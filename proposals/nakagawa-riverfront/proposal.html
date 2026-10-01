@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>那珂川水辺空間 企画提案書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#3B95A9; --teal-d:#2C7486; --teal-l:#D7EAEE; --teal-m:#9CCED7; --teal-xl:#EEF6F8;
+  --coral:#F2716B; --orange:#EE9A2E; --green:#4FA88A; --navy:#14263A;
+  --ink:#2A2C28; --sub:#5E5E5C; --mute:#A2A3A2; --line:#D8DCDD; --card:#F6F8F9;
+}
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#888}
+body{font-family:"Zen Kaku Gothic New","IPAPGothic",sans-serif;color:var(--ink);font-size:11pt;line-height:1.55;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-feature-settings:"palt"}
+.num,.en{font-family:"Lato","Zen Kaku Gothic New",sans-serif}
+.page{width:297mm;height:210mm;background:#fff;position:relative;overflow:hidden;margin:0 auto 8mm;display:flex;flex-direction:column;
+  padding:13mm 15mm 12mm;page-break-after:always;break-after:page}
+@media print{html,body{background:#fff}.page{margin:0}}
+
+/* header / footer */
+.hd{display:flex;align-items:center;gap:3mm;font-size:11pt;font-weight:700;letter-spacing:.06em;color:var(--ink)}
+.hd::before{content:"";width:1.2mm;height:5mm;background:var(--ink)}
+.hd .sec{color:var(--teal)}
+.pno{position:absolute;top:13mm;right:15mm;font-family:Lato;font-size:11pt;color:var(--sub)}
+.ft{display:none;font-size:11pt;color:var(--mute);letter-spacing:.05em}
+.catch{text-align:center;font-size:18pt;font-weight:700;letter-spacing:.08em;line-height:1.45;margin:4mm 0 1mm}
+.catch em{font-style:normal;color:var(--teal)}
+.lead{text-align:center;font-size:11pt;color:var(--sub);margin-bottom:4mm;letter-spacing:.03em}
+.lbl{display:flex;align-items:center;gap:2mm;font-weight:700;font-size:12.5pt;margin-bottom:1.5mm}
+.lbl::before{content:"";width:1.4mm;height:4.6mm;background:var(--teal);border-radius:.4mm}
+.pill{display:inline-block;background:var(--teal);color:#fff;font-weight:700;font-size:11pt;padding:.6mm 3.5mm;border-radius:10mm;letter-spacing:.05em}
+.card{background:#fff;border:.35mm solid var(--line);border-radius:2.5mm;padding:3mm 3.5mm;box-shadow:0 .6mm 1.6mm rgba(20,40,50,.06)}
+.soft{background:var(--card);border-radius:2.5mm;padding:3mm 3.5mm}
+.band{background:var(--teal-l);border-radius:2.5mm;padding:2.6mm 5mm;text-align:center;font-weight:700;font-size:11.5pt;letter-spacing:.04em}
+.band em{font-style:normal;color:var(--teal-d)}
+.tag{display:inline-block;font-size:11pt;font-weight:700;padding:0 1.8mm;line-height:1.35;border-radius:1mm;color:#fff;background:var(--teal);vertical-align:middle;letter-spacing:.04em}
+.tag.c{background:var(--coral)}.tag.o{background:var(--orange)}.tag.g{background:var(--green)}.tag.n{background:var(--navy)}
+.tbd{display:inline-block;font-size:11pt;font-weight:700;color:var(--coral);border:.3mm solid var(--coral);border-radius:1mm;padding:0 1.4mm;margin-left:1.5mm;vertical-align:middle}
+.small{font-size:11pt;color:var(--sub)}
+.note{font-size:11pt;color:var(--sub)}
+ul.dot{list-style:none}
+ul.dot li{position:relative;padding-left:4mm}
+ul.dot li::before{content:"";position:absolute;left:.6mm;top:2.3mm;width:1.6mm;height:1.6mm;border-radius:50%;background:var(--teal)}
+.grid{display:grid;gap:4mm}
+.grow{flex:1 1 auto;min-height:0;margin-bottom:4mm}
+.grow:last-of-type{margin-bottom:0}
+b.t{color:var(--teal-d)}
+h3{font-size:13pt;font-weight:700;letter-spacing:.04em}
+
+/* cover */
+.cover{background:linear-gradient(120deg,#0E1C2C 0%,#16334A 45%,#1F5E70 80%,#3B95A9 100%);color:#fff;padding:0}
+.cover .river{position:absolute;inset:0}
+.cover .inner{position:absolute;left:20mm;top:42mm;right:20mm}
+.cover .kicker{font-size:11pt;letter-spacing:.3em;color:var(--teal-m);font-weight:700}
+.cover h1{font-size:25pt;font-weight:900;letter-spacing:.08em;line-height:1.5;margin-top:5mm}
+.cover .sub{margin-top:5mm;font-size:13pt;letter-spacing:.12em;font-weight:500}
+.cover .meta{position:absolute;left:20mm;bottom:22mm;font-size:11pt;line-height:1.9;letter-spacing:.06em}
+.cover .meta .who{border-top:.3mm solid rgba(255,255,255,.45);padding-top:2mm;margin-top:2mm;font-size:11pt;color:#d6e9ee}
+.cover .theme{position:absolute;right:20mm;bottom:22mm;text-align:right}
+.cover .theme .en{font-size:30pt;font-weight:900;letter-spacing:.06em;line-height:1.05}
+.cover .theme .jp{font-size:12pt;letter-spacing:.2em;margin-top:2mm;color:var(--teal-m)}
+
+/* toc */
+.toc{margin:10mm auto 0;width:200mm}
+.toc .row{display:grid;grid-template-columns:22mm 1fr 30mm 18mm;align-items:baseline;border-bottom:.3mm solid var(--line);padding:3.2mm 0}
+.toc .no{font-family:Lato;font-weight:900;font-size:20pt;color:var(--teal)}
+.toc .tt{font-size:13pt;font-weight:700;letter-spacing:.05em}
+.toc .tt small{display:block;font-size:11pt;font-weight:400;color:var(--sub);letter-spacing:.02em}
+.toc .pt{font-size:11pt;color:var(--sub);text-align:right}
+.toc .pg{font-family:Lato;font-size:11pt;text-align:right}
+
+/* timeline table */
+.tt-table{width:100%;border-collapse:collapse;font-size:8.5pt}
+.tt-table th,.tt-table td{border:.25mm solid #fff;padding:1.2mm 1.4mm;text-align:center}
+.tt-table th{background:var(--teal);color:#fff;font-weight:700}
+.tt-table td.h{background:var(--card);font-weight:700;text-align:left;white-space:nowrap}
+.cell{border-radius:1mm;color:#fff;font-weight:700;padding:.8mm 0}
+
+/* gantt */
+.gantt{width:100%;border-collapse:collapse;font-size:11pt;table-layout:fixed}
+.gantt th{font-weight:700;background:var(--teal);color:#fff;padding:1.4mm 0;border-left:.3mm solid #fff}
+.gantt th.sub{background:var(--teal-l);color:var(--teal-d);font-size:7.5pt;padding:.6mm 0}
+.gantt td{border-left:.3mm dashed #E3E7E8;border-bottom:.3mm solid #EEF1F2;height:10.8mm;padding:0;position:relative}
+.gantt td.item{font-weight:700;padding-left:2mm;border-left:none;font-size:11pt;white-space:nowrap}
+.bar{position:absolute;top:2mm;bottom:2mm;border-radius:3mm;color:#fff;font-size:7.5pt;font-weight:700;display:flex;align-items:center;padding-left:2mm;white-space:nowrap;z-index:1}
+.ms{position:absolute;top:1.6mm;width:4.6mm;height:4.6mm;transform:rotate(45deg);background:var(--coral);z-index:2}
+
+/* estimate */
+.est{width:100%;border-collapse:collapse;font-size:11pt}
+.est th{background:var(--teal);color:#fff;padding:1.6mm 2.5mm;text-align:left;font-weight:700}
+.est td{padding:1.35mm 2.5mm;border-bottom:.3mm solid var(--line);vertical-align:top}
+.est td.r{text-align:right;font-family:Lato;white-space:nowrap}
+.est tr.sum td{background:var(--teal-l);font-weight:700}
+.est tr.total td{background:var(--teal);color:#fff;font-weight:900;font-size:11pt}
+.est .d{font-size:11pt;color:var(--sub)}
+</style>
+</head>
+<body>
+
+<!-- ============ 表紙 ============ -->
+<section class="page cover">
+  <svg class="river" viewBox="0 0 297 210" preserveAspectRatio="none">
+    <defs><linearGradient id="rv" x1="0" x2="1"><stop offset="0" stop-color="#9CCED7" stop-opacity="0"/><stop offset=".5" stop-color="#9CCED7" stop-opacity=".35"/><stop offset="1" stop-color="#9CCED7" stop-opacity="0"/></linearGradient></defs>
+    <path d="M-10 150 C 60 120, 110 175, 170 140 S 260 95, 310 120" fill="none" stroke="url(#rv)" stroke-width="16"/>
+    <path d="M-10 160 C 60 130, 110 185, 170 150 S 260 105, 310 130" fill="none" stroke="#fff" stroke-opacity=".18" stroke-width=".4"/>
+    <g fill="#fff"><circle cx="40" cy="38" r=".5" opacity=".6"/><circle cx="250" cy="30" r=".6" opacity=".5"/><circle cx="210" cy="62" r=".4" opacity=".6"/><circle cx="120" cy="22" r=".4" opacity=".5"/><circle cx="275" cy="70" r=".5" opacity=".5"/></g>
+  </svg>
+  <div class="inner">
+    <div class="kicker">企画提案書</div>
+    <h1>那珂川の水辺空間を活かした<br>回遊促進・賑わい創出事業企画運営業務委託</h1>
+    <div class="sub">― 提案競技 企画提案書 ―</div>
+  </div>
+  <div class="meta">
+    令和8年11月　日 提出<br>
+    <div class="who">【正本のみ記載】提案者名／担当者氏名／連絡先</div>
+  </div>
+  <div class="theme">
+    <div class="en">NAKAGAWA<br>RIVER NIGHTS</div>
+    <div class="jp">川が、夜のステージになる。（仮）</div>
+  </div>
+</section>
+
+<!-- ============ 目次 ============ -->
+<section class="page">
+  <div class="hd">目次</div>
+  <div class="catch" style="margin-top:8mm">CONTENTS</div>
+  <div class="toc">
+    <div class="row"><div class="no">1</div><div class="tt">実施内容<small>コンセプト／全体計画／夜間・水辺コンテンツ／回遊の仕組み・フォトスポット／今後の展開</small></div><div class="pt">配点 60</div><div class="pg">1–5</div></div>
+    <div class="row"><div class="no">2</div><div class="tt">広報・プロモーション<small>SNSを軸にした国内外来街者への情報拡散</small></div><div class="pt">配点 10</div><div class="pg">6</div></div>
+    <div class="row"><div class="no">3</div><div class="tt">運営体制<small>実施体制・安全管理・関係者調整</small></div><div class="pt">配点 10</div><div class="pg">7</div></div>
+    <div class="row"><div class="no">4</div><div class="tt">運営スケジュール<small>契約から報告書提出までの全体工程</small></div><div class="pt">配点 5</div><div class="pg">8</div></div>
+    <div class="row"><div class="no">5</div><div class="tt">追加提案<small>事業者独自の取組み</small></div><div class="pt">配点 5</div><div class="pg">9</div></div>
+    <div class="row"><div class="no" style="font-size:13pt">別紙</div><div class="tt">見積書</div><div class="pt"></div><div class="pg">10</div></div>
+  </div>
+</section>
+
+<!-- ============ 1-1 コンセプト ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-1 背景・コンセプト・ターゲット</div>
+  <div class="pno">1</div>
+  <div class="catch">那珂川を「渡る川」から、<em>夜に「巡る川」へ。</em></div>
+  <div class="lead">清流公園の再整備と護岸・橋梁ライトアップの完成という「水辺の転換点」に、川沿いを歩きたくなる理由を一気につくる。</div>
+
+  <div class="grid grow" style="grid-template-columns:1fr 1.25fr;gap:5mm">
+    <div class="grid" style="gap:3mm">
+      <div class="card">
+        <div class="lbl">エリアの特性と課題</div>
+        <ul class="dot">
+          <li>天神・中洲という九州最大の夜の集積に挟まれながら、川は<b class="t">「橋を渡るだけ」の通過空間</b>になっている</li>
+          <li>夜の過ごし方が天神の商業施設・中洲の飲食・屋台で<b class="t">点で完結</b>し、川沿いの滞在と回遊が生まれていない</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="lbl">いま、この時期である理由</div>
+        <ul class="dot">
+          <li>清流公園 北側・橋上エリア供用（R8.9）／南端広場供用（R8.12頃）</li>
+          <li>中洲懸橋〜西大橋の護岸・橋梁ライトアップ完成（R9.2予定）</li>
+        </ul>
+        <div class="small" style="margin-top:1mm">→ 本イベントを<b class="t">新しい水辺の「お披露目」</b>と位置づけ、来街者に夜の那珂川の使い方を印象づける。</div>
+      </div>
+    </div>
+
+    <div class="grid" style="gap:3mm">
+      <div class="card" style="border-color:var(--teal);border-width:.5mm">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill">コンセプト・テーマ</span><span class="tbd">仮・別途確定</span></div>
+        <div style="margin-top:2mm;font-size:15pt;font-weight:900;letter-spacing:.06em">NAKAGAWA RIVER NIGHTS<span style="font-size:11pt;font-weight:500;margin-left:3mm">川が、夜のステージになる。</span></div>
+        <div style="margin-top:1mm">音・水・光・食で川沿いを一本の「夜の回廊」にし、<b class="t">ひとつの場所で終わらない夜</b>をつくる。</div>
+      </div>
+      <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:2mm;text-align:center">
+        <div class="soft"><div class="en" style="font-weight:900;color:var(--teal);font-size:12pt">LIVE</div><div style="font-size:11pt;font-weight:700">音で巡る</div><div class="note">2ステージのリレー</div></div>
+        <div class="soft"><div class="en" style="font-weight:900;color:var(--green);font-size:12pt">WATER</div><div style="font-size:11pt;font-weight:700">川面で遊ぶ</div><div class="note">水上ステージ・屋形船</div></div>
+        <div class="soft"><div class="en" style="font-weight:900;color:var(--coral);font-size:12pt">ART</div><div style="font-size:11pt;font-weight:700">撮って残す</div><div class="note">常設アート2基</div></div>
+        <div class="soft"><div class="en" style="font-weight:900;color:var(--orange);font-size:12pt">TASTE</div><div style="font-size:11pt;font-weight:700">味わう</div><div class="note">マルシェ・屋台連携</div></div>
+      </div>
+      <div class="card">
+        <div class="lbl">ターゲット</div>
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:3mm">
+          <div><span class="tag">メイン</span> <b>国内外の観光客</b><div class="small">韓国・台湾・香港などアジアからの訪日客、国内の個人・グループ旅行者（20〜40代中心）。「福岡の夜」を探している層</div></div>
+          <div><span class="tag g">サブ</span> <b>都市圏の来街者</b><div class="small">天神・中洲で夜を過ごす20〜40代。仕事帰りの一杯、週末の外出をイベントで川沿いへ延長</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">目標（仮）：会期中 延べ来場 <em class="num">100,000</em>人 ／ 回遊企画参加 <em class="num">10,000</em>人 ／ 来場者の平均滞在時間 <em>＋60分</em> ／ SNS投稿 <em class="num">10,000</em>件</div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 1-2 全体計画 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-2 全体計画・会場配置</div>
+  <div class="pno">2</div>
+  <div class="catch" style="margin-bottom:3mm">春吉橋〜西大橋の両岸に、<em>6つの「夜の目的地」</em>を配置する</div>
+
+  <div class="grid grow" style="grid-template-columns:118mm 1fr;gap:5mm;margin-bottom:0">
+    <div class="card" style="padding:2mm">
+      <svg viewBox="0 0 230 250" width="100%" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+        <!-- land -->
+        <rect width="230" height="250" fill="#F6F8F9"/>
+        <text x="22" y="40" font-size="9" fill="#A2A3A2" font-weight="700" letter-spacing="2">天神</text>
+        <text x="160" y="22" font-size="9" fill="#A2A3A2" font-weight="700" letter-spacing="2">中洲</text>
+        <!-- Hakata river -->
+        <path d="M196 0 C 200 60, 210 120, 205 250" fill="none" stroke="#CFE6EC" stroke-width="10"/>
+        <!-- Nakagawa -->
+        <path d="M118 0 C 112 50, 108 90, 112 130 C 116 170, 132 205, 128 250" fill="none" stroke="#BFE0E8" stroke-width="30"/>
+        <!-- lightup segment on east bank -->
+        <path d="M131 40 C 125 75, 124 105, 127 150" fill="none" stroke="#F2C14E" stroke-width="2" stroke-dasharray="3 2"/>
+        <line x1="130" y1="112" x2="168" y2="118" stroke="#B8860B" stroke-width=".4"/><text x="166" y="124" font-size="5.5" fill="#B8860B">護岸・橋梁</text><text x="166" y="131" font-size="5.5" fill="#B8860B">ライトアップ区間</text>
+        <!-- bridges -->
+        <g stroke="#5E5E5C" stroke-width="2.2"><line x1="92" y1="40" x2="144" y2="40"/><line x1="90" y1="96" x2="138" y2="96"/><line x1="94" y1="150" x2="142" y2="150"/><line x1="94" y1="160" x2="146" y2="160"/></g>
+        <g font-size="6.5" fill="#2A2C28" font-weight="700">
+          <text x="60" y="42">西大橋</text><text x="44" y="98">福博であい橋</text><text x="60" y="148">中洲懸橋</text><text x="62" y="165">春吉橋</text>
+        </g>
+        <!-- walking route -->
+        <path d="M82 55 L82 175 M150 55 L150 175" fill="none" stroke="#3B95A9" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round"/>
+        <!-- spots -->
+        <g font-size="7" font-weight="700">
+          <circle cx="78" cy="122" r="9" fill="#3B95A9"/><text x="78" y="125" text-anchor="middle" fill="#fff" font-family="Lato">A</text>
+          <circle cx="152" cy="173" r="9" fill="#3B95A9"/><text x="152" y="176" text-anchor="middle" fill="#fff" font-family="Lato">B</text>
+          <circle cx="133" cy="232" r="9" fill="#4FA88A"/><text x="133" y="235" text-anchor="middle" fill="#fff" font-family="Lato">C</text>
+          <circle cx="100" cy="96" r="7.5" fill="#4FA88A"/><text x="100" y="99" text-anchor="middle" fill="#fff" font-family="Lato">D</text>
+          <rect x="54" y="108" width="12" height="12" rx="2" fill="#F2716B"/><text x="60" y="117" text-anchor="middle" fill="#fff" font-family="Lato">1</text>
+          <rect x="160" y="152" width="12" height="12" rx="2" fill="#F2716B"/><text x="166" y="161" text-anchor="middle" fill="#fff" font-family="Lato">2</text>
+          <circle cx="150" cy="70" r="7.5" fill="#EE9A2E"/><text x="150" y="73" text-anchor="middle" fill="#fff" font-family="Lato">E</text>
+          
+          <rect x="150" y="194" width="24" height="9" rx="2" fill="#fff" stroke="#EE9A2E"/><text x="162" y="201" text-anchor="middle" fill="#EE9A2E" font-size="6">屋台</text>
+        </g>
+        <g font-size="6" fill="#5E5E5C">
+          <text x="10" y="126">貴賓館前広場</text>
+          <text x="164" y="176">清流公園</text><text x="164" y="183">（橋上広場）</text>
+          <text x="146" y="232">清流公園</text><text x="146" y="239">（南端広場）</text>
+          <text x="160" y="60">北側プロムナード</text>
+        </g>
+        <text x="8" y="244" font-size="5.5" fill="#A2A3A2">※位置関係のイメージ図（縮尺不定）。北が上。</text>
+        <g transform="translate(212 14)"><path d="M0 -8 L4 4 L0 1 L-4 4Z" fill="#2A2C28"/><text x="0" y="13" font-size="6" text-anchor="middle" font-family="Lato">N</text></g>
+      </svg>
+    </div>
+
+    <div class="grid" style="gap:2.2mm;align-content:space-between">
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag">A</span> <b>貴賓館前ステージ</b><span class="small">（天神中央公園 旧県公会堂貴賓館前広場）</span><div class="small">北のメインステージ。明治の洋館を背景に、DJ・日替わりプログラム・メインアクト</div></div>
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag">B</span> <b>春吉橋ミニステージ</b><span class="small">（清流公園 橋上広場）</span><div class="small">南のステージ。DJ・アコースティック中心。屋台・中洲への玄関口</div></div>
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag g">C</span> <b>水上ステージ</b><span class="small">（清流公園 南端広場前／土日限定）</span><div class="small">台船を係留した「川に浮かぶステージ」。広場から観覧</div></div>
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag g">D</span> <b>屋形船ジャズ</b><span class="small">（福博であい橋周辺）</span><div class="small">屋形船の上でジャズを生演奏。乗船体験と、岸に流れる音の両方を楽しむ</div></div>
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag c">1・2</span> <b>常設アート／フォトスポット</b><div class="small">① DOBくん（貴賓館前）　② NONOTAKの光のインスタレーション（橋上広場）</div></div>
+      <div class="card" style="padding:2.4mm 3.5mm"><span class="tag o">E</span> <b>リバーサイド・マルシェ</b><div class="small">北側プロムナード・貴賓館前。地元飲食・クラフト・屋台との連携</div></div>
+      <div class="band" style="font-size:11pt;padding:2mm 3mm">北（A・①）と南（B・②・C）の<em>両端に核</em>を置き、<br>その間の川沿いを歩かせる「ダンベル型」配置</div>
+    </div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 1-3 夜間景観・水辺コンテンツ ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-3 夜間景観・水辺空間を活かしたコンテンツ</div>
+  <div class="pno">3</div>
+  <div class="catch" style="margin-bottom:3mm">岸辺から、橋の上から、<em>川面の上から</em>。夜の那珂川を全方位で楽しむ</div>
+
+  <div class="grid grow" style="grid-template-columns:1fr 1fr;gap:4mm">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:2mm"><span class="tag">A</span><h3>貴賓館前ステージ</h3><span class="small">17:30–21:30（予定）</span></div>
+      <div class="small" style="margin:1mm 0 1.5mm">日没からDJで場をつくり、夜ごとにテーマの異なるプログラムを展開</div>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr);gap:1.6mm;text-align:center;font-size:11pt">
+        <div class="soft" style="padding:1.6mm"><b>アイドルDAY</b><div class="note">九州・福岡発の<br>アイドルが集結</div></div>
+        <div class="soft" style="padding:1.6mm"><b>サーカスDAY</b><div class="note">エアリアル・ジャグリング<br>等の夜間パフォーマンス</div></div>
+        <div class="soft" style="padding:1.6mm;background:var(--teal-l)"><b style="color:var(--teal-d)">メインアクト</b><div class="note">福岡ゆかりの全国区<br>アーティスト<span style="white-space:nowrap">（椎名林檎クラス）</span></div></div>
+      </div>
+      <div class="note" style="margin-top:1.5mm">※メインアクト公演は観覧エリアを事前抽選の整理券制とし、周辺への滞留を防ぐ</div>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:2mm"><span class="tag">B</span><h3>春吉橋ミニステージ</h3><span class="small">17:30–22:00（予定）</span></div>
+      <div class="small" style="margin:1mm 0 1.5mm">橋上広場の開放感を活かしたDJ・アコースティックライブ。屋台の開店時間と重ね、「聴いてから屋台へ」の流れをつくる</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>地元DJ・クラブシーンと連携した日替わりラインナップ</li>
+        <li>Aステージと<b class="t">時間差で演目を組む「リレー型タイムテーブル」</b>で、南北の移動を促す（1-4参照）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:2mm"><span class="tag g">C</span><h3>水上ステージ</h3><span class="small">会期中の土日・各日2〜3公演</span></div>
+      <div class="small" style="margin:1mm 0 1mm">清流公園南端広場の前に台船を係留し、<b class="t">川に浮かぶステージ</b>を設置。新しく供用される南端広場を観覧席として使う</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>アーティストのライブ、ダンス、パフォーマンス</li>
+        <li>河川空間のオープン化制度を活用（河川管理者と協議）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:2mm"><span class="tag g">D</span><h3>屋形船ジャズクルーズ</h3><span class="small">毎夜・複数便</span></div>
+      <div class="small" style="margin:1mm 0 1mm">福博であい橋周辺を発着点に、屋形船の上でジャズを生演奏。<b class="t">乗船（有料・予約制）</b>で消費につなげ、岸辺には「流れてくるライブ」が届く</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>ライトアップされた護岸・橋梁を水面から眺める特等席</li>
+        <li>多言語での予約受付で訪日客にも対応</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1.3fr 1fr;gap:4mm">
+    <div class="soft" style="padding:2.4mm 3.5mm"><span class="tag o">E</span> <b>リバーサイド・マルシェ</b><span class="small">　北側プロムナード・貴賓館前広場に、福岡の食・酒・クラフトを集めた夜市を出店。中洲の屋台・周辺店舗と連携し、川沿いで「飲んで、食べて、留まる」時間をつくる</span></div>
+    <div class="soft" style="padding:2.4mm 3.5mm;background:#FFF6EC"><b style="color:#B4691A">景観への配慮</b><span class="small">　ステージ・装飾の照明は、市が整備するライトアップ箇所と河川面へ照射しない配光とし、ライトアップを「主役の背景」として活かす</span></div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 1-4 回遊の仕組み・フォトスポット ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-4 回遊促進の仕組み・フォトスポット</div>
+  <div class="pno">4</div>
+  <div class="catch" style="margin-bottom:3mm">「時間」「ごほうび」「撮りたい場所」の<em>3つの仕掛け</em>で、来街者を歩かせる</div>
+
+  <div class="grid grow" style="grid-template-columns:1.15fr 1fr;gap:4mm">
+    <div class="card">
+      <div class="lbl">仕掛け① リレー型タイムテーブル<span class="small" style="font-weight:400">（例）</span></div>
+      <table class="tt-table">
+        <tr><th style="width:24%"></th><th>18:00</th><th>18:45</th><th>19:30</th><th>20:15</th><th>21:00</th></tr>
+        <tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal)">DJ</div></td><td></td><td><div class="cell" style="background:var(--teal)">LIVE</div></td><td></td><td><div class="cell" style="background:var(--teal-d)">MAIN</div></td></tr>
+        <tr><td class="h">B 春吉橋</td><td></td><td><div class="cell" style="background:var(--teal-m);color:var(--teal-d)">LIVE</div></td><td></td><td><div class="cell" style="background:var(--teal-m);color:var(--teal-d)">DJ</div></td><td></td></tr>
+        <tr><td class="h">C 水上<span class="note">（土日）</span></td><td></td><td></td><td><div class="cell" style="background:var(--green)">SHOW</div></td><td></td><td></td></tr>
+        <tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#86C4B0">便1</div></td><td></td><td><div class="cell" style="background:#86C4B0">便2</div></td><td></td><td><div class="cell" style="background:#86C4B0">便3</div></td></tr>
+      </table>
+      <div class="small" style="margin-top:1.5mm">南北の演目を約45分ずらし、「次はあっちで始まる」が自然に<b class="t">川沿いの往復</b>を生む。移動の途中にマルシェ・屋台がある配置にする</div>
+    </div>
+    <div class="card">
+      <div class="lbl">仕掛け② デジタルスタンプラリー</div>
+      <div class="small" style="margin-bottom:1.2mm">QRで参加できるWebアプリ（日・英・韓・繁中・簡中）。アプリのインストールは不要</div>
+      <div style="display:flex;align-items:center;gap:1.4mm;font-size:8.5pt;font-weight:700;flex-wrap:wrap;margin-bottom:1.5mm">
+        <span class="tag">A</span>→<span class="tag c">①</span>→<span class="tag g">D</span>→<span class="tag o">E</span>→<span class="tag c">②</span>→<span class="tag">B</span>→<span class="tag o">屋台</span>
+      </div>
+      <ul class="dot" style="font-size:11pt">
+        <li>3か所達成：マルシェ・周辺店舗で使える<b class="t">クーポン</b></li>
+        <li>全制覇：限定ノベルティ／屋形船乗船の抽選</li>
+        <li>回遊ログを効果検証に活用（個人を特定しない形）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--coral)">
+    <div class="lbl" style="margin-bottom:1mm">仕掛け③ 常設アート ＝ フォトスポット（2か所）</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:4mm">
+      <div style="display:grid;grid-template-columns:24mm 1fr;gap:3mm;align-items:start">
+        <div style="height:24mm;border-radius:2mm;background:radial-gradient(circle at 50% 40%,#FFD9D6,#F2716B);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-family:Lato;font-size:14pt">①</div>
+        <div><b>DOBくん</b><span class="small">｜貴賓館前広場（天神側の入口）</span>
+          <div class="small">世界的に知られるキャラクターのアイコン作品を、天神から川へ向かう入口に設置。「ここから川沿いを巡る」<b class="t">北の起点</b>に</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:24mm 1fr;gap:3mm;align-items:start">
+        <div style="height:24mm;border-radius:2mm;background:linear-gradient(135deg,#14263A,#3B95A9);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-family:Lato;font-size:14pt">②</div>
+        <div><b>NONOTAK（光と音のインスタレーション）</b><span class="small">｜清流公園 橋上広場</span>
+          <div class="small">光と音で空間をつくるアートユニットの作品を、春吉橋側の<b class="t">南の起点</b>に設置。光は内向きに設計し、ライトアップ・河川面に干渉させない</div></div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:1.5mm">両作品とも<b>イベント後も常設</b>し、年間を通して川沿いを訪れる理由として残す。設置場所・構造・維持管理は公園管理者と協議のうえ決定</div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 1-5 継続的な賑わい ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-5 継続的な賑わい創出・今後の展開</div>
+  <div class="pno">5</div>
+  <div class="catch" style="margin-bottom:3mm">1週間で終わらせない。<em>「残るもの」と「続く仕組み」</em>をイベントで仕込む</div>
+
+  <div class="grid grow" style="grid-template-columns:repeat(3,1fr);gap:4mm">
+    <div class="card"><span class="pill" style="background:var(--coral)">残る</span>
+      <h3 style="margin:1.5mm 0 1mm">常設アート2基</h3>
+      <div class="small">DOBくん・NONOTAKは会期後も設置を継続。リバーフロントNEXTエリアの<b class="t">新しい定番フォトスポット</b>として、来訪の理由になり続ける</div></div>
+    <div class="card"><span class="pill">歩ける</span>
+      <h3 style="margin:1.5mm 0 1mm">夜のモデルコース・回遊マップ</h3>
+      <div class="small">イベントで使った多言語の回遊マップ・Webを会期後も公開。ホテル・観光案内所で配布し、<b class="t">いつでも使える夜の散策ガイド</b>にする</div></div>
+    <div class="card"><span class="pill" style="background:var(--green)">続く</span>
+      <h3 style="margin:1.5mm 0 1mm">定期プログラム化</h3>
+      <div class="small">反響の大きかったコンテンツ（水上ステージ・屋形船ジャズ・マルシェ）を、<b class="t">民間主体の定期開催</b>として検討。協賛・出店料で自走できるモデルを整理する</div></div>
+  </div>
+
+  <div class="grid grow" style="grid-template-columns:1fr 1.15fr;gap:4mm">
+    <div class="card">
+      <div class="lbl">夜のモデルコース（例）</div>
+      <div style="font-size:11pt;line-height:1.75">
+        <div><span class="tag">90分</span> 天神 → DOBくん → 貴賓館 → であい橋 → 屋台</div>
+        <div><span class="tag g">2時間</span> 天神 → 屋形船 → 北側プロムナード → NONOTAK → 屋台</div>
+        <div><span class="tag o">はしご</span> マルシェ → 春吉の飲食店 → 中洲 → 屋台</div>
+      </div>
+      <div class="note" style="margin-top:1mm">須崎公園など周辺整備の進み具合に合わせて、北側にもコースを延ばしていく</div>
+    </div>
+    <div class="card">
+      <div class="lbl">展開ロードマップ（案）</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2mm;font-size:11pt">
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--teal)"><b class="num">2027.3</b><div class="small">本イベント開催<br>アート設置・データ取得</div></div>
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--green)"><b class="num">2027年度</b><div class="small">月1回の水上ライブ・マルシェなどの定期開催を試行</div></div>
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--orange)"><b class="num">2028〜</b><div class="small">須崎公園まで延伸、民間活力による運営へ移行</div></div>
+      </div>
+      <div class="small" style="margin-top:1.5mm">実施報告書では、来場・回遊・消費のデータをもとに、<b class="t">常設化や民間活力導入の可能性</b>と課題を整理する</div>
+    </div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 2 広報 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">2 広報・プロモーション</span></div>
+  <div class="pno">6</div>
+  <div class="catch" style="margin-bottom:3mm">来場者が撮って、投稿して、<em>次の来場者を呼ぶ</em>。SNSを中心に拡散の循環をつくる</div>
+
+  <div class="grid grow" style="grid-template-columns:repeat(4,1fr);gap:2.5mm">
+    <div class="card" style="border-top:1.2mm solid var(--teal-m)"><b class="en" style="color:var(--teal)">PHASE 1｜1月</b><h3>知ってもらう</h3><ul class="dot small"><li>公式サイト公開（5言語）</li><li>公式アカウント開設、ティザー動画</li><li>第1弾出演者の発表</li></ul></div>
+    <div class="card" style="border-top:1.2mm solid var(--teal)"><b class="en" style="color:var(--teal)">PHASE 2｜2月</b><h3>期待を高める</h3><ul class="dot small"><li>メインアクトの発表（ニュース化）</li><li>アートの制作過程を発信</li><li>インフルエンサーの事前招待</li></ul></div>
+    <div class="card" style="border-top:1.2mm solid var(--teal-d)"><b class="en" style="color:var(--teal)">PHASE 3｜会期中</b><h3>来場・拡散</h3><ul class="dot small"><li>日ごとの見どころ・混雑情報</li><li>ライブ配信、リール・ショート動画</li><li>投稿キャンペーン</li></ul></div>
+    <div class="card" style="border-top:1.2mm solid var(--navy)"><b class="en" style="color:var(--teal)">PHASE 4｜会期後</b><h3>余韻を残す</h3><ul class="dot small"><li>アフタームービーの公開</li><li>常設アート・モデルコースの継続発信</li></ul></div>
+  </div>
+
+  <div class="grid grow" style="grid-template-columns:1fr 1fr 1fr;gap:3mm">
+    <div class="soft">
+      <div class="lbl">SNS・UGC</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>Instagram／TikTok／X／YouTube を使い分け</li>
+        <li>公式ハッシュタグ（例：#那珂川ナイト）で<b class="t">フォトコンテスト</b></li>
+        <li>アート前に「撮影ポイント」を表示して投稿を促す</li>
+      </ul>
+    </div>
+    <div class="soft">
+      <div class="lbl">インバウンド</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>韓国・台湾・香港のインフルエンサーを招待して発信</li>
+        <li>小红书など、各地域で使われているSNSにも発信</li>
+        <li>空港・博多港・ホテル・観光案内所に多言語ツールを設置</li>
+      </ul>
+    </div>
+    <div class="soft">
+      <div class="lbl">メディア・市の媒体</div>
+      <ul class="dot" style="font-size:11pt">
+        <li>ライトアップ点灯とアート除幕を合わせた<b class="t">記者発表会</b></li>
+        <li>TV・新聞・Webメディアへのプレスリリース配信</li>
+        <li>市政だより・市HP・市の掲示板、交通機関のサイネージ</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">KPI（仮）：SNS総リーチ <em class="num">500万</em> ／ 公式ハッシュタグ投稿 <em class="num">1万件</em> ／ メディア掲載 <em class="num">50件</em> ／ 公式サイト訪問 <em class="num">20万PV</em></div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 3 運営体制 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">3 運営体制</span></div>
+  <div class="pno">7</div>
+  <div class="catch" style="margin-bottom:3mm">運営責任者のもとで<em>全領域を一体で動かす</em>、安全最優先の体制</div>
+
+  <div class="grid grow" style="grid-template-columns:1.5fr 1fr;gap:4mm">
+    <div class="card" style="padding:3mm">
+      <div style="display:flex;justify-content:center;gap:6mm;align-items:center">
+        <div class="soft" style="text-align:center;padding:2mm 6mm;font-weight:700">福岡市<div class="note">経済観光文化局 地域観光推進課</div></div>
+        <div style="font-size:14pt;color:var(--teal)">⇄</div>
+        <div style="text-align:center;padding:2mm 6mm;background:var(--teal);color:#fff;border-radius:2mm;font-weight:700">代表事業者（統括）<div style="font-size:11pt;font-weight:400">運営責任者：○○○○（契約〜完了まで交代なし）</div></div>
+      </div>
+      <div style="width:.4mm;height:4mm;background:var(--teal);margin:0 auto"></div>
+      <div style="border-top:.4mm solid var(--teal);margin:0 8mm"></div>
+      <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:1.8mm;margin-top:2.5mm;font-size:11pt;text-align:center">
+        <div class="soft" style="padding:1.8mm"><b>企画・制作</b><div class="note">会場計画・装飾<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>ステージ制作</b><div class="note">音響・照明・映像<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>キャスティング</b><div class="note">出演者調整<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>水上運営</b><div class="note">台船・屋形船<br>[舟運事業者]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>アート</b><div class="note">キュレーション・設置<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>回遊・デジタル</b><div class="note">スタンプラリー<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>広報・PR</b><div class="note">SNS・メディア<br>[構成員名]</div></div>
+        <div class="soft" style="padding:1.8mm"><b>警備・安全</b><div class="note">警備・救護<br>[警備会社]</div></div>
+      </div>
+      <div class="note" style="margin-top:1.5mm;text-align:center">※構成員・協力会社は確定後に記載</div>
+    </div>
+
+    <div class="grid" style="gap:2.5mm;align-content:stretch">
+      <div class="soft"><div class="lbl">会期中の運営</div>
+        <ul class="dot" style="font-size:11pt"><li>貴賓館前に<b class="t">運営本部</b>、各会場に責任者を配置</li><li>無線・チャットで全会場の状況をリアルタイムで共有</li><li>開催日ごとの運営マニュアルを作成</li></ul></div>
+      <div class="soft"><div class="lbl">安全対策</div>
+        <ul class="dot" style="font-size:11pt"><li>メインアクトは整理券制、観覧エリアを区切って誘導</li><li>水上：救命胴衣の着用、監視船を配置</li><li>救護所の設置、雨・強風時の中止基準を事前に決定</li></ul></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:2.4mm 3.5mm">
+    <div class="lbl" style="margin-bottom:.5mm">関係者調整・許認可</div>
+    <div style="font-size:11pt">地域（中洲・春吉・天神の町内会／屋台組合）、警察・消防、保健所、公園管理者（市・県）、河川管理者（福岡県）と、契約直後から協議を開始。<b class="t">占用許可・道路使用・食品営業</b>などの手続きを、工程表に沿って確実に進める</div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 4 スケジュール ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">4 運営スケジュール</span></div>
+  <div class="pno">8</div>
+  <div class="catch" style="margin-bottom:3mm">許認可と出演者の確定を<em>12月中に前倒し</em>し、無理のない工程で3月を迎える</div>
+
+  <div class="card" style="padding:3mm">
+  <table class="gantt">
+    <colgroup><col style="width:44mm"><col span="10"></colgroup>
+    <tr><th style="background:none"></th><th colspan="2">11月</th><th colspan="2">12月</th><th colspan="2">1月</th><th colspan="2">2月</th><th colspan="2">3月</th></tr>
+    <tr><th class="sub" style="background:none"></th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th></tr>
+    <tr><td class="item">契約・実施計画書</td><td></td><td><span class="ms" style="left:60%"></span><div class="bar" style="left:75%;width:300%;background:var(--teal)">実施計画書の作成</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">関係者協議・許認可</td><td></td><td><div class="bar" style="left:80%;width:620%;background:var(--teal-d)">公園・河川・警察・保健所との協議と申請</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">出演者交渉・確定</td><td></td><td><div class="bar" style="left:80%;width:330%;background:var(--coral)">出演交渉→確定</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">アート制作・設置</td><td></td><td></td><td><div class="bar" style="left:0;width:700%;background:#E2918C">設計・制作</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:100%;background:var(--coral)">設置</div></td><td></td></tr>
+    <tr><td class="item">会場設計・設営</td><td></td><td></td><td><div class="bar" style="left:0;width:600%;background:var(--teal-m);color:var(--teal-d)">会場設計・資機材手配</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:100%;background:var(--teal)">設営</div></td><td></td></tr>
+    <tr><td class="item">回遊ツール開発</td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:400%;background:var(--green)">スタンプラリー開発・テスト</div></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">広報・プロモーション</td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:600%;background:var(--orange)">サイト公開 → 出演者発表 → 会期中の発信</div></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">イベント開催</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:40%;width:110%;background:var(--navy)">開催</div></td><td></td></tr>
+    <tr><td class="item">撤去・効果検証・報告</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:40%;width:60%;background:var(--sub)">報告</div></td></tr>
+  </table>
+  </div>
+
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:2.5mm;margin-top:auto;font-size:11pt">
+    <div class="soft"><b class="num" style="color:var(--coral)">11/25〜</b> 契約締結<div class="small">すぐに関係者協議を開始</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">12月下旬</b> 実施計画書の提出<div class="small">出演者・会場計画を確定</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">3/13〜3/21（案）</b> 開催<div class="small">土日2回を含む9日間、夕方〜夜</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">3/31</b> 実施報告書の提出<div class="small">効果検証・今後の展開</div></div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 5 追加提案 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">5 追加提案</span></div>
+  <div class="pno">9</div>
+  <div class="catch" style="margin-bottom:4mm">委託費の範囲を超える価値を生む、<em>4つの独自の取組み</em></div>
+
+  <div class="grid grow" style="grid-template-columns:1fr 1fr;gap:5mm">
+    <div class="card"><div style="display:flex;gap:3mm;align-items:baseline"><span class="num" style="font-size:22pt;font-weight:900;color:var(--teal)">01</span><h3>協賛スキームで事業を拡充</h3></div>
+      <div class="small">ステージの命名権、マルシェ、アート、屋形船便などを協賛メニューとして整理し、民間企業から協賛金を集める。<b class="t">委託費に協賛金を上乗せ</b>して、出演者の充実や会期の拡大にあてる</div></div>
+    <div class="card"><div style="display:flex;gap:3mm;align-items:baseline"><span class="num" style="font-size:22pt;font-weight:900;color:var(--green)">02</span><h3>「ナイトパス」で周辺店舗と連携</h3></div>
+      <div class="small">スタンプラリーの特典を、春吉・中洲・天神の飲食店や屋台で使えるクーポンにする。<b class="t">イベントの外まで消費を広げ</b>、利用件数で経済効果を見えるようにする</div></div>
+    <div class="card"><div style="display:flex;gap:3mm;align-items:baseline"><span class="num" style="font-size:22pt;font-weight:900;color:var(--coral)">03</span><h3>データによる効果検証</h3></div>
+      <div class="small">人流データ（位置情報）、スタンプラリーの回遊ログ、多言語アンケートを組み合わせ、<b class="t">滞在時間・回遊範囲・消費額の変化</b>を数値で示す。次年度以降の施策の判断材料にする</div></div>
+    <div class="card"><div style="display:flex;gap:3mm;align-items:baseline"><span class="num" style="font-size:22pt;font-weight:900;color:var(--orange)">04</span><h3>誰もが楽しめる、環境に配慮した運営</h3></div>
+      <div class="small">多言語・やさしい日本語での案内、車いすでも通れる動線、休憩スペースを用意する。マルシェはリユース食器と分別ステーションを導入し、<b class="t">ごみを減らす</b></div></div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 見積書 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">別紙</span>｜見積書<span class="tbd">概算・精査中</span></div>
+  <div class="pno">10</div>
+  <div class="catch" style="margin:3mm 0 3mm;font-size:15pt">見積書（概算）</div>
+  <table class="est">
+    <tr><th style="width:26%">項目</th><th>内訳</th><th style="width:16%;text-align:right">金額（円・税抜）</th></tr>
+    <tr><td>企画・制作管理費</td><td class="d">全体企画、実施計画書の作成、制作進行管理、関係者調整、許認可申請</td><td class="r">2,800,000</td></tr>
+    <tr><td>会場設営・装飾費</td><td class="d">ステージ2か所（A・B）、音響・照明・映像、電源・通信、テント・備品、装飾デザイン</td><td class="r">8,100,000</td></tr>
+    <tr><td>出演・コンテンツ制作費</td><td class="d">メインアクト、アイドル・サーカス・DJ等の出演料、演出制作</td><td class="r">9,000,000</td></tr>
+    <tr><td>水上ステージ費</td><td class="d">台船の手配・曳航・係留、ステージ設営、水上の安全管理（土日）</td><td class="r">4,200,000</td></tr>
+    <tr><td>屋形船ジャズ費</td><td class="d">屋形船チャーター、ジャズ出演料、予約システム</td><td class="r">1,600,000</td></tr>
+    <tr><td>アート制作・設置費</td><td class="d">常設アート2基の制作・輸送・設置・基礎工事、キュレーション</td><td class="r">5,500,000</td></tr>
+    <tr><td>回遊施策費</td><td class="d">デジタルスタンプラリーの開発・運用（5言語）、回遊マップ、特典・ノベルティ</td><td class="r">1,400,000</td></tr>
+    <tr><td>マルシェ運営費</td><td class="d">出店者の募集・調整、什器、リユース食器、衛生管理</td><td class="r">1,000,000</td></tr>
+    <tr><td>広報・プロモーション費</td><td class="d">公式サイト（5言語）、SNS運用・広告、インフルエンサー招待、PR、ポスター・フライヤー</td><td class="r">3,200,000</td></tr>
+    <tr><td>警備・安全対策費</td><td class="d">警備員の配置、救護所、整理券の運用、保険</td><td class="r">3,300,000</td></tr>
+    <tr><td>運営スタッフ・清掃費</td><td class="d">運営スタッフ、通訳、清掃・廃棄物処理</td><td class="r">1,800,000</td></tr>
+    <tr><td>効果検証・報告書作成費</td><td class="d">人流データ分析、アンケート、実施報告書の作成</td><td class="r">600,000</td></tr>
+    <tr class="sum"><td colspan="2">小計</td><td class="r">42,500,000</td></tr>
+    <tr class="sum"><td colspan="2">消費税及び地方消費税（10%）</td><td class="r">4,250,000</td></tr>
+    <tr class="total"><td colspan="2">合計（提案限度額 46,750,000円 以内）</td><td class="r">46,750,000</td></tr>
+  </table>
+  <div class="note" style="margin-top:1.5mm">※協賛金を得た場合は、上記に上乗せして事業内容の充実にあてる。出演料・アート費は交渉により変わる可能性あり</div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+</body>
+</html>
