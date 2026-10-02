@@ -46,3 +46,9 @@
   font-weight: 900;
   src: url(ZenKakuGothicNew-900.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'Dela Gothic One';
+  font-style: normal;
+  font-weight: 400;
+  src: url(DelaGothicOne-400.ttf) format('truetype');
+}
