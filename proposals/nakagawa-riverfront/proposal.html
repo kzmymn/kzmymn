@@ -319,6 +319,7 @@ ul.dot li::before{background:var(--ink)!important;width:1.6mm}
 .toc .row{border-bottom:.25mm solid var(--ink)!important}
 .toc .no{font-family:Lato,sans-serif!important;font-weight:300!important;font-size:22pt!important}
 .tl .m{background:var(--ink)!important;color:#fff!important;border-radius:0!important}
+section .ph .pht{line-height:1.3}
 </style>
 </head>
 <body>
@@ -388,55 +389,29 @@ ul.dot li::before{background:var(--ink)!important;width:1.6mm}
   <div class="hd"><span class="sec">1 実施内容</span>｜1-2 会場配置・夜間景観と水辺のコンテンツ</div>
   <div class="pno">2</div>
   <div class="catch">岸辺・橋の上・川面の上に、6つの「夜の目的地」を置く</div>
-  <div class="grid grow" style="grid-template-columns:118mm 1fr;gap:7mm">
-    <div style="display:flex;min-height:0"><svg viewBox="0 0 230 250" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
-        <!-- land -->
-        <rect width="230" height="250" fill="#F5F6F7"/>
-        <text x="22" y="40" font-size="9" fill="#A2A3A2" font-weight="700" letter-spacing="2">天神</text>
-        <text x="160" y="22" font-size="9" fill="#A2A3A2" font-weight="700" letter-spacing="2">中洲</text>
-        <!-- Hakata river -->
-        <path d="M196 0 C 200 60, 210 120, 205 250" fill="none" stroke="#DDEBEE" stroke-width="10"/>
-        <!-- Nakagawa -->
-        <path d="M118 0 C 112 50, 108 90, 112 130 C 116 170, 132 205, 128 250" fill="none" stroke="#CFE3E8" stroke-width="30"/>
-        <!-- lightup segment on east bank -->
-        <path d="M131 40 C 125 75, 124 105, 127 150" fill="none" stroke="#F2C14E" stroke-width="2" stroke-dasharray="3 2"/>
-        <line x1="130" y1="112" x2="168" y2="118" stroke="#F2C14E" stroke-width=".4"/><text x="166" y="124" font-size="5.5" fill="#F2C14E">護岸・橋梁</text><text x="166" y="131" font-size="5.5" fill="#F2C14E">ライトアップ区間</text>
-        <!-- bridges -->
-        <g stroke="#6B7075" stroke-width="2.2"><line x1="92" y1="40" x2="144" y2="40"/><line x1="90" y1="96" x2="138" y2="96"/><line x1="94" y1="150" x2="142" y2="150"/><line x1="94" y1="160" x2="146" y2="160"/></g>
-        <g font-size="6.5" fill="#2A2C28" font-weight="700">
-          <text x="60" y="42">西大橋</text><text x="44" y="98">福博であい橋</text><text x="60" y="148">中洲懸橋</text><text x="62" y="165">春吉橋</text>
-        </g>
-        <!-- walking route -->
-        <path d="M82 55 L82 175 M150 55 L150 175" fill="none" stroke="#3B95A9" stroke-width="1.6" stroke-dasharray="1 3" stroke-linecap="round"/>
-        <!-- spots -->
-        <g font-size="7" font-weight="700">
-          <circle cx="78" cy="122" r="9" fill="#3B95A9"/><text x="78" y="125" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">A</text>
-          <circle cx="152" cy="173" r="9" fill="#3B95A9"/><text x="152" y="176" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">B</text>
-          <circle cx="133" cy="232" r="9" fill="#5AAE8C"/><text x="133" y="235" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">C</text>
-          <circle cx="100" cy="96" r="7.5" fill="#5AAE8C"/><text x="100" y="99" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">D</text>
-          <rect x="54" y="108" width="12" height="12" rx="2" fill="#FC7D78"/><text x="60" y="117" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">1</text>
-          <rect x="160" y="152" width="12" height="12" rx="2" fill="#FC7D78"/><text x="166" y="161" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">2</text>
-          <circle cx="150" cy="70" r="7.5" fill="#F0A030"/><text x="150" y="73" text-anchor="middle" fill="#fff" font-family="Lato, sans-serif">E</text>
-          
-          <rect x="150" y="194" width="24" height="9" rx="2" fill="#F5F6F7" stroke="#F0A030"/><text x="162" y="201" text-anchor="middle" fill="#F0A030" font-size="6">屋台</text>
-        </g>
-        <g font-size="6" fill="#6B7075">
-          <text x="10" y="126">貴賓館前広場</text>
-          <text x="164" y="176">清流公園</text><text x="164" y="183">（橋上広場）</text>
-          <text x="146" y="232">清流公園</text><text x="146" y="239">（南端広場）</text>
-          <text x="160" y="60">北側プロムナード</text>
-        </g>
-        <text x="8" y="244" font-size="5.5" fill="#A2A3A2">※位置関係のイメージ図（縮尺不定）。北が上。</text>
-        <g transform="translate(212 14)"><path d="M0 -8 L4 4 L0 1 L-4 4Z" fill="#2A2C28"/><text x="0" y="13" font-size="6" text-anchor="middle" font-family="Lato, sans-serif">N</text></g>
-      </svg></div>
+  <div class="grid grow" style="grid-template-columns:150mm 1fr;gap:6mm">
+    <div style="display:flex;flex-direction:column;gap:3mm;min-height:0"><svg viewBox="0 0 2000 1216" width="100%" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+  <image href="img/area-map.webp" x="0" y="0" width="2000" height="1216"/>
+  <rect width="2000" height="1216" fill="#fff" opacity=".18"/>
+  <polyline points="500,265 640,320 780,375 880,440 960,540 1005,640 1020,700" fill="none" stroke="#F2C14E" stroke-width="12" stroke-dasharray="26 14" stroke-linecap="round"/>
+  <text x="430" y="215" font-size="36" font-weight="700" fill="#8A5A00" stroke="#fff" stroke-width="8" paint-order="stroke" transform="rotate(14 430 215)">護岸・橋梁ライトアップ区間</text>
+  <g><circle cx="500" cy="525" r="38" fill="#3B95A9" stroke="#fff" stroke-width="5"/><text x="500" y="540" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">A</text><text x="466" y="533" text-anchor="end" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">貴賓館前ステージ</text></g>
+  <g><circle cx="1125" cy="765" r="38" fill="#3B95A9" stroke="#fff" stroke-width="5"/><text x="1125" y="780" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">B</text><text x="1175" y="825" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">春吉橋ミニステージ</text></g>
+  <g><circle cx="1395" cy="1120" r="38" fill="#5AAE8C" stroke="#fff" stroke-width="5"/><text x="1395" y="1135" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">C</text><text x="1361" y="1128" text-anchor="end" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">水上ステージ（南端広場）</text></g>
+  <g><circle cx="600" cy="450" r="38" fill="#5AAE8C" stroke="#fff" stroke-width="5"/><text x="600" y="465" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">D</text><text x="634" y="490" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">屋形船ジャズ</text></g>
+  <g><circle cx="870" cy="430" r="38" fill="#F0A030" stroke="#fff" stroke-width="5"/><text x="870" y="445" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">E</text><text x="904" y="416" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">マルシェ（北側プロムナード）</text></g>
+  <g><rect x="423" y="568" width="64" height="64" fill="#FC7D78" stroke="#fff" stroke-width="5"/><text x="455" y="610" text-anchor="middle" font-size="40" font-weight="900" fill="#fff" font-family="Lato,sans-serif">1</text><text x="425" y="608" text-anchor="end" font-size="38" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="11" paint-order="stroke" stroke-linejoin="round">DOBくん</text></g>
+  <g><rect x="1153" y="673" width="64" height="64" fill="#FC7D78" stroke="#fff" stroke-width="5"/><text x="1185" y="715" text-anchor="middle" font-size="40" font-weight="900" fill="#fff" font-family="Lato,sans-serif">2</text><text x="1227" y="675" text-anchor="start" font-size="38" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="11" paint-order="stroke" stroke-linejoin="round">NONOTAK</text></g>
+  <text x="40" y="1190" font-size="22" fill="#16181C" stroke="#fff" stroke-width="6" paint-order="stroke">※位置はイメージ</text>
+</svg><div class="ph" style="flex:1;min-height:20mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">エリア鳥瞰図（清流公園の再整備後イメージ）</span></div></div>
     <div style="display:flex;flex-direction:column;gap:3mm;min-height:0">
-      <div class="grid" style="grid-template-columns:1fr;grid-auto-rows:1fr;gap:1.5mm;flex:1">
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag ">A</span> <b>貴賓館前ステージ</b><span class="note">　天神中央公園</span><div class="small">明治の洋館とライトアップを背にした、北のメインステージ。DJ・ジャズ・サーカスの日替わりプログラム</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">貴賓館前ステージ</span></div></div>
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag ">B</span> <b>春吉橋ミニステージ</b><span class="note">　清流公園 橋上広場</span><div class="small">DJ・アコースティック。橋の上から川とライトアップを見渡せる、南のステージ</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">春吉橋ミニステージ</span></div></div>
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag g">C</span> <b>水上ステージ</b><span class="note">　南端広場前・三連休</span><div class="small">南端広場の前に台船を係留した、川に浮かぶステージ。三連休に開き、最終日はメインアクトの舞台に</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">水上ステージ</span></div></div>
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag g">D</span> <b>屋形船ジャズ</b><span class="note">　福博であい橋周辺</span><div class="small">屋形船の上でジャズを生演奏。乗船は有料・予約制で、岸辺にも音が流れる</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">屋形船ジャズ</span></div></div>
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag c">1・2</span> <b>常設アート</b><span class="note">　貴賓館前／橋上広場</span><div class="small">DOBくん（貴賓館前）とNONOTAK（橋上広場）を、川沿いを巡る北と南の起点に置く</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">常設アート</span></div></div>
-        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm;display:grid;grid-template-columns:1fr 34mm;gap:4mm;min-height:0"><div><span class="tag o">E</span> <b>マルシェ</b><span class="note">　北側プロムナード</span><div class="small">北側プロムナードに食・酒・クラフトの夜市。GohGan の特別ブースと屋台連携</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">マルシェ</span></div></div>
+      <div class="grid" style="grid-template-columns:1fr;grid-auto-rows:1fr;gap:1mm;flex:1">
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag ">A</span> <b>貴賓館前ステージ</b><span class="note">　天神中央公園</span><div class="small">明治の洋館とライトアップを背にした、北のメインステージ。DJ・ジャズ・サーカスの日替わりプログラム</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">貴賓館前ステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag ">B</span> <b>春吉橋ミニステージ</b><span class="note">　清流公園 橋上広場</span><div class="small">DJ・アコースティック。橋の上から川とライトアップを見渡せる、南のステージ</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">春吉橋ミニステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag g">C</span> <b>水上ステージ</b><span class="note">　南端広場前・三連休</span><div class="small">南端広場の前に台船を係留した、川に浮かぶステージ。三連休に開き、最終日はメインアクトの舞台に</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">水上ステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag g">D</span> <b>屋形船ジャズ</b><span class="note">　福博であい橋周辺</span><div class="small">屋形船の上でジャズを生演奏。乗船は有料・予約制で、岸辺にも音が流れる</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">屋形船ジャズ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag c">1・2</span> <b>常設アート</b><span class="note">　貴賓館前／橋上広場</span><div class="small">DOBくん（貴賓館前）とNONOTAK（橋上広場）を、川沿いを巡る北と南の起点に置く</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">常設アート</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag o">E</span> <b>マルシェ</b><span class="note">　北側プロムナード</span><div class="small">北側プロムナードに食・酒・クラフトの夜市。GohGan の特別ブースと屋台連携</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">マルシェ</span></div></div>
       </div>
     </div>
   </div>
