@@ -279,6 +279,8 @@ ul.dot li::before{background:#8A8F95!important}
 .cover .jp,.cover .theme .jp,.cover .kicker{color:var(--sub)!important}
 .lead{color:var(--sub)}
 .catch{font-size:18pt!important;letter-spacing:.06em!important}
+.ph .phl:empty{display:none}
+section .lbl+.tt-table td,.tt-table td{padding:.9mm 1.2mm}
 </style>
 </head>
 <body>
@@ -301,7 +303,7 @@ ul.dot li::before{background:#8A8F95!important}
   <div class="hd">目次</div>
   <div class="catch" style="margin-top:8mm">CONTENTS</div>
   <div class="toc">
-    <div class="row"><div class="no">1</div><div class="tt">実施内容<small>コンセプト・KV／会場配置／出演者ラインナップ／回遊の仕組み／今後の展開</small></div><div class="pt">配点 60</div><div class="pg">1–5</div></div>
+    <div class="row"><div class="no">1</div><div class="tt">実施内容<small>コンセプト・KV／会場とプログラム／ヘッドライナー／回遊とアート／今後の展開</small></div><div class="pt">配点 60</div><div class="pg">1–5</div></div>
     <div class="row"><div class="no">2</div><div class="tt">広報・プロモーション<small>SNSを軸にした国内外来街者への情報拡散</small></div><div class="pt">配点 10</div><div class="pg">6</div></div>
     <div class="row"><div class="no">3</div><div class="tt">運営体制<small>実施体制・安全管理・関係者調整</small></div><div class="pt">配点 10</div><div class="pg">7</div></div>
     <div class="row"><div class="no">4</div><div class="tt">運営スケジュール<small>契約から報告書提出までの全体工程</small></div><div class="pt">配点 5</div><div class="pg">8</div></div>
@@ -344,11 +346,11 @@ ul.dot li::before{background:#8A8F95!important}
 
 <!-- ============ 1-2 全体計画 ============ -->
 <section class="page">
-  <div class="hd"><span class="sec">1 実施内容</span>｜1-2 会場配置・夜間景観と水辺のコンテンツ</div>
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-2 会場配置・9日間のプログラム</div>
   <div class="pno">2</div>
-  <div class="catch" style="margin-bottom:3mm">岸辺・橋の上・<em>川面の上</em>に、6つの「夜の目的地」を配置する</div>
-  <div class="grid grow" style="grid-template-columns:100mm 1fr;gap:4mm">
-    <div class="card" style="padding:2mm;display:flex"><svg viewBox="0 0 230 250" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+  <div class="catch">岸辺・橋の上・川面の上に、6つの「夜の目的地」を置く</div>
+  <div class="grid grow" style="grid-template-columns:78mm 1fr;gap:6mm">
+    <div style="display:flex;min-height:0"><svg viewBox="0 0 230 250" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
         <!-- land -->
         <rect width="230" height="250" fill="#F5F6F7"/>
         <text x="22" y="40" font-size="9" fill="#A2A3A2" font-weight="700" letter-spacing="2">天神</text>
@@ -388,60 +390,82 @@ ul.dot li::before{background:#8A8F95!important}
         <text x="8" y="244" font-size="5.5" fill="#A2A3A2">※位置関係のイメージ図（縮尺不定）。北が上。</text>
         <g transform="translate(212 14)"><path d="M0 -8 L4 4 L0 1 L-4 4Z" fill="#2A2C28"/><text x="0" y="13" font-size="6" text-anchor="middle" font-family="Lato, sans-serif">N</text></g>
       </svg></div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:2.5mm">
-      <div class="soft" style="padding:2mm 3mm"><span class="tag ">A</span> <b>貴賓館前ステージ</b><div class="note">天神中央公園 旧県公会堂貴賓館前広場</div><div class="small" style="margin-top:.5mm">洋館とライトアップを背景にした<b class='t'>北のメインステージ</b></div></div>
-      <div class="soft" style="padding:2mm 3mm"><span class="tag ">B</span> <b>春吉橋ミニステージ</b><div class="note">清流公園 橋上広場</div><div class="small" style="margin-top:.5mm">DJ・アコースティック。橋の上が<b class='t'>夜景を見渡す場所</b>に</div></div>
-      <div class="soft" style="padding:2mm 3mm"><span class="tag g">C</span> <b>水上ステージ</b><div class="note">清流公園 南端広場前（土日）</div><div class="small" style="margin-top:.5mm">台船を係留した<b class='t'>川に浮かぶステージ</b></div></div>
-      <div class="soft" style="padding:2mm 3mm"><span class="tag g">D</span> <b>屋形船ジャズクルーズ</b><div class="note">福博であい橋周辺</div><div class="small" style="margin-top:.5mm">船上の生演奏。<b class='t'>有料・予約制</b>で消費につなげる</div></div>
-      <div class="soft" style="padding:2mm 3mm"><span class="tag c">1・2</span> <b>常設アート</b><div class="note">貴賓館前／橋上広場</div><div class="small" style="margin-top:.5mm">DOBくん・NONOTAKを<b class='t'>北と南の起点</b>に</div></div>
-      <div class="soft" style="padding:2mm 3mm"><span class="tag o">E</span> <b>リバーサイド・マルシェ</b><div class="note">北側プロムナード・貴賓館前</div><div class="small" style="margin-top:.5mm">福岡の食・酒・クラフトの夜市。屋台と連携</div></div>
+    <div style="display:flex;flex-direction:column;gap:3mm;min-height:0">
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:2.2mm 6mm">
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag ">A</span> <b>貴賓館前ステージ</b><span class="note">　天神中央公園</span><div class="small">洋館とライトアップを背にした北のメインステージ</div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag ">B</span> <b>春吉橋ミニステージ</b><span class="note">　清流公園 橋上広場</span><div class="small">DJ・アコースティック。橋の上が夜景の見どころに</div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag g">C</span> <b>水上ステージ</b><span class="note">　南端広場前・土日</span><div class="small">台船を係留した、川に浮かぶステージ</div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag g">D</span> <b>屋形船ジャズ</b><span class="note">　福博であい橋周辺</span><div class="small">船上の生演奏。有料・予約制</div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag c">1・2</span> <b>常設アート</b><span class="note">　貴賓館前／橋上広場</span><div class="small">DOBくんとNONOTAKを北と南の起点に</div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1.4mm"><span class="tag o">E</span> <b>マルシェ</b><span class="note">　北側プロムナード</span><div class="small">福岡の食・酒・クラフト。屋台と連携</div></div>
+      </div>
+      <div style="margin-top:auto">
+        <div class="lbl">9日間のプログラム（案）</div>
+        <table class="tt-table" style="font-size:7.5pt;table-layout:fixed"><tr><th style="width:11%"></th><th>3/13<span style="font-weight:400">（土）</span></th><th>3/14<span style="font-weight:400">（日）</span></th><th>3/15<span style="font-weight:400">（月）</span></th><th>3/16<span style="font-weight:400">（火）</span></th><th>3/17<span style="font-weight:400">（水）</span></th><th>3/18<span style="font-weight:400">（木）</span></th><th>3/19<span style="font-weight:400">（金）</span></th><th>3/20<span style="font-weight:400">（土）</span></th><th>3/21<span style="font-weight:400">（日）</span></th></tr><tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal);">OPENING<br>DJ</div></td><td><div class="cell" style="background:var(--teal);">アイドル<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">サーカス<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">サーカス<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">アイドル<br>DAY</div></td><td><div class="cell" style="background:var(--teal);background:var(--coral);">FINAL<br>メインアクト</div></td></tr><tr><td class="h">B 春吉橋</td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">Rin音</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">弾き語り</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">弾き語り</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">藤原さくら</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td></tr><tr><td class="h">C 水上</td><td><div class="cell" style="background:var(--green);">博多芸妓</div></td><td><div class="cell" style="background:var(--green);">DRUM TAO</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="cell" style="background:var(--green);">DRUM TAO</div></td><td><div class="cell" style="background:var(--green);">ダンス</div></td></tr><tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td></tr></table>
+      </div>
     </div>
   </div>
-  <div class="grid" style="grid-template-columns:1.3fr 1fr;gap:4mm">
-    <div class="band" style="font-size:11pt">北（A・①）と南（B・②・C）の<em>両端に核</em>を置き、その間の川沿いを歩かせる</div>
-    <div class="soft" style="padding:2.2mm 3.5mm;background:rgba(255,255,255,.06)"><b style="color:#B4691A">景観への配慮</b><span class="small">　照明はライトアップ箇所と河川面に当てない</span></div>
-  </div>
+  <div class="band">北（A・①）と南（B・②・C）の両端に核を置き、その間の川沿いを歩かせる。照明はライトアップ箇所と河川面に当てない</div>
   <div class="ft"><span></span><span></span></div>
 </section>
 
 <!-- ============ 1-3 夜間景観・水辺コンテンツ ============ -->
 <section class="page">
-  <div class="hd"><span class="sec">1 実施内容</span>｜1-3 ステージ・出演者ラインナップ</div>
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-3 ヘッドライナー・ステージ別ラインナップ</div>
   <div class="pno">3</div>
-  <div class="catch" style="margin-bottom:2.5mm">4つのステージに、<em>福岡ゆかりの出演者</em>を中心に組む</div>
-  <div class="grid grow" style="grid-template-columns:repeat(4,1fr);gap:3mm">
-    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column;gap:1.5mm">
-      <div class="ph" style="height:28mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Aステージ<br>イメージパース</span></div>
-      <div><span class="tag ">A</span> <b style="font-size:12.5pt">貴賓館前ステージ</b><div class="note">17:30–21:30</div></div>
-      <ul class="dot" style="font-size:11pt;line-height:1.5"><li><b class='t'>メインアクト：椎名林檎</b>（最終日・整理券制）</li><li>HKT48／LinQ／ばってん少女隊</li><li>ながめくらしつ／ちゃんへん.</li><li>DJ 沖野修也／Licaxxx</li></ul></div>
-    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column;gap:1.5mm">
-      <div class="ph" style="height:28mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Bステージ<br>イメージパース</span></div>
-      <div><span class="tag ">B</span> <b style="font-size:12.5pt">春吉橋ミニステージ</b><div class="note">17:30–22:00</div></div>
-      <ul class="dot" style="font-size:11pt;line-height:1.5"><li><b class='t'>藤原さくら</b>（福岡市出身）</li><li><b class='t'>Rin音</b>（福岡市出身）</li><li>福岡のクラブシーンのDJ</li><li>アコースティックライブ</li></ul></div>
-    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column;gap:1.5mm">
-      <div class="ph" style="height:28mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Cステージ（台船）<br>イメージパース</span></div>
-      <div><span class="tag g">C</span> <b style="font-size:12.5pt">水上ステージ</b><div class="note">土日 19:00–21:00</div></div>
-      <ul class="dot" style="font-size:11pt;line-height:1.5"><li><b class='t'>DRUM TAO</b>（和太鼓）</li><li><b class='t'>博多芸妓</b>（博多の伝統芸能）</li><li>水上ダンス・パフォーマンス</li><li>川面に浮かぶ演出で写真映え</li></ul></div>
-    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column;gap:1.5mm">
-      <div class="ph" style="height:28mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">D 屋形船ジャズ<br>イメージパース</span></div>
-      <div><span class="tag g">D</span> <b style="font-size:12.5pt">屋形船ジャズ</b><div class="note">毎夜 18:00／19:30／21:00</div></div>
-      <ul class="dot" style="font-size:11pt;line-height:1.5"><li><b class='t'>中洲ジャズ</b>と連携したキャスティング</li><li>TOKU／小沼ようすけ</li><li>九州のジャズミュージシャン</li><li>1便20名程度・有料予約制</li></ul></div>
+  <div class="catch">福岡ゆかりのアーティストと、世界のパフォーマンスを那珂川へ</div>
+  <div class="lbl">HEADLINERS<span class="note" style="font-weight:400;margin-left:2mm">出演候補（未交渉）</span></div>
+  <div class="grid" style="grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;gap:4mm;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:1.2mm">
+      <div class="ph" style="height:56mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">椎名林檎 アーティスト写真</span></div>
+      <div><b style="font-size:13pt">椎名林檎</b></div>
+      <div class="note">A 貴賓館前｜3/21 FINAL</div><div class="small">福岡で育ったシンガーソングライター。最終日のメインアクト（整理券制）</div></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm">
+      <div class="ph" style="height:40mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">シルク・ドゥ・ソレイユ アーティスト写真</span></div>
+      <div><b style="font-size:11pt">シルク・ドゥ・ソレイユ</b></div>
+      <div class="note">A 貴賓館前｜サーカスDAY</div><div class="small">カナダ・モントリオール発のサーカス・エンターテインメント</div></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm">
+      <div class="ph" style="height:40mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">HKT48 アーティスト写真</span></div>
+      <div><b style="font-size:11pt">HKT48</b></div>
+      <div class="note">A 貴賓館前｜アイドルDAY</div><div class="small">博多を拠点に活動するアイドルグループ</div></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm">
+      <div class="ph" style="height:40mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">藤原さくら アーティスト写真</span></div>
+      <div><b style="font-size:11pt">藤原さくら</b></div>
+      <div class="note">B 春吉橋｜3/20</div><div class="small">福岡市出身のシンガーソングライター</div></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm">
+      <div class="ph" style="height:40mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">DRUM TAO アーティスト写真</span></div>
+      <div><b style="font-size:11pt">DRUM TAO</b></div>
+      <div class="note">C 水上｜土日</div><div class="small">大分を拠点に世界で公演する和太鼓エンターテインメント</div></div>
   </div>
-  <div class="card" style="padding:2mm 2.5mm;margin-top:3mm">
-    <table class="tt-table" style="font-size:9pt;table-layout:fixed"><tr><th style="width:11%"></th><th>3/13<span style="font-weight:400">（土）</span></th><th>3/14<span style="font-weight:400">（日）</span></th><th>3/15<span style="font-weight:400">（月）</span></th><th>3/16<span style="font-weight:400">（火）</span></th><th>3/17<span style="font-weight:400">（水）</span></th><th>3/18<span style="font-weight:400">（木）</span></th><th>3/19<span style="font-weight:400">（金）</span></th><th>3/20<span style="font-weight:400">（土）</span></th><th>3/21<span style="font-weight:400">（日）</span></th></tr><tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal);">OPENING<br>DJ</div></td><td><div class="cell" style="background:var(--teal);">アイドル<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">サーカス<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal);">サーカス<br>DAY</div></td><td><div class="cell" style="background:var(--teal);">アイドル<br>DAY</div></td><td><div class="cell" style="background:var(--teal);background:var(--coral);">FINAL<br>メインアクト</div></td></tr><tr><td class="h">B 春吉橋</td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">Rin音</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">アコース<br>ティック</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">アコース<br>ティック</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">藤原さくら</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524;">DJ</div></td></tr><tr><td class="h">C 水上</td><td><div class="cell" style="background:var(--green);">博多芸妓</div></td><td><div class="cell" style="background:var(--green);">DRUM TAO</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="cell" style="background:var(--green);">DRUM TAO</div></td><td><div class="cell" style="background:var(--green);">ダンス</div></td></tr><tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C;">JAZZ</div></td></tr></table>
+  <div class="grid grow" style="grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:4mm;margin-bottom:0">
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:22mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Aステージ イメージパース</span></div>
+      <div><span class="tag ">A</span> <b>貴賓館前ステージ</b> <span class="note">17:30–21:30</span></div>
+      <ul class="dot small"><li>椎名林檎（最終日）</li><li>シルク・ドゥ・ソレイユ</li><li>HKT48／LinQ／ばってん少女隊</li><li>DJ 沖野修也／Licaxxx</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:22mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Bステージ イメージパース</span></div>
+      <div><span class="tag ">B</span> <b>春吉橋ミニステージ</b> <span class="note">17:30–22:00</span></div>
+      <ul class="dot small"><li>藤原さくら／Rin音（福岡市出身）</li><li>福岡のクラブシーンのDJ</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:22mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Cステージ（台船） イメージパース</span></div>
+      <div><span class="tag g">C</span> <b>水上ステージ</b> <span class="note">土日 19:00–21:00</span></div>
+      <ul class="dot small"><li>DRUM TAO</li><li>博多芸妓（博多の伝統芸能）</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:22mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">屋形船ジャズ イメージパース</span></div>
+      <div><span class="tag g">D</span> <b>屋形船ジャズ</b> <span class="note">毎夜3便</span></div>
+      <ul class="dot small"><li>中洲ジャズと連携したキャスティング</li><li>TOKU／小沼ようすけ</li></ul></div>
   </div>
-  <div class="note" style="margin-top:1mm">※出演者はすべて候補（未交渉）。交渉状況により変更する場合がある</div>
   <div class="ft"><span></span><span></span></div>
 </section>
 
 <!-- ============ 1-4 回遊の仕組み・フォトスポット ============ -->
 <section class="page">
-  <div class="hd"><span class="sec">1 実施内容</span>｜1-4 回遊促進の仕組み・フォトスポット</div>
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-4 回遊促進の仕組み・アート／フォトスポット</div>
   <div class="pno">4</div>
-  <div class="catch" style="margin-bottom:3mm">「時間」「ごほうび」「撮りたい場所」の<em>3つの仕掛け</em>で、来街者を歩かせる</div>
-  <div class="grid grow" style="grid-template-columns:1.15fr 1fr;gap:4mm">
+  <div class="catch">時間差のステージと、世界的なアートで、川沿いを歩かせる</div>
+  <div class="grid" style="grid-template-columns:1.25fr 1fr;gap:6mm">
     <div class="card">
-      <div class="lbl">仕掛け① リレー型タイムテーブル<span class="small" style="font-weight:400">（例）</span></div>
+      <div class="lbl">リレー型タイムテーブル（例）</div>
       <table class="tt-table" style="font-size:9.5pt">
         <tr><th style="width:24%"></th><th>18:00</th><th>18:45</th><th>19:30</th><th>20:15</th><th>21:00</th></tr>
         <tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal)">DJ</div></td><td></td><td><div class="cell" style="background:var(--teal)">LIVE</div></td><td></td><td><div class="cell" style="background:var(--teal-d)">MAIN</div></td></tr>
@@ -449,22 +473,38 @@ ul.dot li::before{background:#8A8F95!important}
         <tr><td class="h">C 水上（土日）</td><td></td><td></td><td><div class="cell" style="background:var(--green)">SHOW</div></td><td></td><td></td></tr>
         <tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#5AAE8C">便1</div></td><td></td><td><div class="cell" style="background:#5AAE8C">便2</div></td><td></td><td><div class="cell" style="background:#5AAE8C">便3</div></td></tr>
       </table>
-      <div class="small" style="margin-top:2mm">南北の演目を約45分ずらし、<b class="t">川沿いの往復</b>を生む</div>
+      <div class="note" style="margin-top:1.2mm">南北の演目を約45分ずらし、「次はあっち」で川沿いの往復を生む</div>
     </div>
-    <div class="card imgcard" style="grid-template-columns:32mm 1fr">
-      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">スタンプラリー<br>画面イメージ<br>（スマホ）</span></div>
-      <div><div class="lbl">仕掛け② デジタルスタンプラリー</div>
-        <div class="small" style="margin-bottom:1mm">QRで参加。5言語・インストール不要</div>
-        <ul class="dot"><li>3か所で<b class="t">店舗クーポン</b></li><li>全制覇で限定ノベルティ・屋形船の抽選</li></ul></div>
+    <div class="card" style="display:grid;grid-template-columns:26mm 1fr;gap:3mm">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">スタンプラリー 画面イメージ</span></div>
+      <div><div class="lbl">デジタルスタンプラリー</div>
+        <div class="small">QRで参加。5言語対応・インストール不要</div>
+        <ul class="dot small" style="margin-top:1mm"><li>3か所で周辺店舗のクーポン</li><li>全制覇で限定ノベルティ・屋形船の抽選</li></ul></div>
     </div>
   </div>
-  <div class="card grow" style="border-color:var(--coral);display:flex;flex-direction:column">
-    <div class="lbl" style="margin-bottom:1.5mm">仕掛け③ 常設アート ＝ フォトスポット（2か所）</div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;gap:5mm;flex:1">
-      <div class="imgcard" style="grid-template-columns:48% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">DOBくん<br>作品画像</span></div><div><b>① DOBくん</b><div class="small">貴賓館前広場（天神側の入口）</div><div style="margin-top:1mm">川沿いを巡る<b class="t">北の起点</b></div></div></div>
-      <div class="imgcard" style="grid-template-columns:48% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">NONOTAK<br>作品画像</span></div><div><b>② NONOTAK</b><div class="small">清流公園 橋上広場</div><div style="margin-top:1mm"><b class="t">南の起点</b>。光は内向きに設計</div></div></div>
+  <div class="card grow" style="margin-top:4mm;display:flex;flex-direction:column">
+    <div class="lbl">常設アート＝フォトスポット（2か所・イベント後も常設）</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:6mm;flex:1;min-height:0">
+      <div class="grid" style="grid-template-columns:46mm 1fr;gap:4mm;min-height:0">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">DOBくん 作品画像</span></div>
+      <div style="display:flex;flex-direction:column;gap:1.2mm;min-height:0">
+        <div class="note">01｜貴賓館前広場（天神側の入口）</div>
+        <div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:15pt;letter-spacing:.06em;line-height:1.2">DOBくん</div>
+        <div style="display:flex;gap:2.5mm;align-items:center"><div class="ph" style="height:13mm;width:13mm;min-height:0;padding:0!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">作家</span></div><b style="font-size:9.5pt">村上隆（むらかみ・たかし）</b></div>
+        <div class="note" style="line-height:1.6;color:var(--sub)">1962年東京都生まれ。現代美術家。日本の美術とサブカルチャーをつなぐ「スーパーフラット」を提唱し、世界各地の美術館で展覧会を開く。DOBくんは1993年に生まれた、村上作品を代表するキャラクター</div>
+        <div class="small" style="margin-top:auto;border-top:.25mm solid var(--line);padding-top:1.2mm">天神から川へ向かう入口に置く<b>北の起点</b></div>
+      </div></div>
+      <div class="grid" style="grid-template-columns:46mm 1fr;gap:4mm;min-height:0">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">NONOTAK 作品画像</span></div>
+      <div style="display:flex;flex-direction:column;gap:1.2mm;min-height:0">
+        <div class="note">02｜清流公園 橋上広場</div>
+        <div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:15pt;letter-spacing:.06em;line-height:1.2">NONOTAK</div>
+        <div style="display:flex;gap:2.5mm;align-items:center"><div class="ph" style="height:13mm;width:13mm;min-height:0;padding:0!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">作家</span></div><b style="font-size:9.5pt">NONOTAK Studio（ノノタック）</b></div>
+        <div class="note" style="line-height:1.6;color:var(--sub)">パリを拠点に活動するアートユニット。イラストレーターのノエミ・シュパーと、建築家でミュージシャンのタカミ・ナカモトによる。光と音で没入型の空間をつくるインスタレーションを世界各地で発表</div>
+        <div class="small" style="margin-top:auto;border-top:.25mm solid var(--line);padding-top:1.2mm">春吉橋側の<b>南の起点</b>。光は内向きに設計し、ライトアップと河川面に干渉させない</div>
+      </div></div>
     </div>
-    <div class="note" style="margin-top:1.5mm">2作品とも<b>イベント後も常設</b>。設置・維持管理は公園管理者と協議</div>
+    <div class="note" style="margin-top:1.5mm">※設置・維持管理は公園管理者と協議。作家プロフィールは最終確認のうえ記載</div>
   </div>
   <div class="ft"><span></span><span></span></div>
 </section>
