@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><title>ヘッドライナー出演概要</title>
+<link href="fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --teal:#3B95A9; --teal-d:#2C7486; --teal-l:#D7EAEE; --teal-m:#9CCED7; --teal-xl:#EEF6F8;
+  --coral:#F2716B; --orange:#EE9A2E; --green:#4FA88A; --navy:#14263A;
+  --ink:#2A2C28; --sub:#5E5E5C; --mute:#A2A3A2; --line:#D8DCDD; --card:#F6F8F9;
+}
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#888}
+body{font-family:"Zen Kaku Gothic New","IPAPGothic",sans-serif;color:var(--ink);font-size:12pt;line-height:1.55;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-feature-settings:"palt"}
+.num,.en{font-family:"Lato","Zen Kaku Gothic New",sans-serif}
+.page{width:297mm;height:210mm;background:#fff;position:relative;overflow:hidden;margin:0 auto 8mm;display:flex;flex-direction:column;
+  padding:13mm 15mm 12mm;page-break-after:always;break-after:page}
+@media print{html,body{background:#fff}.page{margin:0}}
+
+/* header / footer */
+.hd{display:flex;align-items:center;gap:3mm;font-size:11pt;font-weight:700;letter-spacing:.06em;color:var(--ink)}
+.hd::before{content:"";width:1.2mm;height:5mm;background:var(--ink)}
+.hd .sec{color:var(--teal)}
+.pno{position:absolute;top:13mm;right:15mm;font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-size:11pt;color:var(--sub)}
+.ft{display:none;font-size:11pt;color:var(--mute);letter-spacing:.05em}
+.catch{text-align:center;font-size:18pt;font-weight:700;letter-spacing:.08em;line-height:1.45;margin:4mm 0 1mm}
+.catch em{font-style:normal;color:var(--teal)}
+.lead{text-align:center;font-size:11pt;color:var(--sub);margin-bottom:4mm;letter-spacing:.03em}
+.lbl{display:flex;align-items:center;gap:2mm;font-weight:700;font-size:12.5pt;margin-bottom:1.5mm}
+.lbl::before{content:"";width:1.4mm;height:4.6mm;background:var(--teal);border-radius:.4mm}
+.pill{display:inline-block;background:var(--teal);color:#fff;font-weight:700;font-size:11pt;padding:.6mm 3.5mm;border-radius:10mm;letter-spacing:.05em}
+.card{background:#fff;border:.35mm solid var(--line);border-radius:2.5mm;padding:3mm 3.5mm;box-shadow:0 .6mm 1.6mm rgba(20,40,50,.06)}
+.soft{background:var(--card);border-radius:2.5mm;padding:3mm 3.5mm}
+.band{background:var(--teal-l);border-radius:2.5mm;padding:2.6mm 5mm;text-align:center;font-weight:700;font-size:11.5pt;letter-spacing:.04em}
+.band em{font-style:normal;color:var(--teal-d)}
+.tag{display:inline-block;font-size:11pt;font-weight:700;padding:0 1.8mm;line-height:1.35;border-radius:1mm;color:#fff;background:var(--teal);vertical-align:middle;letter-spacing:.04em}
+.tag.c{background:var(--coral)}.tag.o{background:var(--orange)}.tag.g{background:var(--green)}.tag.n{background:var(--navy)}
+.tbd{display:inline-block;font-size:11pt;font-weight:700;color:var(--coral);border:.3mm solid var(--coral);border-radius:1mm;padding:0 1.4mm;margin-left:1.5mm;vertical-align:middle}
+.small{font-size:11.5pt;color:var(--sub)}
+.note{font-size:11pt;color:var(--sub)}
+ul.dot{list-style:none}
+ul.dot li{position:relative;padding-left:4mm}
+ul.dot li::before{content:"";position:absolute;left:.6mm;top:2.3mm;width:1.6mm;height:1.6mm;border-radius:50%;background:var(--teal)}
+.grid{display:grid;gap:4mm}
+.grow{flex:1 1 auto;min-height:0;margin-bottom:4mm}
+.grow:last-of-type{margin-bottom:0}
+b.t{color:var(--teal-d)}
+h3{font-size:13pt;font-weight:700;letter-spacing:.04em}
+
+/* cover */
+.cover{background:linear-gradient(120deg,#0E1C2C 0%,#16334A 45%,#1F5E70 80%,#3B95A9 100%);color:#fff;padding:0}
+.cover .river{position:absolute;inset:0}
+.cover .inner{position:absolute;left:20mm;top:42mm;right:20mm}
+.cover .kicker{font-size:11pt;letter-spacing:.3em;color:var(--teal-m);font-weight:700}
+.cover h1{font-size:25pt;font-weight:900;letter-spacing:.08em;line-height:1.5;margin-top:5mm}
+.cover .sub{margin-top:5mm;font-size:13pt;letter-spacing:.12em;font-weight:500}
+.cover .meta{position:absolute;left:20mm;bottom:22mm;font-size:11pt;line-height:1.9;letter-spacing:.06em}
+.cover .meta .who{border-top:.3mm solid rgba(255,255,255,.45);padding-top:2mm;margin-top:2mm;font-size:11pt;color:var(--sub)}
+.cover .theme{position:absolute;right:20mm;bottom:22mm;text-align:right}
+.cover .theme .en{font-size:30pt;font-weight:900;letter-spacing:.06em;line-height:1.05}
+.cover .theme .jp{font-size:12pt;letter-spacing:.2em;margin-top:2mm;color:var(--teal-m)}
+
+/* toc */
+.toc{margin:10mm auto 0;width:200mm}
+.toc .row{display:grid;grid-template-columns:22mm 1fr 30mm 18mm;align-items:baseline;border-bottom:.3mm solid var(--line);padding:3.2mm 0}
+.toc .no{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:20pt;color:var(--teal)}
+.toc .tt{font-size:13pt;font-weight:700;letter-spacing:.05em}
+.toc .tt small{display:block;font-size:11pt;font-weight:400;color:var(--sub);letter-spacing:.02em}
+.toc .pt{font-size:11pt;color:var(--sub);text-align:right}
+.toc .pg{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-size:11pt;text-align:right}
+
+/* timeline table */
+.tt-table{width:100%;border-collapse:collapse;font-size:8.5pt}
+.tt-table th,.tt-table td{border:.25mm solid #fff;padding:1.2mm 1.4mm;text-align:center}
+.tt-table th{background:var(--teal);color:#fff;font-weight:700}
+.tt-table td.h{background:var(--card);font-weight:700;text-align:left;white-space:nowrap}
+.cell{border-radius:1mm;color:#fff;font-weight:700;padding:.8mm 0}
+
+/* gantt */
+.gantt{width:100%;border-collapse:collapse;font-size:11pt;table-layout:fixed}
+.gantt th{font-weight:700;background:var(--teal);color:#fff;padding:1.4mm 0;border-left:.3mm solid #fff}
+.gantt th.sub{background:var(--teal-l);color:var(--teal-d);font-size:9pt;padding:.6mm 0}
+.gantt td{border-left:.3mm dashed #E3E7E8;border-bottom:.3mm solid #EEF1F2;height:12.4mm;padding:0;position:relative}
+.gantt td.item{font-weight:700;padding-left:2mm;border-left:none;font-size:11pt;white-space:nowrap}
+.bar{position:absolute;top:2.4mm;bottom:2.4mm;border-radius:4mm;color:#fff;font-size:9pt;font-weight:700;display:flex;align-items:center;padding-left:2mm;white-space:nowrap;z-index:1}
+.ms{position:absolute;top:3.6mm;width:4.6mm;height:4.6mm;transform:rotate(45deg);background:var(--coral);z-index:2}
+
+/* estimate */
+.est{width:100%;border-collapse:collapse;font-size:11pt}
+.est th{background:var(--teal);color:#fff;padding:1.6mm 2.5mm;text-align:left;font-weight:700}
+.est td{padding:1.35mm 2.5mm;border-bottom:.3mm solid var(--line);vertical-align:top}
+.est td.r{text-align:right;font-family:Lato,'Zen Kaku Gothic New',sans-serif;white-space:nowrap}
+.est tr.sum td{background:var(--teal-l);font-weight:700}
+.est tr.total td{background:var(--teal);color:#fff;font-weight:900;font-size:11pt}
+.est .d{font-size:11pt;color:var(--sub)}
+
+.ph{border:.45mm dashed #93B3BB;border-radius:2mm;background:repeating-linear-gradient(135deg,#F4F8F9 0 2.5mm,#ECF3F5 2.5mm 5mm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8mm;color:#5B8591;text-align:center;padding:2mm;min-height:18mm;overflow:hidden}
+.ph svg{width:8mm;height:8mm;flex:none}
+.ph .phl{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:8pt;letter-spacing:.25em;opacity:.7}
+.ph .pht{font-size:10pt;font-weight:700;line-height:1.35}
+.ph.dark{border-color:rgba(255,255,255,.45);background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 2.5mm,rgba(255,255,255,.02) 2.5mm 5mm);color:#CFE6EC}
+.imgcard{display:grid;grid-template-columns:42% 1fr;gap:3mm}
+
+.tl{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.tl>div{padding:2mm 2.2mm 2mm;border-left:.3mm solid var(--line)}
+.tl>div:first-child{border-left:none}
+.tl .m{font-weight:900;font-size:11pt;color:#fff;border-radius:1mm;padding:.4mm 2mm;display:inline-block;margin-bottom:1.2mm}
+.tl ul{list-style:none}
+.tl li{font-size:10.5pt;line-height:1.45;margin-bottom:1mm}
+.tl li b{color:var(--coral);font-family:Lato}
+.mp{width:100%;border-collapse:collapse;font-size:10pt}
+.mp th{background:var(--teal);color:#fff;padding:1.3mm 2mm;text-align:left;font-weight:700}
+.mp td{padding:1.25mm 2mm;border-bottom:.3mm solid var(--line);vertical-align:top}
+.mp td.r{text-align:right;font-family:Lato,'Zen Kaku Gothic New',sans-serif;white-space:nowrap}
+.mp tr.sum td{background:var(--teal-l);font-weight:700}
+
+.stf{width:100%;border-collapse:collapse;font-size:9.5pt}
+.stf th{background:var(--teal);color:#fff;padding:1mm 1.5mm;font-weight:700;text-align:center}
+.stf th:first-child{text-align:left}
+.stf td{padding:.9mm 1.5mm;border-bottom:.3mm solid var(--line);text-align:center}
+.stf td:first-child{text-align:left;font-weight:700}
+.stf tr.sum td{background:var(--teal-l);font-weight:700}
+.lg{display:flex;flex-wrap:wrap;gap:1mm 3mm;font-size:9pt;color:var(--sub);margin-top:1mm}
+.lg i{display:inline-block;width:3mm;height:3mm;border-radius:50%;margin-right:1mm;vertical-align:-.4mm}
+
+
+/* ===== Style A (design guide) on dark gray ===== */
+:root{--ink:#ECEFF1;--sub:#B3BBC1;--mute:#7F888E;--line:#3A4046;--card:#2C3136;
+ --teal:#3B95A9;--teal-d:#2C7486;--teal-l:#243A41;--teal-m:#6FB6C6;--teal-xl:#262B30;
+ --coral:#FC7D78;--orange:#F0A030;--green:#5AAE8C;--navy:#2C7486}
+html,body{background:#111}
+.page,.cover{background:#1F2226!important;color:var(--ink)}
+.card{background:#272B30;border:.3mm solid #383E44;box-shadow:none}
+.soft{background:#2C3136}
+.band{background:var(--teal-l);border:.3mm solid var(--teal);color:var(--ink)}
+.band em,b.t{color:#7CC3D3}
+.catch em{color:#7CC3D3}
+.hd::before{background:var(--teal)}
+.hd .sec{color:#7CC3D3}
+.lbl::before{background:var(--teal)}
+ul.dot li::before{background:var(--teal-m)}
+.tbd{color:var(--coral);border-color:var(--coral)}
+.toc .row{border-color:var(--line)}
+.toc .no{color:#7CC3D3}
+.est td,.mp td,.stf td{border-color:var(--line)}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:var(--teal-l)}
+.tt-table th,.tt-table td{border-color:#1F2226}
+.tt-table td.h{background:#2C3136}
+.gantt td{border-left-color:#30363C;border-bottom-color:#2B3036}
+.gantt th{border-left-color:#1F2226}
+.gantt th.sub{background:var(--teal-l);color:#A9D6E0}
+.ph{border:.4mm dashed #56606A;background:#262A2F;color:#9AA4AC}
+.ph.dark{border-color:#56606A;background:#262A2F}
+.pno{color:var(--sub)}
+.cover .jp,.cover .theme .jp{color:var(--teal-m)}
+/* impression words: mincho */
+.catch,.kvtitle,.cover h1{font-family:"Shippori Mincho","Zen Kaku Gothic New",serif!important;font-weight:800!important;letter-spacing:.06em}
+.catch{font-size:19pt}
+.kvtitle{font-size:24pt;line-height:1.12;margin:2mm 0 1.5mm;color:#fff}
+.mincho{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.1em}
+
+/* ===== night museum theme (ref. flyers) ===== */
+:root{--ink:#F3F5FF;--sub:#BCC3E4;--mute:#8A92BC;--line:rgba(200,210,255,.28);--card:rgba(255,255,255,.06);
+ --teal:#4C6FE0;--teal-d:#3A52B8;--teal-l:#1D2463;--teal-m:#8FB4FF;--teal-xl:#151A4A;
+ --green:#45B8C9;--coral:#E27BB8;--orange:#E3B45E;--navy:#7E6BE8}
+html,body{background:#05071A}
+.page,.cover{background:
+ radial-gradient(ellipse 90% 60% at 50% -10%,rgba(70,78,190,.55) 0,rgba(70,78,190,0) 70%),
+ radial-gradient(ellipse 60% 60% at 105% 105%,rgba(98,64,170,.45) 0,rgba(98,64,170,0) 70%),
+ linear-gradient(180deg,#0B0F33 0%,#11164A 55%,#0A0D2C 100%)!important;color:var(--ink)}
+.page::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20297%20210%22%20preserveAspectRatio%3D%22none%22%3E%3Ccircle%20cx%3D%22142.3%22%20cy%3D%2245.4%22%20r%3D%220.36%22%20fill%3D%22%23fff%22%20opacity%3D%220.53%22/%3E%3Ccircle%20cx%3D%2212.6%22%20cy%3D%22209.5%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%22182.9%22%20cy%3D%227.2%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%2234.4%22%20cy%3D%22199.9%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.34%22/%3E%3Ccircle%20cx%3D%22242.8%22%20cy%3D%2226.2%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%2255.5%22%20cy%3D%227.8%22%20r%3D%220.38%22%20fill%3D%22%23fff%22%20opacity%3D%220.38%22/%3E%3Ccircle%20cx%3D%22231.7%22%20cy%3D%2243.8%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.67%22/%3E%3Ccircle%20cx%3D%2236.4%22%20cy%3D%22100.0%22%20r%3D%220.18%22%20fill%3D%22%23fff%22%20opacity%3D%220.76%22/%3E%3Ccircle%20cx%3D%22134.0%22%20cy%3D%2281.0%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22/%3E%3Ccircle%20cx%3D%2227.7%22%20cy%3D%22150.8%22%20r%3D%220.42%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%22103.4%22%20cy%3D%22194.7%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.58%22/%3E%3Ccircle%20cx%3D%2291.1%22%20cy%3D%2221.7%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.70%22/%3E%3Ccircle%20cx%3D%22200.7%22%20cy%3D%22188.7%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.79%22/%3E%3Ccircle%20cx%3D%22285.5%22%20cy%3D%22124.0%22%20r%3D%220.38%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%22111.5%22%20cy%3D%2251.9%22%20r%3D%220.17%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22/%3E%3Ccircle%20cx%3D%22248.6%22%20cy%3D%2211.0%22%20r%3D%220.20%22%20fill%3D%22%23fff%22%20opacity%3D%220.41%22/%3E%3Ccircle%20cx%3D%22100.4%22%20cy%3D%22188.8%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.51%22/%3E%3Ccircle%20cx%3D%2274.9%22%20cy%3D%22201.4%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.65%22/%3E%3Ccircle%20cx%3D%228.4%22%20cy%3D%2244.5%22%20r%3D%220.37%22%20fill%3D%22%23fff%22%20opacity%3D%220.69%22/%3E%3Ccircle%20cx%3D%22158.7%22%20cy%3D%2258.0%22%20r%3D%220.12%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%22283.3%22%20cy%3D%224.9%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.60%22/%3E%3Ccircle%20cx%3D%22120.5%22%20cy%3D%22201.3%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.32%22/%3E%3Ccircle%20cx%3D%2228.2%22%20cy%3D%2219.7%22%20r%3D%220.13%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%22163.4%22%20cy%3D%229.7%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%22137.8%22%20cy%3D%2213.3%22%20r%3D%220.35%22%20fill%3D%22%23fff%22%20opacity%3D%220.35%22/%3E%3Ccircle%20cx%3D%2293.1%22%20cy%3D%228.8%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%22267.5%22%20cy%3D%2262.0%22%20r%3D%220.27%22%20fill%3D%22%23fff%22%20opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%22281.6%22%20cy%3D%2220.7%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.53%22/%3E%3Ccircle%20cx%3D%22218.2%22%20cy%3D%22203.1%22%20r%3D%220.21%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%22242.0%22%20cy%3D%22205.1%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%22295.0%22%20cy%3D%2222.6%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22/%3E%3Ccircle%20cx%3D%22184.6%22%20cy%3D%224.2%22%20r%3D%220.31%22%20fill%3D%22%23fff%22%20opacity%3D%220.49%22/%3E%3Ccircle%20cx%3D%2267.0%22%20cy%3D%2210.3%22%20r%3D%220.25%22%20fill%3D%22%23fff%22%20opacity%3D%220.39%22/%3E%3Ccircle%20cx%3D%22144.6%22%20cy%3D%22132.7%22%20r%3D%220.15%22%20fill%3D%22%23fff%22%20opacity%3D%220.51%22/%3E%3Ccircle%20cx%3D%22146.1%22%20cy%3D%22150.6%22%20r%3D%220.35%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%22225.3%22%20cy%3D%22140.3%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%2272.9%22%20cy%3D%22192.5%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%22245.0%22%20cy%3D%22202.4%22%20r%3D%220.42%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22/%3E%3Ccircle%20cx%3D%2289.9%22%20cy%3D%22198.1%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%2232.1%22%20cy%3D%22200.8%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.36%22/%3E%3Ccircle%20cx%3D%2277.5%22%20cy%3D%22199.8%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.39%22/%3E%3Ccircle%20cx%3D%22112.6%22%20cy%3D%22197.6%22%20r%3D%220.26%22%20fill%3D%22%23fff%22%20opacity%3D%220.49%22/%3E%3Ccircle%20cx%3D%22285.4%22%20cy%3D%227.2%22%20r%3D%220.36%22%20fill%3D%22%23fff%22%20opacity%3D%220.76%22/%3E%3Ccircle%20cx%3D%22209.3%22%20cy%3D%224.0%22%20r%3D%220.27%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22/%3E%3Ccircle%20cx%3D%222.3%22%20cy%3D%22114.3%22%20r%3D%220.15%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%2240.1%22%20cy%3D%22166.3%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22/%3E%3Ccircle%20cx%3D%2266.9%22%20cy%3D%22168.5%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.74%22/%3E%3Ccircle%20cx%3D%225.2%22%20cy%3D%22122.2%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.74%22/%3E%3Ccircle%20cx%3D%2217.7%22%20cy%3D%22171.2%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%2220.1%22%20cy%3D%22107.5%22%20r%3D%220.32%22%20fill%3D%22%23fff%22%20opacity%3D%220.35%22/%3E%3Ccircle%20cx%3D%2280.1%22%20cy%3D%2212.3%22%20r%3D%220.13%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%2230.9%22%20cy%3D%22195.5%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.47%22/%3E%3Ccircle%20cx%3D%2223.3%22%20cy%3D%22173.7%22%20r%3D%220.18%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22/%3E%3Ccircle%20cx%3D%2248.1%22%20cy%3D%22178.7%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.62%22/%3E%3Ccircle%20cx%3D%2264.5%22%20cy%3D%22163.3%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.75%22/%3E%3Ccircle%20cx%3D%22288.1%22%20cy%3D%2281.9%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.77%22/%3E%3Ccircle%20cx%3D%22235.8%22%20cy%3D%222.4%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%2248.0%22%20cy%3D%22195.5%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%2261.4%22%20cy%3D%22209.6%22%20r%3D%220.29%22%20fill%3D%22%23fff%22%20opacity%3D%220.68%22/%3E%3Ccircle%20cx%3D%2224.6%22%20cy%3D%2285.2%22%20r%3D%220.17%22%20fill%3D%22%23fff%22%20opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%228.0%22%20cy%3D%2288.8%22%20r%3D%220.29%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22/%3E%3Cpath%20d%3D%22M271.2%20203.8Q271.4%20204.5%20272.2%20204.7Q271.4%20204.9%20271.2%20205.7Q271.1%20204.9%20270.3%20204.7Q271.1%20204.5%20271.2%20203.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M73.9%20200.3Q74.2%20201.4%2075.3%20201.7Q74.2%20202.0%2073.9%20203.1Q73.6%20202.0%2072.5%20201.7Q73.6%20201.4%2073.9%20200.3Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M191.8%20198.1Q192.0%20199.0%20192.8%20199.2Q192.0%20199.4%20191.8%20200.2Q191.6%20199.4%20190.7%20199.2Q191.6%20199.0%20191.8%20198.1Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M142.0%203.6Q142.1%204.4%20142.9%204.6Q142.1%204.8%20142.0%205.5Q141.8%204.8%20141.0%204.6Q141.8%204.4%20142.0%203.6Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M241.2%2010.8Q241.5%2011.9%20242.6%2012.2Q241.5%2012.5%20241.2%2013.6Q240.9%2012.5%20239.8%2012.2Q240.9%2011.9%20241.2%2010.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M290.1%207.8Q290.4%209.0%20291.6%209.3Q290.4%209.6%20290.1%2010.7Q289.8%209.6%20288.7%209.3Q289.8%209.0%20290.1%207.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3C/svg%3E") no-repeat center/100% 100%;pointer-events:none}
+.page>*:not(.pno){position:relative}
+.card{background:rgba(8,12,44,.55);border:.3mm solid rgba(200,210,255,.32);border-radius:1mm;box-shadow:none}
+.soft{background:rgba(255,255,255,.06);border-radius:1mm}
+.band{background:transparent;border:none;border-top:.3mm solid rgba(255,255,255,.55);border-bottom:.3mm solid rgba(255,255,255,.55);border-radius:0;color:var(--ink)}
+.band em,b.t{color:#A9D4FF}
+.catch{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.14em;font-size:19pt}
+.catch::after{content:"✦";display:block;font-size:7pt;letter-spacing:0;color:rgba(255,255,255,.75);margin-top:.6mm}
+.catch em{color:#fff;border:none}
+.hd{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.2em}
+.hd::before{background:#fff;width:.4mm}
+.hd .sec{color:#A9D4FF}
+.lbl{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.08em}
+.lbl::before{background:#fff;width:.5mm}
+h3{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.06em}
+ul.dot li::before{background:#A9D4FF}
+.pill,.tag{background:#fff!important;color:#141A4E!important;border-radius:.6mm}
+.tbd{color:#FFD6EC;border-color:#FFD6EC}
+.toc .row{border-color:var(--line)}
+.toc .no,.toc .tt{font-family:"Shippori Mincho",serif;font-weight:700;color:#fff}
+.toc .tt small{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;color:var(--sub)}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:#26307E;color:#fff}
+.est tr.total td{background:#fff;color:#141A4E}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:rgba(255,255,255,.08)}
+.est td,.mp td,.stf td{border-color:rgba(200,210,255,.18)}
+.tt-table th,.tt-table td{border-color:transparent}
+.tt-table td.h{background:rgba(255,255,255,.07)}
+.gantt th.sub{background:#1D2463;color:#C9D6FF}
+.gantt td{border-left-color:rgba(255,255,255,.07);border-bottom-color:rgba(255,255,255,.06)}
+.ph{border:.35mm solid rgba(255,255,255,.4);background:linear-gradient(160deg,rgba(90,110,230,.18),rgba(120,80,200,.14));color:#D6DCFF;border-radius:.8mm}
+.ph.dark{border-color:rgba(255,255,255,.45);background:linear-gradient(160deg,rgba(90,110,230,.18),rgba(120,80,200,.14))}
+.kvtitle{font-family:"Shippori Mincho",serif!important;font-weight:800!important;letter-spacing:.08em;color:#fff}
+.cover h1{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.1em}
+.cover .en{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.12em}
+.cover .jp,.cover .theme .jp{color:#C9D6FF}
+.mincho{letter-spacing:.2em}
+.pno{font-family:"Shippori Mincho",serif;color:var(--sub)}
+.cell{border-radius:.6mm}
+/* ===== editorial layer: less "template", more designed ===== */
+body{font-size:10pt;line-height:1.7}
+.page{padding:13mm 16mm 11mm}
+.hd{font-family:Lato,"Zen Kaku Gothic New",sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.28em;color:var(--sub)}
+.hd::before{display:none}
+.hd .sec{color:var(--sub)}
+.pno{font-family:Lato,sans-serif;font-size:8pt;letter-spacing:.2em;top:13mm;right:16mm}
+.catch{text-align:left!important;font-size:21pt;line-height:1.5;letter-spacing:.1em;margin:3mm 0 5mm}
+.catch::after{content:""!important;display:block;width:14mm;height:.25mm;background:rgba(255,255,255,.7);margin-top:3.5mm}
+.lead{text-align:left;font-size:9.5pt;margin-top:-2mm}
+.card{background:none!important;border:none!important;border-top:.25mm solid rgba(255,255,255,.32)!important;border-radius:0!important;padding:2.6mm 0 0!important;box-shadow:none!important}
+.soft{background:rgba(255,255,255,.045)!important;border-radius:0!important}
+.grid{gap:6mm}
+.lbl{font-size:10pt;margin-bottom:1.6mm}
+.lbl::before{display:none}
+h3{font-size:12pt}
+ul.dot li{padding-left:3.6mm}
+ul.dot li::before{width:2mm;height:.25mm;border-radius:0;top:2.7mm;left:0;background:rgba(255,255,255,.65)!important}
+.small{font-size:9pt}
+.note{font-size:8pt}
+.tag,.pill{background:transparent!important;color:#fff!important;border:.25mm solid rgba(255,255,255,.75);font-size:8pt;font-weight:700;padding:0 1.6mm;border-radius:0!important;letter-spacing:.08em}
+b.t{color:inherit!important;font-weight:700}
+.band{text-align:left;font-size:10pt;font-weight:500;padding:2.4mm 0;border-top:.25mm solid rgba(255,255,255,.4)!important;border-bottom:none!important}
+.band em{color:#fff!important;font-weight:700}
+.tbd{font-size:7.5pt;border-radius:0}
+.ph{border:none!important;background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.035))!important;border-radius:0!important;align-items:flex-start!important;justify-content:flex-end!important;text-align:left!important;padding:2.5mm 3mm!important;gap:.4mm!important}
+.ph svg{display:none}
+.ph .phl{font-size:6.5pt;letter-spacing:.3em;opacity:.6}
+.ph .pht{font-size:8pt!important;font-weight:500;opacity:.8}
+.ph .pht br{display:none}
+.est,.mp,.stf{font-size:9pt}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:rgba(255,255,255,.12)!important;color:#fff;font-weight:700}
+.est tr.total td{background:rgba(255,255,255,.9)!important;color:#141A4E}
+.toc .row{padding:3.6mm 0}
+.toc .tt{font-size:13pt}
+
+/* ===== white editorial (final) ===== */
+:root{--ink:#1E2024;--sub:#5D6168;--mute:#94989E;--line:#D9DCDF;--card:#F4F5F6;
+ --teal:#3B95A9;--teal-d:#2C7486;--teal-l:#E3EFF2;--teal-m:#9CCED7;--teal-xl:#F2F7F8;
+ --green:#5AAE8C;--coral:#FC7D78;--orange:#F0A030;--navy:#2C7486}
+html,body{background:#E8E9EB}
+.page,.cover{background:#fff!important;color:var(--ink)}
+.page::before{display:none!important}
+.hd,.hd .sec,.pno{color:var(--mute)}
+.catch,.catch em,.kvtitle,.cover h1,.cover .en{color:var(--ink)!important}
+.catch::after{background:var(--ink)!important}
+.card{border-top:.25mm solid #BFC3C7!important}
+.soft{background:#F4F5F6!important}
+ul.dot li::before{background:#8A8F95!important}
+.tag,.pill{color:var(--ink)!important;border-color:var(--ink)}
+.tbd{color:var(--coral);border-color:var(--coral)}
+.band{border-top:.25mm solid var(--ink)!important;color:var(--ink)}
+.band em{color:var(--ink)!important}
+.ph{background:#EEF0F2!important;color:#7C8187}
+.ph.dark{background:#EEF0F2!important}
+.toc .row{border-color:var(--line)}
+.toc .no,.toc .tt{color:var(--ink)}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:#EDEFF1!important;color:var(--ink)}
+.est tr.total td{background:var(--ink)!important;color:#fff}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:#F4F5F6}
+.est td,.mp td,.stf td{border-color:var(--line)}
+.tt-table th,.tt-table td{border-color:#fff}
+.tt-table td.h{background:#F4F5F6}
+.gantt th.sub{background:#F4F5F6;color:var(--sub)}
+.gantt td{border-left-color:#ECEEF0;border-bottom-color:#F0F1F2}
+.gantt th{border-left-color:#fff}
+.cover .jp,.cover .theme .jp,.cover .kicker{color:var(--sub)!important}
+.lead{color:var(--sub)}
+.catch{font-size:18pt!important;letter-spacing:.06em!important}
+.ph .phl:empty{display:none}
+section .lbl+.tt-table td,.tt-table td{padding:.9mm 1.2mm}
+.tl li{font-size:8.8pt!important;line-height:1.5}
+.tl .m{font-size:8.5pt!important}
+.mp{font-size:8.3pt!important}
+.mp td{padding:1mm 1.6mm!important}
+
+/* ===== editorial v2: crisp hierarchy ===== */
+:root{--ink:#16181C;--sub:#4A4E55;--mute:#8A8E95;--line:#D3D6DA}
+body{color:var(--ink)}
+.hd{display:block;font-size:7.5pt;letter-spacing:.25em;color:var(--ink)!important;font-weight:700;border-bottom:.6mm solid var(--ink);padding-bottom:2mm;margin-bottom:0}
+.hd .sec{color:var(--ink)!important}
+.pno{top:12.4mm!important;font-size:8pt;font-weight:700;color:var(--ink)!important}
+.catch{font-size:19pt!important;margin:4.5mm 0 4.5mm!important;line-height:1.45;letter-spacing:.05em!important}
+.catch::after{display:none!important}
+.lbl{font-family:"Zen Kaku Gothic New",sans-serif!important;font-weight:700!important;font-size:10.5pt!important;letter-spacing:.04em!important;color:var(--ink);display:flex;align-items:center;gap:1.6mm}
+.lbl::before{content:""!important;display:block!important;width:1.8mm;height:1.8mm;background:var(--ink)!important;box-shadow:none!important;border-radius:0}
+h3{font-family:"Zen Kaku Gothic New",sans-serif!important;font-weight:700!important;font-size:11.5pt!important;letter-spacing:.02em!important;line-height:1.45}
+.small{font-size:8.8pt!important;color:var(--sub)!important;line-height:1.7}
+.note{font-size:7.6pt!important;color:var(--mute)!important}
+ul.dot li::before{background:var(--ink)!important;width:1.6mm}
+.card{border-top:.3mm solid var(--ink)!important}
+.soft{background:#F1F2F4!important}
+.tag,.pill{background:var(--ink)!important;color:#fff!important;border:none!important;font-size:7.5pt!important;padding:.25mm 1.5mm!important;letter-spacing:.06em}
+.tag.g,.tag.c,.tag.o,.tag.n{background:var(--ink)!important}
+.tbd{color:var(--coral)!important;border-color:var(--coral)!important}
+.band{border-top:.6mm solid var(--ink)!important;font-weight:700!important;font-size:9.8pt!important;padding-top:2.4mm!important}
+.ph{background:#E9EBEE!important;color:#6C7077!important}
+.ph .phl{opacity:.75}
+/* tables */
+.est th,.mp th,.stf th{background:none!important;color:var(--ink)!important;border-bottom:.5mm solid var(--ink)!important;font-weight:700}
+.est td,.mp td,.stf td{border-bottom:.2mm solid var(--line)!important}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:none!important;border-top:.4mm solid var(--ink)!important;font-weight:700}
+.est tr.total td{background:var(--ink)!important;color:#fff!important}
+.tt-table th,.gantt th{background:var(--ink)!important;color:#fff!important}
+.gantt th.sub{background:#F1F2F4!important;color:var(--sub)!important}
+.tt-table td.h{background:#F1F2F4!important;font-weight:700}
+.toc .row{border-bottom:.25mm solid var(--ink)!important}
+.toc .no{font-family:Lato,sans-serif!important;font-weight:300!important;font-size:22pt!important}
+.tl .m{background:var(--ink)!important;color:#fff!important;border-radius:0!important}
+
+@page{size:A4 portrait;margin:0}
+.page{width:210mm!important;height:297mm!important;padding:14mm 15mm 12mm!important}
+.spec{width:100%;border-collapse:collapse;font-size:9pt}
+.spec th{width:28mm;text-align:left;font-weight:700;padding:1.8mm 0;border-bottom:.2mm solid var(--line);vertical-align:top}
+.spec td{padding:1.8mm 0;border-bottom:.2mm solid var(--line);color:var(--sub)}
+.spec tr:first-child th,.spec tr:first-child td{border-top:.4mm solid var(--ink)}
+.conf{position:absolute!important;top:13mm;right:15mm;font-size:7.5pt;font-weight:700;letter-spacing:.15em;border:.3mm solid var(--ink);padding:.6mm 2mm}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;font-size:8.5pt}
+.flow>div{border-top:.6mm solid var(--ink);padding:1.6mm 2mm 0 0}
+.flow b{display:block;font-family:Lato,sans-serif;font-size:10pt}
+</style></head><body>
+
+<!-- ===== sheet 1 ===== -->
+<section class="page">
+  <div class="hd">ARTIST BOOKING OVERVIEW｜1/2</div>
+  <div class="conf">CONFIDENTIAL</div>
+  <div style="margin-top:6mm">
+    <div class="note" style="letter-spacing:.3em">那珂川の水辺空間を活かした回遊促進・賑わい創出事業（福岡市）</div>
+    <div class="kvtitle" style="font-size:30pt;margin:2mm 0 1mm">NAKAGAWA<br>RIVER NIGHTS</div>
+    <div class="mincho" style="font-size:12pt">川が、夜のステージになる。<span class="note" style="margin-left:2mm">（タイトル・コピーは仮称）</span></div>
+  </div>
+  
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:5mm;margin-top:5mm">
+    <div class="ph" style="height:auto;min-height:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">エリア鳥瞰図（清流公園の再整備後イメージ）</span></div>
+    <div><svg viewBox="0 0 2000 1216" width="100%" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+  <image href="img/area-map.webp" x="0" y="0" width="2000" height="1216"/>
+  <rect width="2000" height="1216" fill="#fff" opacity=".15"/>
+  <polyline points="500,265 640,320 780,375 880,440 960,540 1005,640 1020,700" fill="none" stroke="#F2C14E" stroke-width="16" stroke-dasharray="34 18" stroke-linecap="round"/>
+  <circle cx="500" cy="525" r="62" fill="#3B95A9" stroke="#fff" stroke-width="8"/><text x="500" y="551" text-anchor="middle" font-size="76" font-weight="900" fill="#fff" font-family="Lato,sans-serif">A</text><circle cx="1125" cy="765" r="62" fill="#3B95A9" stroke="#fff" stroke-width="8"/><text x="1125" y="791" text-anchor="middle" font-size="76" font-weight="900" fill="#fff" font-family="Lato,sans-serif">B</text><circle cx="600" cy="450" r="62" fill="#5AAE8C" stroke="#fff" stroke-width="8"/><text x="600" y="476" text-anchor="middle" font-size="76" font-weight="900" fill="#fff" font-family="Lato,sans-serif">D</text>
+  <circle cx="1395" cy="1100" r="110" fill="none" stroke="#FC7D78" stroke-width="14"/>
+  <circle cx="1395" cy="1100" r="74" fill="#FC7D78" stroke="#fff" stroke-width="8"/><text x="1395" y="1126" text-anchor="middle" font-size="76" font-weight="900" fill="#fff" font-family="Lato,sans-serif">C</text>
+  <text x="1260" y="1050" text-anchor="end" font-size="66" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="16" paint-order="stroke" stroke-linejoin="round">水上ステージ</text>
+  <text x="1260" y="1130" text-anchor="end" font-size="52" font-weight="700" fill="#C2403A" stroke="#fff" stroke-width="14" paint-order="stroke" stroke-linejoin="round">ヘッドライナー公演</text>
+</svg></div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:7mm;margin-top:5mm">
+    <div><div class="lbl">イベントについて</div>
+      <p class="small">福岡・天神と中洲のあいだを流れる那珂川で、護岸と橋梁の新しいライトアップが完成します。本イベントはそのお披露目となる9日間のナイトイベントです。川沿いに4つのステージとアート、マルシェを配置し、川そのものを夜の舞台にします。福岡市が進める水辺のまちづくり「リバーフロントNEXT」の一環として、国内外からの来街者を迎えます。</p></div>
+    <div><div class="lbl" >開催概要（予定）</div>
+      <table class="spec">
+        <tr><th>会期</th><td>2027年3月14日（日）〜3月22日（月・振休）の9日間</td></tr>
+        <tr><th>時間</th><td>17:30〜22:00（夜間開催）</td></tr>
+        <tr><th>会場</th><td>那珂川沿い 春吉橋〜西大橋エリア（清流公園・天神中央公園 ほか）</td></tr>
+        <tr><th>来場目標</th><td>延べ10万人（会期中）</td></tr>
+        <tr><th>入場</th><td>無料（一部有料・整理券制）</td></tr>
+        <tr><th>主催</th><td>福岡市（委託事業）</td></tr>
+      </table></div>
+  </div>
+  <div class="lbl" style="margin-top:5mm">ステージ構成</div>
+  <div class="grid" style="grid-template-columns:1.25fr 1fr;gap:6mm">
+    <div style="border-top:.6mm solid var(--ink);padding-top:2mm;display:grid;grid-template-columns:40mm 1fr;gap:3.5mm">
+      <div class="ph" style="height:30mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">C 水上ステージ（台船）</span></div>
+      <div><div class="note" style="letter-spacing:.2em">HEADLINER STAGE</div><div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:14pt;line-height:1.3">C 水上ステージ</div>
+      <div class="small">清流公園 南端広場の前に台船を係留した、川に浮かぶステージ。<b style="color:var(--ink)">ヘッドライナー公演はこの水上ステージで行います。</b></div></div>
+    </div>
+    <div style="display:grid;gap:1.6mm">
+      <div style="border-top:.3mm solid var(--ink);padding-top:1.2mm"><span class="tag">A</span> <b>貴賓館前ステージ</b><span class="small">　DJ・ジャズ・サーカス</span></div>
+      <div style="border-top:.3mm solid var(--ink);padding-top:1.2mm"><span class="tag">B</span> <b>春吉橋ミニステージ</b><span class="small">　DJ・アコースティック</span></div>
+      <div style="border-top:.3mm solid var(--ink);padding-top:1.2mm"><span class="tag">D</span> <b>屋形船ジャズ</b><span class="small">　船上で毎夜ジャズ</span></div>
+    </div>
+  </div>
+  <div class="band" style="margin-top:auto">本資料は提案中の企画にもとづくご相談です。福岡市の提案競技で採択された場合に、正式にご依頼いたします。</div>
+</section>
+
+<!-- ===== sheet 2 ===== -->
+<section class="page">
+  <div class="hd">ARTIST BOOKING OVERVIEW｜2/2</div>
+  <div class="conf">CONFIDENTIAL</div>
+  <div class="catch" style="margin-top:6mm!important">最終日、川に浮かぶステージでの<br>ヘッドライナー公演をお願いしたい</div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:7mm">
+    <div>
+      <div class="ph" style="height:92mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">C 水上ステージ（台船）イメージパース</span></div>
+      <p class="small" style="margin-top:2mm">清流公園 南端広場の前に台船を係留し、ステージにします。観客は川岸の広場から、水面越しにステージを観覧します。ライトアップされた護岸と夜の川面を背景にした、ほかにない公演になります。</p>
+    </div>
+    <div>
+      <div class="lbl">出演枠</div>
+      <table class="spec">
+        <tr><th>日時</th><td>2027年3月22日（月・振休）三連休最終日 FINAL<br>20:00頃〜（60分程度を想定）</td></tr>
+        <tr><th>会場</th><td><b style="color:var(--ink)">C 水上ステージ（台船）での公演が前提</b><br>観覧は川岸の南端広場から</td></tr>
+        <tr><th>観覧</th><td>整理券制（事前抽選）。観覧エリアを区切り、安全に運営</td></tr>
+        <tr><th>位置づけ</th><td>9日間の会期を締めくくるメインアクト</td></tr>
+        <tr><th>内容</th><td>ライブ形式。編成・演出はご相談のうえ決定</td></tr>
+      </table>
+      <div class="lbl" style="margin-top:4mm">こちらでご用意するもの</div>
+      <ul class="dot small">
+        <li>ステージ・音響・照明・映像の設営と運営（仕様はご相談）</li>
+        <li>楽屋・控室、移動車両、警備・安全管理</li>
+        <li>水上ステージの安全対策（監視船・救命設備）</li>
+        <li>雨天・強風時の判断基準と代替案の事前共有</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:7mm;margin-top:6mm">
+    <div>
+      <div class="lbl">告知での露出</div>
+      <ul class="dot small">
+        <li>メインアクトとして2月に発表（記者発表・プレスリリース）</li>
+        <li>博多駅・天神・地下鉄のシティドレッシングに掲出</li>
+        <li>公式サイト（5言語）とSNSで国内外に発信</li>
+        <li>福岡市の広報媒体（市政だより・市HPなど）</li>
+      </ul>
+    </div>
+    <div>
+      <div class="lbl">条件について</div>
+      <ul class="dot small">
+        <li>出演料、交通・宿泊、権利関係はご相談のうえ決定</li>
+        <li>写真・映像の使用範囲は事前に取り決め</li>
+        <li>発表のタイミング・情報解禁はご意向に合わせます</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lbl" style="margin-top:6mm">今後の進め方（予定）</div>
+  <div class="flow">
+    <div><b>10月</b>出演の可否・<br>条件のご相談</div>
+    <div><b>11/5</b>福岡市へ<br>企画提案</div>
+    <div><b>11/18</b>事業者決定<br>（予定）</div>
+    <div><b>12月</b>正式なご依頼・<br>契約</div>
+    <div><b>2月</b>出演者発表<br>（情報解禁）</div>
+  </div>
+</section>
+</body></html>
