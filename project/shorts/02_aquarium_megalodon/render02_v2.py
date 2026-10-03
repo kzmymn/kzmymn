@@ -5,6 +5,7 @@ from PIL import Image
 
 L, E, view = R.L, R.E, R.view
 R.IMG['I6'] = R.load('images/I6_whaleshark_tank.png')
+R.IMG['I7'] = R.load('images/I7_bay_aquarium.png')
 R.DUR = 44.5
 R.SHOTS = [
     (0.0, 4.0,   lambda t, d: view('I1', L(.50, .49, E(t/d)), L(.50, .47, E(t/d)), L(1.00, 1.08, t/d))),
@@ -15,7 +16,7 @@ R.SHOTS = [
     (22.0, 25.5, lambda t, d: view('B2', .5, .476, L(1.15, 1.17, t/d))),
     (25.5, 29.0, lambda t, d: view('I1', .49, .47, L(1.10, 1.00, E(t/d)), dark=.55)),
     (29.0, 33.5, lambda t, d: view('I6', L(.50, .52, t/d), L(.46, .44, t/d), L(1.00, 1.07, t/d))),
-    (33.5, 37.5, lambda t, d: view('I1', .49, L(.47, .44, t/d), L(1.00, 1.12, t/d))),
+    (33.5, 37.5, lambda t, d: view('I7', L(.50, .48, E(t/d)), L(.56, .46, E(t/d)), L(1.00, 1.15, t/d))),
     (37.5, 44.5, lambda t, d: view('I5', .50, L(.56, .42, E(t/d)), L(1.10, 1.16, t/d))),
 ]
 R.TAGS = [(0, 14, '仮想シーン／AI生成'), (14, 25.5, '模式図（縮尺はおおむね正確）'), (25.5, 29, '仮想シーン／AI生成'),
@@ -36,7 +37,7 @@ R.SUBS = [
     (37.9, 40.6, '現実に“飼える”メガロドンは、\n1頭だけ。', 'sub'),
     (40.8, 43.4, '埼玉の博物館の、\n天井に。', 'sub'),
 ]
-R.LOGO = (42.5, 44.5, 'ロストジャイアント')
+R.LOGO = (999.0, 999.0, '')  # no channel name at the end
 
 if __name__ == '__main__':
     O = R.OUT
