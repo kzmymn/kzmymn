@@ -35,7 +35,7 @@ def base(title):
     hx=X0+900-40; hy=Y0+TANK_D*PX
     d.ellipse([hx-6,hy-44,hx+6,hy-32],fill=(230,235,240)); d.rectangle([hx-5,hy-32,hx+5,hy],fill=(230,235,240))
     d.text((hx-90,hy+8),'人（1.7m）',font=fl(24,FM),fill=(200,210,225))
-    d.text((56,150),'模式図（縮尺はおおむね正確）',font=fl(30,FM),fill=(255,255,255,215))
+    pass  # tag is drawn by the video renderer
     return im,d
 
 # A: great white 3.5m vs newborn megalodon 3.6-3.9m
