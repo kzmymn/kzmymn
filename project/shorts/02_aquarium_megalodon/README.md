@@ -9,7 +9,7 @@
 | ID | ファイル | 判定 | 用途 |
 |---|---|---|---|
 | I1 | images/I1_megalodon_tank.png | 採用 | 冒頭・サムネイル・結論の背景 |
-| I2 | images/I2_greatwhite_tank_v1.png | **作り直し推奨** | ホホジロザメのパート（下記参照） |
+| I2 | images/I2_greatwhite_tank.png | 採用（v2） | ホホジロザメのパート |
 | I5 | images/I5_museum_ceiling.png | 採用 | オチ |
 | A | diagram_A_newborn.png | 採用（縮尺は正確） | 生まれたてのメガロドンとホホジロザメの比較 |
 | B1 | diagram_B1_adult16m.png | 採用（縮尺は正確） | 大人 約16m |
@@ -20,7 +20,7 @@
 | 秒 | 素材 | Runway の動き | 字幕 | ラベル |
 |---|---|---|---|---|
 | 0.0〜4.0 | I1 | 画像から動画を作る：`slow push-in toward the shark, the shark glides slowly to the left, light ripples on the water surface, visitors stay still, no morphing` | メガロドンは、<br>水族館で飼えるのか？ | 仮想シーン／AI生成 |
-| 4.0〜8.5 | I2 | `shark swims slowly along the acrylic wall, gentle camera drift, no morphing` | 実は、ホホジロザメでさえ<br>難しい。 | 仮想シーン／AI生成 |
+| 4.0〜8.5 | I2 | `the shark swims slowly from left to right along the acrylic wall, the visitor stays still, gentle camera drift, no morphing` | 実は、ホホジロザメでさえ<br>難しい。 | 仮想シーン／AI生成 |
 | 8.5〜14.0 | I2（拡大） | 動画はそのままで、編集でゆっくり拡大する | 2016年、沖縄で展示された<br>約3.5mのホホジロザメは、 → 3日で死んだ。（文字を切り替える） | 同上 |
 | 14.0〜18.5 | I2（暗く） | 静止画をゆっくり拡大する | ホホジロザメは、泳ぎ続けて呼吸する。<br>飼育は極めて難しい。 | 同上 |
 | 18.5〜23.5 | A | 動かさない（図をフェードイン） | メガロドンは、生まれた時点で<br>約3.6〜3.9m。 → そのホホジロザメと、<br>ほぼ同じ大きさ。 | 模式図 |
@@ -48,9 +48,9 @@
 ## 不採用・作り直しの理由
 - **x_tank_diagram（Gemini の水槽図）**: 水槽の縦横比が約1.6:1。実際の35m×10mは3.5:1なので、数字を載せると嘘の図になる。人の大きさも合っていない。→ 縮尺が正確な図（A／B1／B2）を別に作った。
 - **x_diver_newborn（ダイバーとサメ）**: サメが大人のホホジロザメ（8m以上）に見え、「生まれたて約4m」と矛盾する。→ 図 A で代替する。
-- **I2 v1（水槽のホホジロザメ）**: 来館者に比べてサメが巨大に見え、メガロドンの画像（I1）と区別がつかない。「たった3.5mでも3日しか生きられなかった」という対比が弱まる。
+- **I2 v1（x_greatwhite_tank_v1_unused、水槽のホホジロザメ）**: 来館者に比べてサメが巨大に見え、メガロドンの画像（I1）と区別がつかない。「たった3.5mでも3日しか生きられなかった」という対比が弱まる。
 
-### I2 作り直し用プロンプト（Gemini）
+### I2 作り直しに使ったプロンプト（Gemini）→ v2 を採用
 ```
 Vertical 9:16. Inside a large public aquarium, eye-level view along the acrylic wall. A single great white shark about 3.5 meters long swims right next to the acrylic, parallel to it, while an adult visitor stands at the glass in silhouette in the same plane, so the shark is clearly only about twice the visitor's height in length. Blue tank lighting, a few small fish, generic aquarium with no logos or signage, slightly uneasy mood, photorealistic, no text.
 ```
