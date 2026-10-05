@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>那珂川水辺空間 企画提案書</title>
+
+<link href="fonts/fonts.css" rel="stylesheet">
+<style>
+:root{
+  --teal:#3B95A9; --teal-d:#2C7486; --teal-l:#D7EAEE; --teal-m:#9CCED7; --teal-xl:#EEF6F8;
+  --coral:#F2716B; --orange:#EE9A2E; --green:#4FA88A; --navy:#14263A;
+  --ink:#2A2C28; --sub:#5E5E5C; --mute:#A2A3A2; --line:#D8DCDD; --card:#F6F8F9;
+}
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#888}
+body{font-family:"Zen Kaku Gothic New","IPAPGothic",sans-serif;color:var(--ink);font-size:12pt;line-height:1.55;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;font-feature-settings:"palt"}
+.num,.en{font-family:"Lato","Zen Kaku Gothic New",sans-serif}
+.page{width:297mm;height:210mm;background:#fff;position:relative;overflow:hidden;margin:0 auto 8mm;display:flex;flex-direction:column;
+  padding:13mm 15mm 12mm;page-break-after:always;break-after:page}
+@media print{html,body{background:#fff}.page{margin:0}}
+
+/* header / footer */
+.hd{display:flex;align-items:center;gap:3mm;font-size:11pt;font-weight:700;letter-spacing:.06em;color:var(--ink)}
+.hd::before{content:"";width:1.2mm;height:5mm;background:var(--ink)}
+.hd .sec{color:var(--teal)}
+.pno{position:absolute;top:13mm;right:15mm;font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-size:11pt;color:var(--sub)}
+.ft{display:none;font-size:11pt;color:var(--mute);letter-spacing:.05em}
+.catch{text-align:center;font-size:18pt;font-weight:700;letter-spacing:.08em;line-height:1.45;margin:4mm 0 1mm}
+.catch em{font-style:normal;color:var(--teal)}
+.lead{text-align:center;font-size:11pt;color:var(--sub);margin-bottom:4mm;letter-spacing:.03em}
+.lbl{display:flex;align-items:center;gap:2mm;font-weight:700;font-size:12.5pt;margin-bottom:1.5mm}
+.lbl::before{content:"";width:1.4mm;height:4.6mm;background:var(--teal);border-radius:.4mm}
+.pill{display:inline-block;background:var(--teal);color:#fff;font-weight:700;font-size:11pt;padding:.6mm 3.5mm;border-radius:10mm;letter-spacing:.05em}
+.card{background:#fff;border:.35mm solid var(--line);border-radius:2.5mm;padding:3mm 3.5mm;box-shadow:0 .6mm 1.6mm rgba(20,40,50,.06)}
+.soft{background:var(--card);border-radius:2.5mm;padding:3mm 3.5mm}
+.band{background:var(--teal-l);border-radius:2.5mm;padding:2.6mm 5mm;text-align:center;font-weight:700;font-size:11.5pt;letter-spacing:.04em}
+.band em{font-style:normal;color:var(--teal-d)}
+.tag{display:inline-block;font-size:11pt;font-weight:700;padding:0 1.8mm;line-height:1.35;border-radius:1mm;color:#fff;background:var(--teal);vertical-align:middle;letter-spacing:.04em}
+.tag.c{background:var(--coral)}.tag.o{background:var(--orange)}.tag.g{background:var(--green)}.tag.n{background:var(--navy)}
+.tbd{display:inline-block;font-size:11pt;font-weight:700;color:var(--coral);border:.3mm solid var(--coral);border-radius:1mm;padding:0 1.4mm;margin-left:1.5mm;vertical-align:middle}
+.small{font-size:11.5pt;color:var(--sub)}
+.note{font-size:11pt;color:var(--sub)}
+ul.dot{list-style:none}
+ul.dot li{position:relative;padding-left:4mm}
+ul.dot li::before{content:"";position:absolute;left:.6mm;top:2.3mm;width:1.6mm;height:1.6mm;border-radius:50%;background:var(--teal)}
+.grid{display:grid;gap:4mm}
+.grow{flex:1 1 auto;min-height:0;margin-bottom:4mm}
+.grow:last-of-type{margin-bottom:0}
+b.t{color:var(--teal-d)}
+h3{font-size:13pt;font-weight:700;letter-spacing:.04em}
+
+/* cover */
+.cover{background:linear-gradient(120deg,#0E1C2C 0%,#16334A 45%,#1F5E70 80%,#3B95A9 100%);color:#fff;padding:0}
+.cover .river{position:absolute;inset:0}
+.cover .inner{position:absolute;left:20mm;top:42mm;right:20mm}
+.cover .kicker{font-size:11pt;letter-spacing:.3em;color:var(--teal-m);font-weight:700}
+.cover h1{font-size:25pt;font-weight:900;letter-spacing:.08em;line-height:1.5;margin-top:5mm}
+.cover .sub{margin-top:5mm;font-size:13pt;letter-spacing:.12em;font-weight:500}
+.cover .meta{position:absolute;left:20mm;bottom:22mm;font-size:11pt;line-height:1.9;letter-spacing:.06em}
+.cover .meta .who{border-top:.3mm solid rgba(255,255,255,.45);padding-top:2mm;margin-top:2mm;font-size:11pt;color:var(--sub)}
+.cover .theme{position:absolute;right:20mm;bottom:22mm;text-align:right}
+.cover .theme .en{font-size:30pt;font-weight:900;letter-spacing:.06em;line-height:1.05}
+.cover .theme .jp{font-size:12pt;letter-spacing:.2em;margin-top:2mm;color:var(--teal-m)}
+
+/* toc */
+.toc{margin:10mm auto 0;width:200mm}
+.toc .row{display:grid;grid-template-columns:22mm 1fr 30mm 18mm;align-items:baseline;border-bottom:.3mm solid var(--line);padding:3.2mm 0}
+.toc .no{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:20pt;color:var(--teal)}
+.toc .tt{font-size:13pt;font-weight:700;letter-spacing:.05em}
+.toc .tt small{display:block;font-size:11pt;font-weight:400;color:var(--sub);letter-spacing:.02em}
+.toc .pt{font-size:11pt;color:var(--sub);text-align:right}
+.toc .pg{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-size:11pt;text-align:right}
+
+/* timeline table */
+.tt-table{width:100%;border-collapse:collapse;font-size:8.5pt}
+.tt-table th,.tt-table td{border:.25mm solid #fff;padding:1.2mm 1.4mm;text-align:center}
+.tt-table th{background:var(--teal);color:#fff;font-weight:700}
+.tt-table td.h{background:var(--card);font-weight:700;text-align:left;white-space:nowrap}
+.cell{border-radius:1mm;color:#fff;font-weight:700;padding:.8mm 0}
+
+/* gantt */
+.gantt{width:100%;border-collapse:collapse;font-size:11pt;table-layout:fixed}
+.gantt th{font-weight:700;background:var(--teal);color:#fff;padding:1.4mm 0;border-left:.3mm solid #fff}
+.gantt th.sub{background:var(--teal-l);color:var(--teal-d);font-size:9pt;padding:.6mm 0}
+.gantt td{border-left:.3mm dashed #E3E7E8;border-bottom:.3mm solid #EEF1F2;height:12.4mm;padding:0;position:relative}
+.gantt td.item{font-weight:700;padding-left:2mm;border-left:none;font-size:11pt;white-space:nowrap}
+.bar{position:absolute;top:2.4mm;bottom:2.4mm;border-radius:4mm;color:#fff;font-size:9pt;font-weight:700;display:flex;align-items:center;padding-left:2mm;white-space:nowrap;z-index:1}
+.ms{position:absolute;top:3.6mm;width:4.6mm;height:4.6mm;transform:rotate(45deg);background:var(--coral);z-index:2}
+
+/* estimate */
+.est{width:100%;border-collapse:collapse;font-size:11pt}
+.est th{background:var(--teal);color:#fff;padding:1.6mm 2.5mm;text-align:left;font-weight:700}
+.est td{padding:1.35mm 2.5mm;border-bottom:.3mm solid var(--line);vertical-align:top}
+.est td.r{text-align:right;font-family:Lato,'Zen Kaku Gothic New',sans-serif;white-space:nowrap}
+.est tr.sum td{background:var(--teal-l);font-weight:700}
+.est tr.total td{background:var(--teal);color:#fff;font-weight:900;font-size:11pt}
+.est .d{font-size:11pt;color:var(--sub)}
+
+.ph{border:.45mm dashed #93B3BB;border-radius:2mm;background:repeating-linear-gradient(135deg,#F4F8F9 0 2.5mm,#ECF3F5 2.5mm 5mm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8mm;color:#5B8591;text-align:center;padding:2mm;min-height:18mm;overflow:hidden}
+.ph svg{width:8mm;height:8mm;flex:none}
+.ph .phl{font-family:Lato,'Zen Kaku Gothic New',sans-serif;font-weight:900;font-size:8pt;letter-spacing:.25em;opacity:.7}
+.ph .pht{font-size:10pt;font-weight:700;line-height:1.35}
+.ph.dark{border-color:rgba(255,255,255,.45);background:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 2.5mm,rgba(255,255,255,.02) 2.5mm 5mm);color:#CFE6EC}
+.imgcard{display:grid;grid-template-columns:42% 1fr;gap:3mm}
+
+.tl{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.tl>div{padding:2mm 2.2mm 2mm;border-left:.3mm solid var(--line)}
+.tl>div:first-child{border-left:none}
+.tl .m{font-weight:900;font-size:11pt;color:#fff;border-radius:1mm;padding:.4mm 2mm;display:inline-block;margin-bottom:1.2mm}
+.tl ul{list-style:none}
+.tl li{font-size:10.5pt;line-height:1.45;margin-bottom:1mm}
+.tl li b{color:var(--coral);font-family:Lato}
+.mp{width:100%;border-collapse:collapse;font-size:10pt}
+.mp th{background:var(--teal);color:#fff;padding:1.3mm 2mm;text-align:left;font-weight:700}
+.mp td{padding:1.25mm 2mm;border-bottom:.3mm solid var(--line);vertical-align:top}
+.mp td.r{text-align:right;font-family:Lato,'Zen Kaku Gothic New',sans-serif;white-space:nowrap}
+.mp tr.sum td{background:var(--teal-l);font-weight:700}
+
+.stf{width:100%;border-collapse:collapse;font-size:9.5pt}
+.stf th{background:var(--teal);color:#fff;padding:1mm 1.5mm;font-weight:700;text-align:center}
+.stf th:first-child{text-align:left}
+.stf td{padding:.9mm 1.5mm;border-bottom:.3mm solid var(--line);text-align:center}
+.stf td:first-child{text-align:left;font-weight:700}
+.stf tr.sum td{background:var(--teal-l);font-weight:700}
+.lg{display:flex;flex-wrap:wrap;gap:1mm 3mm;font-size:9pt;color:var(--sub);margin-top:1mm}
+.lg i{display:inline-block;width:3mm;height:3mm;border-radius:50%;margin-right:1mm;vertical-align:-.4mm}
+
+
+/* ===== Style A (design guide) on dark gray ===== */
+:root{--ink:#ECEFF1;--sub:#B3BBC1;--mute:#7F888E;--line:#3A4046;--card:#2C3136;
+ --teal:#3B95A9;--teal-d:#2C7486;--teal-l:#243A41;--teal-m:#6FB6C6;--teal-xl:#262B30;
+ --coral:#FC7D78;--orange:#F0A030;--green:#5AAE8C;--navy:#2C7486}
+html,body{background:#111}
+.page,.cover{background:#1F2226!important;color:var(--ink)}
+.card{background:#272B30;border:.3mm solid #383E44;box-shadow:none}
+.soft{background:#2C3136}
+.band{background:var(--teal-l);border:.3mm solid var(--teal);color:var(--ink)}
+.band em,b.t{color:#7CC3D3}
+.catch em{color:#7CC3D3}
+.hd::before{background:var(--teal)}
+.hd .sec{color:#7CC3D3}
+.lbl::before{background:var(--teal)}
+ul.dot li::before{background:var(--teal-m)}
+.tbd{color:var(--coral);border-color:var(--coral)}
+.toc .row{border-color:var(--line)}
+.toc .no{color:#7CC3D3}
+.est td,.mp td,.stf td{border-color:var(--line)}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:var(--teal-l)}
+.tt-table th,.tt-table td{border-color:#1F2226}
+.tt-table td.h{background:#2C3136}
+.gantt td{border-left-color:#30363C;border-bottom-color:#2B3036}
+.gantt th{border-left-color:#1F2226}
+.gantt th.sub{background:var(--teal-l);color:#A9D6E0}
+.ph{border:.4mm dashed #56606A;background:#262A2F;color:#9AA4AC}
+.ph.dark{border-color:#56606A;background:#262A2F}
+.pno{color:var(--sub)}
+.cover .jp,.cover .theme .jp{color:var(--teal-m)}
+/* impression words: mincho */
+.catch,.kvtitle,.cover h1{font-family:"Shippori Mincho","Zen Kaku Gothic New",serif!important;font-weight:800!important;letter-spacing:.06em}
+.catch{font-size:19pt}
+.kvtitle{font-size:24pt;line-height:1.12;margin:2mm 0 1.5mm;color:#fff}
+.mincho{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.1em}
+
+/* ===== night museum theme (ref. flyers) ===== */
+:root{--ink:#F3F5FF;--sub:#BCC3E4;--mute:#8A92BC;--line:rgba(200,210,255,.28);--card:rgba(255,255,255,.06);
+ --teal:#4C6FE0;--teal-d:#3A52B8;--teal-l:#1D2463;--teal-m:#8FB4FF;--teal-xl:#151A4A;
+ --green:#45B8C9;--coral:#E27BB8;--orange:#E3B45E;--navy:#7E6BE8}
+html,body{background:#05071A}
+.page,.cover{background:
+ radial-gradient(ellipse 90% 60% at 50% -10%,rgba(70,78,190,.55) 0,rgba(70,78,190,0) 70%),
+ radial-gradient(ellipse 60% 60% at 105% 105%,rgba(98,64,170,.45) 0,rgba(98,64,170,0) 70%),
+ linear-gradient(180deg,#0B0F33 0%,#11164A 55%,#0A0D2C 100%)!important;color:var(--ink)}
+.page::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20297%20210%22%20preserveAspectRatio%3D%22none%22%3E%3Ccircle%20cx%3D%22142.3%22%20cy%3D%2245.4%22%20r%3D%220.36%22%20fill%3D%22%23fff%22%20opacity%3D%220.53%22/%3E%3Ccircle%20cx%3D%2212.6%22%20cy%3D%22209.5%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%22182.9%22%20cy%3D%227.2%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%2234.4%22%20cy%3D%22199.9%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.34%22/%3E%3Ccircle%20cx%3D%22242.8%22%20cy%3D%2226.2%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%2255.5%22%20cy%3D%227.8%22%20r%3D%220.38%22%20fill%3D%22%23fff%22%20opacity%3D%220.38%22/%3E%3Ccircle%20cx%3D%22231.7%22%20cy%3D%2243.8%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.67%22/%3E%3Ccircle%20cx%3D%2236.4%22%20cy%3D%22100.0%22%20r%3D%220.18%22%20fill%3D%22%23fff%22%20opacity%3D%220.76%22/%3E%3Ccircle%20cx%3D%22134.0%22%20cy%3D%2281.0%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22/%3E%3Ccircle%20cx%3D%2227.7%22%20cy%3D%22150.8%22%20r%3D%220.42%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%22103.4%22%20cy%3D%22194.7%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.58%22/%3E%3Ccircle%20cx%3D%2291.1%22%20cy%3D%2221.7%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.70%22/%3E%3Ccircle%20cx%3D%22200.7%22%20cy%3D%22188.7%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.79%22/%3E%3Ccircle%20cx%3D%22285.5%22%20cy%3D%22124.0%22%20r%3D%220.38%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%22111.5%22%20cy%3D%2251.9%22%20r%3D%220.17%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22/%3E%3Ccircle%20cx%3D%22248.6%22%20cy%3D%2211.0%22%20r%3D%220.20%22%20fill%3D%22%23fff%22%20opacity%3D%220.41%22/%3E%3Ccircle%20cx%3D%22100.4%22%20cy%3D%22188.8%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.51%22/%3E%3Ccircle%20cx%3D%2274.9%22%20cy%3D%22201.4%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.65%22/%3E%3Ccircle%20cx%3D%228.4%22%20cy%3D%2244.5%22%20r%3D%220.37%22%20fill%3D%22%23fff%22%20opacity%3D%220.69%22/%3E%3Ccircle%20cx%3D%22158.7%22%20cy%3D%2258.0%22%20r%3D%220.12%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%22283.3%22%20cy%3D%224.9%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.60%22/%3E%3Ccircle%20cx%3D%22120.5%22%20cy%3D%22201.3%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.32%22/%3E%3Ccircle%20cx%3D%2228.2%22%20cy%3D%2219.7%22%20r%3D%220.13%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%22163.4%22%20cy%3D%229.7%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%22137.8%22%20cy%3D%2213.3%22%20r%3D%220.35%22%20fill%3D%22%23fff%22%20opacity%3D%220.35%22/%3E%3Ccircle%20cx%3D%2293.1%22%20cy%3D%228.8%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%22267.5%22%20cy%3D%2262.0%22%20r%3D%220.27%22%20fill%3D%22%23fff%22%20opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%22281.6%22%20cy%3D%2220.7%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.53%22/%3E%3Ccircle%20cx%3D%22218.2%22%20cy%3D%22203.1%22%20r%3D%220.21%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%22242.0%22%20cy%3D%22205.1%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%22295.0%22%20cy%3D%2222.6%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.29%22/%3E%3Ccircle%20cx%3D%22184.6%22%20cy%3D%224.2%22%20r%3D%220.31%22%20fill%3D%22%23fff%22%20opacity%3D%220.49%22/%3E%3Ccircle%20cx%3D%2267.0%22%20cy%3D%2210.3%22%20r%3D%220.25%22%20fill%3D%22%23fff%22%20opacity%3D%220.39%22/%3E%3Ccircle%20cx%3D%22144.6%22%20cy%3D%22132.7%22%20r%3D%220.15%22%20fill%3D%22%23fff%22%20opacity%3D%220.51%22/%3E%3Ccircle%20cx%3D%22146.1%22%20cy%3D%22150.6%22%20r%3D%220.35%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%22225.3%22%20cy%3D%22140.3%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.63%22/%3E%3Ccircle%20cx%3D%2272.9%22%20cy%3D%22192.5%22%20r%3D%220.24%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%22245.0%22%20cy%3D%22202.4%22%20r%3D%220.42%22%20fill%3D%22%23fff%22%20opacity%3D%220.25%22/%3E%3Ccircle%20cx%3D%2289.9%22%20cy%3D%22198.1%22%20r%3D%220.34%22%20fill%3D%22%23fff%22%20opacity%3D%220.50%22/%3E%3Ccircle%20cx%3D%2232.1%22%20cy%3D%22200.8%22%20r%3D%220.33%22%20fill%3D%22%23fff%22%20opacity%3D%220.36%22/%3E%3Ccircle%20cx%3D%2277.5%22%20cy%3D%22199.8%22%20r%3D%220.22%22%20fill%3D%22%23fff%22%20opacity%3D%220.39%22/%3E%3Ccircle%20cx%3D%22112.6%22%20cy%3D%22197.6%22%20r%3D%220.26%22%20fill%3D%22%23fff%22%20opacity%3D%220.49%22/%3E%3Ccircle%20cx%3D%22285.4%22%20cy%3D%227.2%22%20r%3D%220.36%22%20fill%3D%22%23fff%22%20opacity%3D%220.76%22/%3E%3Ccircle%20cx%3D%22209.3%22%20cy%3D%224.0%22%20r%3D%220.27%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22/%3E%3Ccircle%20cx%3D%222.3%22%20cy%3D%22114.3%22%20r%3D%220.15%22%20fill%3D%22%23fff%22%20opacity%3D%220.42%22/%3E%3Ccircle%20cx%3D%2240.1%22%20cy%3D%22166.3%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.28%22/%3E%3Ccircle%20cx%3D%2266.9%22%20cy%3D%22168.5%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.74%22/%3E%3Ccircle%20cx%3D%225.2%22%20cy%3D%22122.2%22%20r%3D%220.14%22%20fill%3D%22%23fff%22%20opacity%3D%220.74%22/%3E%3Ccircle%20cx%3D%2217.7%22%20cy%3D%22171.2%22%20r%3D%220.30%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%2220.1%22%20cy%3D%22107.5%22%20r%3D%220.32%22%20fill%3D%22%23fff%22%20opacity%3D%220.35%22/%3E%3Ccircle%20cx%3D%2280.1%22%20cy%3D%2212.3%22%20r%3D%220.13%22%20fill%3D%22%23fff%22%20opacity%3D%220.52%22/%3E%3Ccircle%20cx%3D%2230.9%22%20cy%3D%22195.5%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.47%22/%3E%3Ccircle%20cx%3D%2223.3%22%20cy%3D%22173.7%22%20r%3D%220.18%22%20fill%3D%22%23fff%22%20opacity%3D%220.27%22/%3E%3Ccircle%20cx%3D%2248.1%22%20cy%3D%22178.7%22%20r%3D%220.39%22%20fill%3D%22%23fff%22%20opacity%3D%220.62%22/%3E%3Ccircle%20cx%3D%2264.5%22%20cy%3D%22163.3%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.75%22/%3E%3Ccircle%20cx%3D%22288.1%22%20cy%3D%2281.9%22%20r%3D%220.40%22%20fill%3D%22%23fff%22%20opacity%3D%220.77%22/%3E%3Ccircle%20cx%3D%22235.8%22%20cy%3D%222.4%22%20r%3D%220.23%22%20fill%3D%22%23fff%22%20opacity%3D%220.59%22/%3E%3Ccircle%20cx%3D%2248.0%22%20cy%3D%22195.5%22%20r%3D%220.28%22%20fill%3D%22%23fff%22%20opacity%3D%220.73%22/%3E%3Ccircle%20cx%3D%2261.4%22%20cy%3D%22209.6%22%20r%3D%220.29%22%20fill%3D%22%23fff%22%20opacity%3D%220.68%22/%3E%3Ccircle%20cx%3D%2224.6%22%20cy%3D%2285.2%22%20r%3D%220.17%22%20fill%3D%22%23fff%22%20opacity%3D%220.55%22/%3E%3Ccircle%20cx%3D%228.0%22%20cy%3D%2288.8%22%20r%3D%220.29%22%20fill%3D%22%23fff%22%20opacity%3D%220.26%22/%3E%3Cpath%20d%3D%22M271.2%20203.8Q271.4%20204.5%20272.2%20204.7Q271.4%20204.9%20271.2%20205.7Q271.1%20204.9%20270.3%20204.7Q271.1%20204.5%20271.2%20203.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M73.9%20200.3Q74.2%20201.4%2075.3%20201.7Q74.2%20202.0%2073.9%20203.1Q73.6%20202.0%2072.5%20201.7Q73.6%20201.4%2073.9%20200.3Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M191.8%20198.1Q192.0%20199.0%20192.8%20199.2Q192.0%20199.4%20191.8%20200.2Q191.6%20199.4%20190.7%20199.2Q191.6%20199.0%20191.8%20198.1Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M142.0%203.6Q142.1%204.4%20142.9%204.6Q142.1%204.8%20142.0%205.5Q141.8%204.8%20141.0%204.6Q141.8%204.4%20142.0%203.6Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M241.2%2010.8Q241.5%2011.9%20242.6%2012.2Q241.5%2012.5%20241.2%2013.6Q240.9%2012.5%20239.8%2012.2Q240.9%2011.9%20241.2%2010.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3Cpath%20d%3D%22M290.1%207.8Q290.4%209.0%20291.6%209.3Q290.4%209.6%20290.1%2010.7Q289.8%209.6%20288.7%209.3Q289.8%209.0%20290.1%207.8Z%22%20fill%3D%22%23fff%22%20opacity%3D%22.85%22/%3E%3C/svg%3E") no-repeat center/100% 100%;pointer-events:none}
+.page>*:not(.pno){position:relative}
+.card{background:rgba(8,12,44,.55);border:.3mm solid rgba(200,210,255,.32);border-radius:1mm;box-shadow:none}
+.soft{background:rgba(255,255,255,.06);border-radius:1mm}
+.band{background:transparent;border:none;border-top:.3mm solid rgba(255,255,255,.55);border-bottom:.3mm solid rgba(255,255,255,.55);border-radius:0;color:var(--ink)}
+.band em,b.t{color:#A9D4FF}
+.catch{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.14em;font-size:19pt}
+.catch::after{content:"✦";display:block;font-size:7pt;letter-spacing:0;color:rgba(255,255,255,.75);margin-top:.6mm}
+.catch em{color:#fff;border:none}
+.hd{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.2em}
+.hd::before{background:#fff;width:.4mm}
+.hd .sec{color:#A9D4FF}
+.lbl{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.08em}
+.lbl::before{background:#fff;width:.5mm}
+h3{font-family:"Shippori Mincho",serif;font-weight:700;letter-spacing:.06em}
+ul.dot li::before{background:#A9D4FF}
+.pill,.tag{background:#fff!important;color:#141A4E!important;border-radius:.6mm}
+.tbd{color:#FFD6EC;border-color:#FFD6EC}
+.toc .row{border-color:var(--line)}
+.toc .no,.toc .tt{font-family:"Shippori Mincho",serif;font-weight:700;color:#fff}
+.toc .tt small{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:400;color:var(--sub)}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:#26307E;color:#fff}
+.est tr.total td{background:#fff;color:#141A4E}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:rgba(255,255,255,.08)}
+.est td,.mp td,.stf td{border-color:rgba(200,210,255,.18)}
+.tt-table th,.tt-table td{border-color:transparent}
+.tt-table td.h{background:rgba(255,255,255,.07)}
+.gantt th.sub{background:#1D2463;color:#C9D6FF}
+.gantt td{border-left-color:rgba(255,255,255,.07);border-bottom-color:rgba(255,255,255,.06)}
+.ph{border:.35mm solid rgba(255,255,255,.4);background:linear-gradient(160deg,rgba(90,110,230,.18),rgba(120,80,200,.14));color:#D6DCFF;border-radius:.8mm}
+.ph.dark{border-color:rgba(255,255,255,.45);background:linear-gradient(160deg,rgba(90,110,230,.18),rgba(120,80,200,.14))}
+.kvtitle{font-family:"Shippori Mincho",serif!important;font-weight:800!important;letter-spacing:.08em;color:#fff}
+.cover h1{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.1em}
+.cover .en{font-family:"Shippori Mincho",serif!important;font-weight:700!important;letter-spacing:.12em}
+.cover .jp,.cover .theme .jp{color:#C9D6FF}
+.mincho{letter-spacing:.2em}
+.pno{font-family:"Shippori Mincho",serif;color:var(--sub)}
+.cell{border-radius:.6mm}
+/* ===== editorial layer: less "template", more designed ===== */
+body{font-size:10pt;line-height:1.7}
+.page{padding:13mm 16mm 11mm}
+.hd{font-family:Lato,"Zen Kaku Gothic New",sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.28em;color:var(--sub)}
+.hd::before{display:none}
+.hd .sec{color:var(--sub)}
+.pno{font-family:Lato,sans-serif;font-size:8pt;letter-spacing:.2em;top:13mm;right:16mm}
+.catch{text-align:left!important;font-size:21pt;line-height:1.5;letter-spacing:.1em;margin:3mm 0 5mm}
+.catch::after{content:""!important;display:block;width:14mm;height:.25mm;background:rgba(255,255,255,.7);margin-top:3.5mm}
+.lead{text-align:left;font-size:9.5pt;margin-top:-2mm}
+.card{background:none!important;border:none!important;border-top:.25mm solid rgba(255,255,255,.32)!important;border-radius:0!important;padding:2.6mm 0 0!important;box-shadow:none!important}
+.soft{background:rgba(255,255,255,.045)!important;border-radius:0!important}
+.grid{gap:6mm}
+.lbl{font-size:10pt;margin-bottom:1.6mm}
+.lbl::before{display:none}
+h3{font-size:12pt}
+ul.dot li{padding-left:3.6mm}
+ul.dot li::before{width:2mm;height:.25mm;border-radius:0;top:2.7mm;left:0;background:rgba(255,255,255,.65)!important}
+.small{font-size:9pt}
+.note{font-size:8pt}
+.tag,.pill{background:transparent!important;color:#fff!important;border:.25mm solid rgba(255,255,255,.75);font-size:8pt;font-weight:700;padding:0 1.6mm;border-radius:0!important;letter-spacing:.08em}
+b.t{color:inherit!important;font-weight:700}
+.band{text-align:left;font-size:10pt;font-weight:500;padding:2.4mm 0;border-top:.25mm solid rgba(255,255,255,.4)!important;border-bottom:none!important}
+.band em{color:#fff!important;font-weight:700}
+.tbd{font-size:7.5pt;border-radius:0}
+.ph{border:none!important;background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.035))!important;border-radius:0!important;align-items:flex-start!important;justify-content:flex-end!important;text-align:left!important;padding:2.5mm 3mm!important;gap:.4mm!important}
+.ph svg{display:none}
+.ph .phl{font-size:6.5pt;letter-spacing:.3em;opacity:.6}
+.ph .pht{font-size:8pt!important;font-weight:500;opacity:.8}
+.ph .pht br{display:none}
+.est,.mp,.stf{font-size:9pt}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:rgba(255,255,255,.12)!important;color:#fff;font-weight:700}
+.est tr.total td{background:rgba(255,255,255,.9)!important;color:#141A4E}
+.toc .row{padding:3.6mm 0}
+.toc .tt{font-size:13pt}
+
+/* ===== white editorial (final) ===== */
+:root{--ink:#1E2024;--sub:#5D6168;--mute:#94989E;--line:#D9DCDF;--card:#F4F5F6;
+ --teal:#3B95A9;--teal-d:#2C7486;--teal-l:#E3EFF2;--teal-m:#9CCED7;--teal-xl:#F2F7F8;
+ --green:#5AAE8C;--coral:#FC7D78;--orange:#F0A030;--navy:#2C7486}
+html,body{background:#E8E9EB}
+.page,.cover{background:#fff!important;color:var(--ink)}
+.page::before{display:none!important}
+.hd,.hd .sec,.pno{color:var(--mute)}
+.catch,.catch em,.kvtitle,.cover h1,.cover .en{color:var(--ink)!important}
+.catch::after{background:var(--ink)!important}
+.card{border-top:.25mm solid #BFC3C7!important}
+.soft{background:#F4F5F6!important}
+ul.dot li::before{background:#8A8F95!important}
+.tag,.pill{color:var(--ink)!important;border-color:var(--ink)}
+.tbd{color:var(--coral);border-color:var(--coral)}
+.band{border-top:.25mm solid var(--ink)!important;color:var(--ink)}
+.band em{color:var(--ink)!important}
+.ph{background:#EEF0F2!important;color:#7C8187}
+.ph.dark{background:#EEF0F2!important}
+.toc .row{border-color:var(--line)}
+.toc .no,.toc .tt{color:var(--ink)}
+.est th,.mp th,.stf th,.tt-table th,.gantt th{background:#EDEFF1!important;color:var(--ink)}
+.est tr.total td{background:var(--ink)!important;color:#fff}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:#F4F5F6}
+.est td,.mp td,.stf td{border-color:var(--line)}
+.tt-table th,.tt-table td{border-color:#fff}
+.tt-table td.h{background:#F4F5F6}
+.gantt th.sub{background:#F4F5F6;color:var(--sub)}
+.gantt td{border-left-color:#ECEEF0;border-bottom-color:#F0F1F2}
+.gantt th{border-left-color:#fff}
+.cover .jp,.cover .theme .jp,.cover .kicker{color:var(--sub)!important}
+.lead{color:var(--sub)}
+.catch{font-size:18pt!important;letter-spacing:.06em!important}
+.ph .phl:empty{display:none}
+section .lbl+.tt-table td,.tt-table td{padding:.9mm 1.2mm}
+.tl li{font-size:8.8pt!important;line-height:1.5}
+.tl .m{font-size:8.5pt!important}
+.mp{font-size:8.3pt!important}
+.mp td{padding:1mm 1.6mm!important}
+
+/* ===== editorial v2: crisp hierarchy ===== */
+:root{--ink:#16181C;--sub:#4A4E55;--mute:#8A8E95;--line:#D3D6DA}
+body{color:var(--ink)}
+.hd{display:block;font-size:7.5pt;letter-spacing:.25em;color:var(--ink)!important;font-weight:700;border-bottom:.6mm solid var(--ink);padding-bottom:2mm;margin-bottom:0}
+.hd .sec{color:var(--ink)!important}
+.pno{top:12.4mm!important;font-size:8pt;font-weight:700;color:var(--ink)!important}
+.catch{font-size:19pt!important;margin:4.5mm 0 4.5mm!important;line-height:1.45;letter-spacing:.05em!important}
+.catch::after{display:none!important}
+.lbl{font-family:"Zen Kaku Gothic New",sans-serif!important;font-weight:700!important;font-size:10.5pt!important;letter-spacing:.04em!important;color:var(--ink);display:flex;align-items:center;gap:1.6mm}
+.lbl::before{content:""!important;display:block!important;width:1.8mm;height:1.8mm;background:var(--ink)!important;box-shadow:none!important;border-radius:0}
+h3{font-family:"Zen Kaku Gothic New",sans-serif!important;font-weight:700!important;font-size:11.5pt!important;letter-spacing:.02em!important;line-height:1.45}
+.small{font-size:8.8pt!important;color:var(--sub)!important;line-height:1.7}
+.note{font-size:7.6pt!important;color:var(--mute)!important}
+ul.dot li::before{background:var(--ink)!important;width:1.6mm}
+.card{border-top:.3mm solid var(--ink)!important}
+.soft{background:#F1F2F4!important}
+.tag,.pill{background:var(--ink)!important;color:#fff!important;border:none!important;font-size:7.5pt!important;padding:.25mm 1.5mm!important;letter-spacing:.06em}
+.tag.g,.tag.c,.tag.o,.tag.n{background:var(--ink)!important}
+.tbd{color:var(--coral)!important;border-color:var(--coral)!important}
+.band{border-top:.6mm solid var(--ink)!important;font-weight:700!important;font-size:9.8pt!important;padding-top:2.4mm!important}
+.ph{background:#E9EBEE!important;color:#6C7077!important}
+.ph .phl{opacity:.75}
+/* tables */
+.est th,.mp th,.stf th{background:none!important;color:var(--ink)!important;border-bottom:.5mm solid var(--ink)!important;font-weight:700}
+.est td,.mp td,.stf td{border-bottom:.2mm solid var(--line)!important}
+.est tr.sum td,.mp tr.sum td,.stf tr.sum td{background:none!important;border-top:.4mm solid var(--ink)!important;font-weight:700}
+.est tr.total td{background:var(--ink)!important;color:#fff!important}
+.tt-table th,.gantt th{background:var(--ink)!important;color:#fff!important}
+.gantt th.sub{background:#F1F2F4!important;color:var(--sub)!important}
+.tt-table td.h{background:#F1F2F4!important;font-weight:700}
+.toc .row{border-bottom:.25mm solid var(--ink)!important}
+.toc .no{font-family:Lato,sans-serif!important;font-weight:300!important;font-size:22pt!important}
+.tl .m{background:var(--ink)!important;color:#fff!important;border-radius:0!important}
+section .ph .pht{line-height:1.3}
+</style>
+</head>
+<body>
+
+<!-- ============ 表紙 ============ -->
+<section class="page cover">
+  
+  <div style="position:absolute;left:20mm;top:30mm;width:120mm">
+    <div class="kicker" style="font-size:11pt;letter-spacing:.3em;color:var(--sub);font-weight:700">企画提案書</div>
+    <h1 style="font-size:21pt;font-weight:900;letter-spacing:.06em;line-height:1.55;margin-top:5mm">那珂川の水辺空間を活かした<br>回遊促進・賑わい創出事業<br>企画運営業務委託</h1>
+    <div style="margin-top:4mm;font-size:12pt;letter-spacing:.12em">― 提案競技 企画提案書 ―</div>
+  </div>
+  <div style="position:absolute;left:20mm;top:96mm;width:118mm">
+    <div class="note" style="letter-spacing:.3em;margin-bottom:2.5mm">STATEMENT</div>
+    <p class="mincho" style="font-size:10pt;line-height:2.1;letter-spacing:.08em;font-weight:500">この春、那珂川の護岸と橋梁に新しい灯りがともります。本イベントは、そのお披露目の場です。<br>私たちは、福岡市が「リバーフロントNEXT」として進める、川に向かって開かれたまちづくりの方針を理解し、共有しています。この9日間を一度きりの催しで終わらせず、街として川沿いの価値を高め続けていくための、最初の一歩として企画しました。</p>
+  </div>
+  <div class="ph dark" style="position:absolute;right:18mm;top:22mm;width:128mm;height:104mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">キービジュアル<br>（デザイナー制作）</span></div>
+  <div style="position:absolute;left:20mm;bottom:20mm;font-size:11pt;line-height:1.9;letter-spacing:.06em">令和8年11月　日 提出<div style="border-top:.3mm solid var(--line);padding-top:2mm;margin-top:2mm;color:var(--sub)">【正本のみ記載】提案者名／担当者氏名／連絡先</div></div>
+  <div style="position:absolute;right:18mm;bottom:20mm;text-align:right"><div class="en" style="font-size:26pt;font-weight:900;letter-spacing:.06em;line-height:1.05">NAKAGAWA RIVER NIGHTS</div><div style="font-size:12pt;letter-spacing:.2em;margin-top:2mm;color:var(--sub)">川が、夜のステージになる。（仮）</div></div>
+</section>
+
+<!-- ============ 目次 ============ -->
+<section class="page">
+  <div class="hd">目次</div>
+  <div class="catch" style="margin-top:8mm">CONTENTS</div>
+  <div class="toc">
+    <div class="row"><div class="no">1</div><div class="tt">実施内容<small>コンセプト・KV／会場とプログラム／ヘッドライナー／回遊とアート／今後の展開</small></div><div class="pt">配点 60</div><div class="pg">1–5</div></div>
+    <div class="row"><div class="no">2</div><div class="tt">広報・プロモーション<small>SNSを軸にした国内外来街者への情報拡散</small></div><div class="pt">配点 10</div><div class="pg">6</div></div>
+    <div class="row"><div class="no">3</div><div class="tt">運営体制<small>実施体制・安全管理・関係者調整</small></div><div class="pt">配点 10</div><div class="pg">7</div></div>
+    <div class="row"><div class="no">4</div><div class="tt">運営スケジュール<small>契約から報告書提出までの全体工程</small></div><div class="pt">配点 5</div><div class="pg">8</div></div>
+    <div class="row"><div class="no">5</div><div class="tt">追加提案<small>事業者独自の取組み</small></div><div class="pt">配点 5</div><div class="pg">9</div></div>
+    <div class="row"><div class="no" style="font-size:13pt">別紙</div><div class="tt">見積書</div><div class="pt"></div><div class="pg">10</div></div>
+  </div>
+</section>
+
+<!-- ============ 1-1 コンセプト ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-1 コンセプト・テーマ・ターゲット</div>
+  <div class="pno">1</div>
+  <div class="catch" style="margin-bottom:3mm">那珂川を「渡る川」から、<em>夜に「巡る川」へ。</em></div>
+  <div class="grid grow" style="grid-template-columns:150mm 1fr;gap:4mm">
+    <div class="ph" style="border-width:.5mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">KEY VISUAL</span><span class="pht" style="font-size:12pt">イベントキービジュアル<br>（デザイナー制作）</span></div>
+    <div class="grid" style="gap:3mm;grid-template-rows:auto 1fr auto">
+      <div class="card" style="border-color:var(--teal);border-width:.5mm">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span class="pill">テーマ</span><span class="tbd">仮・別途確定</span></div>
+        <div class="kvtitle">NAKAGAWA<br>RIVER NIGHTS</div>
+        <div class="mincho" style="font-size:13pt">川が、夜のステージになる。</div>
+              </div>
+      <div style="padding:1mm 0">
+        <div class="note" style="letter-spacing:.2em;margin-bottom:1.5mm">CONCEPT<span class="tbd" style="margin-left:2mm">仮</span></div>
+        <p class="mincho" style="font-size:9.8pt;line-height:1.95;letter-spacing:.06em;font-weight:500">天神と中洲のあいだを流れる那珂川は、夜になると、ただ渡るだけの川になる。新しくなった清流公園と、灯りをまとった護岸。そのあいだを、音楽とパフォーマンス、水上のステージ、アートと食でつなぎ、川沿いをひとつの夜の回廊にする。歩くほどに、次の楽しみが見えてくる。那珂川を、この街の夜の目的地へ。</p>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:1.5mm">
+        <div class="lbl" style="margin:0">ターゲット</div>
+        <div><span class="tag">メイン</span> <b>国内外の観光客</b><div class="small">アジアからの訪日客・国内旅行者（20〜40代）</div></div>
+        <div><span class="tag g">サブ</span> <b>都市圏の来街者</b><div class="small">天神・中洲で夜を過ごす20〜40代</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="soft" style="margin-top:3mm;padding:2mm 3.5mm"><b>課題といまの理由</b><span class="small">　川は「橋を渡るだけ」の通過空間。清流公園の供用とライトアップ完成（R9.2予定）で、<b class="t">水辺の「お披露目」</b>の時期を迎える</span></div>
+  <div class="band" style="margin-top:2.5mm">目標（仮）：延べ来場 <em class="num">100,000</em>人 ／ 回遊参加 <em class="num">10,000</em>人 ／ 平均滞在 <em>＋60分</em> ／ SNS投稿 <em class="num">10,000</em>件</div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 1-2 全体計画 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-2 会場配置・夜間景観と水辺のコンテンツ</div>
+  <div class="pno">2</div>
+  <div class="catch">岸辺・橋の上・川面の上に、6つの「夜の目的地」を置く</div>
+  <div class="grid grow" style="grid-template-columns:150mm 1fr;gap:6mm">
+    <div style="display:flex;flex-direction:column;gap:3mm;min-height:0"><svg viewBox="0 0 2000 1216" width="100%" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+  <image href="img/area-map.webp" x="0" y="0" width="2000" height="1216"/>
+  <rect width="2000" height="1216" fill="#fff" opacity=".18"/>
+  <polyline points="500,265 640,320 780,375 880,440 960,540 1005,640 1020,700" fill="none" stroke="#F2C14E" stroke-width="12" stroke-dasharray="26 14" stroke-linecap="round"/>
+  <text x="430" y="215" font-size="36" font-weight="700" fill="#8A5A00" stroke="#fff" stroke-width="8" paint-order="stroke" transform="rotate(14 430 215)">護岸・橋梁ライトアップ区間</text>
+  <g><circle cx="500" cy="525" r="38" fill="#3B95A9" stroke="#fff" stroke-width="5"/><text x="500" y="540" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">A</text><text x="466" y="533" text-anchor="end" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">貴賓館前ステージ</text></g>
+  <g><circle cx="1125" cy="765" r="38" fill="#3B95A9" stroke="#fff" stroke-width="5"/><text x="1125" y="780" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">B</text><text x="1175" y="825" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">春吉橋ミニステージ</text></g>
+  <g><circle cx="1395" cy="1120" r="38" fill="#5AAE8C" stroke="#fff" stroke-width="5"/><text x="1395" y="1135" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">C</text><text x="1361" y="1128" text-anchor="end" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">水上ステージ（南端広場）</text></g>
+  <g><circle cx="600" cy="450" r="38" fill="#5AAE8C" stroke="#fff" stroke-width="5"/><text x="600" y="465" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">D</text><text x="634" y="490" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">屋形船ジャズ</text></g>
+  <g><circle cx="870" cy="430" r="38" fill="#F0A030" stroke="#fff" stroke-width="5"/><text x="870" y="445" text-anchor="middle" font-size="44" font-weight="900" fill="#fff" font-family="Lato,sans-serif">E</text><text x="904" y="416" text-anchor="start" font-size="42" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="12" paint-order="stroke" stroke-linejoin="round">マルシェ（北側プロムナード）</text></g>
+  <g><rect x="423" y="568" width="64" height="64" fill="#FC7D78" stroke="#fff" stroke-width="5"/><text x="455" y="610" text-anchor="middle" font-size="40" font-weight="900" fill="#fff" font-family="Lato,sans-serif">1</text><text x="425" y="608" text-anchor="end" font-size="38" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="11" paint-order="stroke" stroke-linejoin="round">DOBくん</text></g>
+  <g><rect x="1153" y="673" width="64" height="64" fill="#FC7D78" stroke="#fff" stroke-width="5"/><text x="1185" y="715" text-anchor="middle" font-size="40" font-weight="900" fill="#fff" font-family="Lato,sans-serif">2</text><text x="1227" y="675" text-anchor="start" font-size="38" font-weight="700" fill="#16181C" stroke="#fff" stroke-width="11" paint-order="stroke" stroke-linejoin="round">NONOTAK</text></g>
+  <text x="40" y="1190" font-size="22" fill="#16181C" stroke="#fff" stroke-width="6" paint-order="stroke">※位置はイメージ</text>
+</svg><div style="flex:1;min-height:20mm;position:relative;overflow:hidden;min-height:30mm"><img src="img/birdseye.webp" alt="エリア鳥瞰図" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"><span style="position:absolute;left:2mm;bottom:1.5mm;font-size:6.5pt;color:#fff;text-shadow:0 0 1.5mm rgba(0,0,0,.6)">エリア鳥瞰図（清流公園の再整備後イメージ）</span></div></div>
+    <div style="display:flex;flex-direction:column;gap:3mm;min-height:0">
+      <div class="grid" style="grid-template-columns:1fr;grid-auto-rows:1fr;gap:1mm;flex:1">
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag ">A</span> <b>貴賓館前ステージ</b><span class="note">　天神中央公園</span><div class="small">明治の洋館とライトアップを背にした、北のメインステージ。DJ・ジャズ・サーカスの日替わりプログラム</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">貴賓館前ステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag ">B</span> <b>春吉橋ミニステージ</b><span class="note">　清流公園 橋上広場</span><div class="small">DJ・アコースティック。橋の上から川とライトアップを見渡せる、南のステージ</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">春吉橋ミニステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag g">C</span> <b>水上ステージ</b><span class="note">　南端広場前・三連休</span><div class="small">南端広場の前に台船を係留した、川に浮かぶステージ。三連休に開き、最終日はメインアクトの舞台に</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">水上ステージ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag g">D</span> <b>屋形船ジャズ</b><span class="note">　福博であい橋周辺</span><div class="small">屋形船の上でジャズを生演奏。乗船は有料・予約制で、岸辺にも音が流れる</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">屋形船ジャズ</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag c">1・2</span> <b>常設アート</b><span class="note">　貴賓館前／橋上広場</span><div class="small">DOBくん（貴賓館前）とNONOTAK（橋上広場）を、川沿いを巡る北と南の起点に置く</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">常設アート</span></div></div>
+        <div style="border-top:.25mm solid var(--line);padding-top:1mm;display:grid;grid-template-columns:1fr 30mm;gap:3mm;min-height:0"><div><span class="tag o">E</span> <b>マルシェ</b><span class="note">　北側プロムナード</span><div class="small">北側プロムナードに食・酒・クラフトの夜市。GohGan の特別ブースと屋台連携</div></div><div class="ph" style="min-height:0;height:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">マルシェ</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="band">北（A・①）と南（B・②・C）の両端に核を置き、その間の川沿いを歩かせる。照明はライトアップ箇所と河川面に当てない</div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 1-3 夜間景観・水辺コンテンツ ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-3 ヘッドライナー・ステージ別ラインナップ</div>
+  <div class="pno">3</div>
+  <div class="catch">川に浮かぶステージに、トップアーティストと世界のパフォーマンスを</div>
+  <div class="lbl">HEADLINERS<span class="note" style="font-weight:400;margin-left:2mm">出演候補（未交渉）</span></div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;gap:8mm">
+    <div style="display:grid;grid-template-columns:44mm 1fr;gap:4mm;align-items:center">
+      <div class="ph" style="height:26mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">アイナ・ジ・エンド アーティスト写真</span></div>
+      <div><div class="note">C 水上（台船）｜3/22 FINAL</div><div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:16pt;letter-spacing:.06em;line-height:1.3">アイナ・ジ・エンド</div><div class="small" style="margin-top:1mm">唯一無二の歌声と表現で注目を集めるシンガーソングライター。三連休の最終日、南端広場の台船ステージで公演（整理券制）</div></div></div>
+    <div style="display:grid;grid-template-columns:44mm 1fr;gap:4mm;align-items:center">
+      <div class="ph" style="height:26mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">RIVERSIDE CIRCUS パフォーマー写真</span></div>
+      <div><div class="note">A 貴賓館前｜サーカスDAY</div><div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:16pt;letter-spacing:.06em;line-height:1.3">RIVERSIDE CIRCUS<span style="font-size:9pt;font-weight:500;margin-left:1.5mm">（仮称）</span></div><div class="small" style="margin-top:1mm">シルク・ドゥ・ソレイユなど、世界レベルのパフォーマーが出演する、川辺のサーカス</div></div></div>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:3mm">
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:16mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Aステージ イメージパース</span></div>
+      <div><span class="tag ">A</span> <b>貴賓館前ステージ</b> <span class="note">17:30–21:30</span></div>
+      <ul class="dot small"><li>RIVERSIDE CIRCUS（仮称）：シルク・ドゥ・ソレイユなど世界レベルのパフォーマー</li><li>JAZZ NIGHT（国内外のジャズアーティスト）</li><li>DJ 沖野修也／Licaxxx</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:16mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Bステージ イメージパース</span></div>
+      <div><span class="tag ">B</span> <b>春吉橋ミニステージ</b> <span class="note">17:30–22:00</span></div>
+      <ul class="dot small"><li>ジャズトリオ・アコースティックライブ</li><li>DJ</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:16mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">Cステージ（台船） イメージパース</span></div>
+      <div><span class="tag g">C</span> <b>水上ステージ</b> <span class="note">三連休 19:00–21:00</span></div>
+      <ul class="dot small"><li><b>アイナ・ジ・エンド</b>（3/22 FINAL）</li><li>ジャズライブ</li><li>THEATER 010 パフォーマーの特別演目</li></ul></div>
+    <div style="display:flex;flex-direction:column;gap:1.2mm;border-top:.25mm solid var(--line);padding-top:1.6mm">
+      <div class="ph" style="height:16mm;flex:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">屋形船ジャズ イメージパース</span></div>
+      <div><span class="tag g">D</span> <b>屋形船ジャズ</b> <span class="note">毎夜3便</span></div>
+      <ul class="dot small"><li>国内外のジャズミュージシャン</li><li>TOKU／小沼ようすけ</li><li>GohGan 監修の料理</li></ul></div>
+  </div>
+  <div style="margin-top:auto">
+    <div class="lbl">9日間のスケジュール（案）<span class="note" style="font-weight:400;margin-left:2mm">3/20〜22の三連休をクライマックスに</span></div>
+    <table class="tt-table" style="font-size:8pt;table-layout:fixed"><tr><th style="width:11%"></th><th>3/14<span style="font-weight:400">（日）</span></th><th>3/15<span style="font-weight:400">（月）</span></th><th>3/16<span style="font-weight:400">（火）</span></th><th>3/17<span style="font-weight:400">（水）</span></th><th>3/18<span style="font-weight:400">（木）</span></th><th>3/19<span style="font-weight:400">（金）</span></th><th>3/20<span style="font-weight:400">（土）</span></th><th>3/21<span style="font-weight:400">（日・祝）</span></th><th>3/22<span style="font-weight:400">（月・振休）</span></th></tr><tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal)">OPENING<br>DJ</div></td><td><div class="cell" style="background:var(--teal)">JAZZ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal)">RIVERSIDE<br>CIRCUS</div></td><td><div class="cell" style="background:var(--teal)">DJ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal)">RIVERSIDE<br>CIRCUS</div></td><td><div class="cell" style="background:var(--teal)">JAZZ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal)">RIVERSIDE<br>CIRCUS</div></td><td><div class="cell" style="background:var(--teal)">JAZZ<br>NIGHT</div></td><td><div class="cell" style="background:var(--teal)">CLOSING<br>DJ</div></td></tr><tr><td class="h">B 春吉橋</td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">ACOUSTIC</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">ACOUSTIC</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">ACOUSTIC</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">DJ</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">ACOUSTIC</div></td><td><div class="cell" style="background:var(--teal-m);color:#0B1524">DJ</div></td></tr><tr><td class="h">C 水上</td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="cell" style="background:var(--green)">THEATER<br>010</div></td><td><div class="cell" style="background:var(--green)">JAZZ<br>LIVE</div></td><td><div class="cell" style="background:var(--coral)">FINAL<br>アイナ・<br>ジ・エンド</div></td></tr><tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td><td><div class="cell" style="background:#5AAE8C">JAZZ</div></td></tr></table>
+  </div>
+  <div class="ft"><span></span><span></span></div></section>
+
+<!-- ============ 1-4 回遊の仕組み・フォトスポット ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-4 回遊促進の仕組み・アート／フォトスポット</div>
+  <div class="pno">4</div>
+  <div class="catch">時間差のステージと、世界的なアートで、川沿いを歩かせる</div>
+  <div class="grid" style="grid-template-columns:1.25fr 1fr;gap:6mm">
+    <div class="card">
+      <div class="lbl">リレー型タイムテーブル（例）</div>
+      <table class="tt-table" style="font-size:9.5pt">
+        <tr><th style="width:24%"></th><th>18:00</th><th>18:45</th><th>19:30</th><th>20:15</th><th>21:00</th></tr>
+        <tr><td class="h">A 貴賓館前</td><td><div class="cell" style="background:var(--teal)">DJ</div></td><td></td><td><div class="cell" style="background:var(--teal)">LIVE</div></td><td></td><td><div class="cell" style="background:var(--teal)">LIVE</div></td></tr>
+        <tr><td class="h">B 春吉橋</td><td></td><td><div class="cell" style="background:var(--teal-m);color:var(--teal-d)">LIVE</div></td><td></td><td><div class="cell" style="background:var(--teal-m);color:var(--teal-d)">DJ</div></td><td></td></tr>
+        <tr><td class="h">C 水上（三連休）</td><td></td><td></td><td><div class="cell" style="background:var(--green)">SHOW</div></td><td></td><td><div class="cell" style="background:var(--coral)">MAIN</div></td></tr>
+        <tr><td class="h">D 屋形船</td><td><div class="cell" style="background:#5AAE8C">便1</div></td><td></td><td><div class="cell" style="background:#5AAE8C">便2</div></td><td></td><td><div class="cell" style="background:#5AAE8C">便3</div></td></tr>
+      </table>
+      <div class="note" style="margin-top:1.2mm">南北の演目を約45分ずらし、「次はあっち」で川沿いの往復を生む</div>
+    </div>
+    <div class="card" style="display:grid;grid-template-columns:26mm 1fr;gap:3mm">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">スタンプラリー 画面イメージ</span></div>
+      <div><div class="lbl">デジタルスタンプラリー</div>
+        <div class="small">QRで参加。5言語対応・インストール不要</div>
+        <ul class="dot small" style="margin-top:1mm"><li>010 BUILDING もスポットに追加</li><li>3か所で周辺店舗のクーポン</li><li>全制覇で限定ノベルティ・屋形船の抽選</li></ul></div>
+    </div>
+  </div>
+  <div class="card grow" style="margin-top:4mm;display:flex;flex-direction:column">
+    <div class="lbl">常設アート＝フォトスポット（2か所・イベント後も常設）</div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:6mm;flex:1;min-height:0">
+      <div class="grid" style="grid-template-columns:46mm 1fr;gap:4mm;min-height:0">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">DOBくん 作品画像</span></div>
+      <div style="display:flex;flex-direction:column;gap:1.2mm;min-height:0">
+        <div class="note">01｜貴賓館前広場（天神側の入口）</div>
+        <div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:15pt;letter-spacing:.06em;line-height:1.2">DOBくん</div>
+        <div style="display:flex;gap:2.5mm;align-items:center"><div class="ph" style="height:13mm;width:13mm;min-height:0;padding:0!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">作家</span></div><b style="font-size:9.5pt">村上隆（むらかみ・たかし）</b></div>
+        <div class="note" style="line-height:1.6;color:var(--sub)">1962年東京都生まれ。現代美術家。日本の美術とサブカルチャーをつなぐ「スーパーフラット」を提唱し、世界各地の美術館で展覧会を開く。DOBくんは1993年に生まれた、村上作品を代表するキャラクター</div>
+        <div class="small" style="margin-top:auto;border-top:.25mm solid var(--line);padding-top:1.2mm">天神から川へ向かう入口に置く<b>北の起点</b></div>
+      </div></div>
+      <div class="grid" style="grid-template-columns:46mm 1fr;gap:4mm;min-height:0">
+      <div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">NONOTAK 作品画像</span></div>
+      <div style="display:flex;flex-direction:column;gap:1.2mm;min-height:0">
+        <div class="note">02｜清流公園 橋上広場</div>
+        <div style="font-family:'Shippori Mincho',serif;font-weight:800;font-size:15pt;letter-spacing:.06em;line-height:1.2">NONOTAK</div>
+        <div style="display:flex;gap:2.5mm;align-items:center"><div class="ph" style="height:13mm;width:13mm;min-height:0;padding:0!important"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">作家</span></div><b style="font-size:9.5pt">NONOTAK Studio（ノノタック）</b></div>
+        <div class="note" style="line-height:1.6;color:var(--sub)">パリを拠点に活動するアートユニット。イラストレーターのノエミ・シュパーと、建築家でミュージシャンのタカミ・ナカモトによる。光と音で没入型の空間をつくるインスタレーションを世界各地で発表</div>
+        <div class="small" style="margin-top:auto;border-top:.25mm solid var(--line);padding-top:1.2mm">春吉橋側の<b>南の起点</b>。光は内向きに設計し、ライトアップと河川面に干渉させない</div>
+      </div></div>
+    </div>
+    <div class="note" style="margin-top:1.5mm">※設置・維持管理は公園管理者と協議。作家プロフィールは最終確認のうえ記載</div>
+  </div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 1-5 継続的な賑わい ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">1 実施内容</span>｜1-5 継続的な賑わい創出・今後の展開</div>
+  <div class="pno">5</div>
+  <div class="catch" style="margin-bottom:3mm">1週間で終わらせない。<em>「残るもの」と「続く仕組み」</em>をイベントで仕込む</div>
+  <div class="grid grow" style="grid-template-columns:repeat(3,1fr);gap:4mm">
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5mm">
+      <div class="ph" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">常設アートのある<br>川沿いの夜景イメージ</span></div>
+      <div><span class="pill" style="background:var(--coral)">残る</span> <b style="font-size:13pt;margin-left:1mm">常設アート2基</b></div>
+      <div class="small">会期後も<b class='t'>定番フォトスポット</b>として来訪の理由に</div></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5mm">
+      <div class="ph" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">多言語回遊マップの<br>デザインイメージ</span></div>
+      <div><span class="pill" style="background:var(--teal)">歩ける</span> <b style="font-size:13pt;margin-left:1mm">夜の回遊マップ</b></div>
+      <div class="small">ホテル・観光案内所・空港で配布し、<b class='t'>いつでも使える</b>ガイドに</div></div>
+    <div class="card" style="display:flex;flex-direction:column;gap:1.5mm">
+      <div class="ph" style="flex:1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">水上ライブ・マルシェの<br>定期開催イメージ</span></div>
+      <div><span class="pill" style="background:var(--green)">続く</span> <b style="font-size:13pt;margin-left:1mm">定期プログラム化</b></div>
+      <div class="small">反響の大きい企画を<b class='t'>民間主体で定期開催</b></div></div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1.15fr;gap:4mm">
+    <div class="card">
+      <div class="lbl">夜のモデルコース（例）</div>
+      <div style="display:grid;gap:1mm">
+        <div><span class="tag">90分</span> 天神 → DOBくん → であい橋 → 屋台</div>
+        <div><span class="tag g">2時間</span> 屋形船 → プロムナード → NONOTAK</div>
+        <div><span class="tag o">はしご</span> マルシェ → 春吉 → 中洲 → 屋台</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="lbl">展開ロードマップ（案）</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2mm">
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--teal)"><b class="num">2027.3</b><div class="small">本イベント<br>アート設置</div></div>
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--green)"><b class="num">2027年度</b><div class="small">定期開催を<br>試行</div></div>
+        <div class="soft" style="padding:2mm;border-top:1mm solid var(--orange)"><b class="num">2028〜</b><div class="small">須崎公園まで<br>延伸・民間運営へ</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 2 広報 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">2 広報・プロモーション</span></div>
+  <div class="pno">6</div>
+  <div class="catch" style="margin-bottom:2.5mm">街なかで知らせ、SNSで国内外へ広げる</div>
+  <div class="card" style="padding:1mm 1.5mm;margin-bottom:3mm">
+    <div class="tl">
+      <div><span class="m" style="background:var(--teal-m);color:var(--teal-d)">12月</span><ul><li><b>12/下</b> 公式SNS開設</li><li>ライトアップ工事・アート制作のティザー発信</li></ul></div>
+      <div><span class="m" style="background:var(--teal)">1月</span><ul><li><b>1/中</b> 公式サイト公開（5言語）</li><li><b>発表①</b> 開催決定・第1弾出演者</li></ul></div>
+      <div><span class="m" style="background:var(--teal-d)">2月</span><ul><li><b>発表②</b> メインアクト・整理券応募開始</li><li><b>2/下 発表③</b> 点灯式×アート除幕（記者発表会）</li></ul></div>
+      <div><span class="m" style="background:var(--navy)">3月上旬</span><ul><li>市政だより掲載、シティドレッシング開始（博多駅・天神・地下鉄）</li><li>海外向け広告を強化、インフルエンサー来福</li></ul></div>
+      <div><span class="m" style="background:var(--coral)">会期中・後</span><ul><li>毎日の見どころ・混雑情報、ライブ配信</li><li><b>発表④</b> 実績リリース・アフタームービー</li></ul></div>
+    </div>
+  </div>
+  <div class="grid grow" style="grid-template-columns:repeat(3,1fr);gap:5mm;margin-bottom:3mm">
+    <div class="card" style="display:flex;flex-direction:column;gap:1.6mm;min-height:0">
+      <div class="note" style="letter-spacing:.2em">SNS｜DOMESTIC</div>
+      <div class="lbl" style="margin:0">SNS（国内）</div>
+      <ul class="dot small"><li>Instagram・TikTok・Xで、出演者発表から会期中の見どころまで毎日発信</li><li>公式ハッシュタグの<b>フォトコンテスト</b>。アート前に撮影ポイントを示し、来場者の投稿を増やす</li><li>会期中はライブ配信とショート動画で「いま行ける」を伝える</li></ul>
+      <div class="ph" style="flex:1;min-height:14mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">SNS投稿イメージ</span></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:1.6mm;min-height:0">
+      <div class="note" style="letter-spacing:.2em">SNS｜OVERSEAS</div>
+      <div class="lbl" style="margin:0">SNS（海外・インバウンド）</div>
+      <ul class="dot small"><li>韓国・台湾・香港のインフルエンサーを招き、現地のSNSで発信</li><li>公式サイトとSNSは5言語（日・英・韓・繁中・簡中）</li><li>訪日予定者に向けたSNS広告、空港・ホテル・観光案内所に多言語の案内</li></ul>
+      <div class="ph" style="flex:1;min-height:14mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">海外インフルエンサー発信イメージ</span></div>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;gap:1.6mm;min-height:0">
+      <div class="note" style="letter-spacing:.2em">CITY DRESSING</div>
+      <div class="lbl" style="margin:0">シティドレッシング</div>
+      <ul class="dot small"><li><b>無償</b>：キャナルシティ博多・清流公園をフラッグ・バナーで装飾</li><li><b>協力</b>：博多駅・天神は、行政の広告枠と西鉄エージェンシーとの協力でサイネージ・ポスター面を確保</li><li><b>タイアップ</b>：地下鉄のタイアップコンテンツで駅構内・車内の面を獲得</li></ul>
+      <div class="ph" style="flex:1;min-height:14mm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">シティドレッシング イメージ</span></div>
+    </div>
+  </div>
+  <table class="mp" style="table-layout:fixed">
+    <tr><th style="width:12%">施策</th><th>シティドレッシング</th><th>公式サイト</th><th>SNS運用</th><th>SNS広告</th><th>インフルエンサー</th><th>メディアPR</th><th>印刷物</th><th>合計</th></tr>
+    <tr><td><b>KPI（仮）</b></td><td>主要動線を装飾</td><td>20万PV</td><td>投稿1万件</td><td>リーチ500万</td><td>投稿60本</td><td>掲載50件</td><td>配布3万部</td><td></td></tr>
+    <tr class="sum"><td><b>費用（円）</b></td><td class="r">400,000</td><td class="r">700,000</td><td class="r">600,000</td><td class="r">600,000</td><td class="r">500,000</td><td class="r">250,000</td><td class="r">150,000</td><td class="r"><b>3,200,000</b></td></tr>
+  </table>
+  <div class="band" style="margin-top:2.5mm">街なかの面で会期を知らせ、SNSで国内外へ広げる。<em>来場者の投稿が次の来場者を呼ぶ</em>循環をつくる</div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 3 運営体制 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">3 運営体制</span></div>
+  <div class="pno">7</div>
+  <div class="catch" style="margin-bottom:2.5mm">運営責任者のもとで<em>全会場に人を配置し</em>、安全を最優先に動かす</div>
+  <div class="grid grow" style="grid-template-columns:78mm 1fr 76mm;gap:3.5mm">
+    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column;gap:2mm">
+      <div class="lbl" style="margin:0">実施体制</div>
+      <div style="display:flex;align-items:center;gap:2mm;justify-content:center">
+        <div class="soft" style="text-align:center;padding:1.5mm 3mm;font-weight:700;font-size:10pt">福岡市</div>
+        <div style="color:var(--teal)">⇄</div>
+        <div style="text-align:center;padding:1.5mm 3mm;background:var(--teal);color:#fff;border-radius:2mm;font-weight:700;font-size:10pt">代表事業者（統括）<div style="font-weight:400;font-size:9pt">運営責任者：○○○○</div></div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:1.4mm;font-size:9.5pt;text-align:center">
+        <div class="soft" style="padding:1.2mm"><b>企画・制作</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>ステージ制作</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>キャスティング</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>水上運営</b><div style="color:var(--sub)">[舟運事業者]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>アート</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>回遊・デジタル</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>広報・PR</b><div style="color:var(--sub)">[構成員名]</div></div>
+        <div class="soft" style="padding:1.2mm"><b>警備・安全</b><div style="color:var(--sub)">[警備会社]</div></div>
+      </div>
+      <div style="display:grid;gap:1.4mm;font-size:9pt">
+        <div style="border:.25mm solid var(--teal);padding:1.2mm 2mm"><b>連携｜清流公園 指定管理者（FJグループ）</b><div class="note">三連休（3/20〜22）の会場枠を本イベントに提供</div></div>
+        <div style="border:.25mm solid var(--teal);padding:1.2mm 2mm"><b>自社｜THEATER 010・GohGan（010 BUILDING）</b><div class="note">演目・料理監修で全面協力</div></div>
+      </div>
+      <ul class="dot" style="margin-top:auto;font-size:11pt"><li>責任者は<b class="t">完了まで交代なし</b></li><li>市と週1回の定例会</li></ul>
+    </div>
+
+    <div class="card" style="padding:2.5mm;display:flex;flex-direction:column">
+      <div class="lbl" style="margin:0 0 1mm">人員配置図（会期中・イメージ）</div>
+      <div style="flex:1;min-height:0"><svg viewBox="0 0 230 210" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" style="display:block;font-family:'Zen Kaku Gothic New',sans-serif">
+  <rect width="230" height="210" fill="#F5F6F7"/>
+  <path d="M196 0 C 200 60, 210 120, 205 210" fill="none" stroke="#DDEBEE" stroke-width="9"/>
+  <path d="M118 0 C 112 45, 108 80, 112 115 C 116 150, 132 180, 128 210" fill="none" stroke="#CFE3E8" stroke-width="28"/>
+  <g stroke="#6B7075" stroke-width="2"><line x1="92" y1="28" x2="144" y2="28"/><line x1="90" y1="78" x2="138" y2="78"/><line x1="94" y1="128" x2="142" y2="128"/><line x1="94" y1="137" x2="146" y2="137"/></g>
+  <g font-size="6.5" fill="#2A2C28" font-weight="700"><text x="62" y="30">西大橋</text><text x="46" y="80">福博であい橋</text><text x="62" y="126">中洲懸橋</text><text x="64" y="143">春吉橋</text></g>
+  <text x="18" y="16" font-size="8" fill="#A2A3A2" font-weight="700">天神</text><text x="160" y="16" font-size="8" fill="#A2A3A2" font-weight="700">中洲</text>
+  <!-- evacuation / flow arrows -->
+  <g stroke="#5AAE8C" stroke-width="1.4" fill="none" stroke-dasharray="3 2"><path d="M60 102 L20 102"/><path d="M60 112 L20 128"/><path d="M160 150 L200 150"/></g>
+  <g fill="#5AAE8C" font-size="5.5" font-weight="700"><path d="M20 99 L14 102 L20 105Z"/><path d="M20 125 L14 129 L21 131Z"/><path d="M200 147 L206 150 L200 153Z"/><text x="6" y="96">避難・退場</text><text x="190" y="143">退場</text></g>
+  <!-- zones -->
+  <rect x="38" y="90" width="44" height="30" rx="3" fill="#3B95A9" fill-opacity=".14" stroke="#3B95A9" stroke-width=".6"/>
+  <text x="40" y="96" font-size="5.5" fill="#2C7486" font-weight="700">A 観覧エリア</text>
+  <rect x="138" y="140" width="34" height="18" rx="3" fill="#3B95A9" fill-opacity=".14" stroke="#3B95A9" stroke-width=".6"/>
+  <text x="140" y="155" font-size="5.5" fill="#2C7486" font-weight="700">B 橋上広場</text>
+  <rect x="134" y="182" width="40" height="18" rx="3" fill="#5AAE8C" fill-opacity=".14" stroke="#5AAE8C" stroke-width=".6"/>
+  <text x="136" y="197" font-size="5.5" fill="#2E7D63" font-weight="700">C 南端広場（整理券エリア）</text>
+  <!-- HQ & first aid -->
+  <g><rect x="60" y="108" width="16" height="9" rx="1.5" fill="#3B95A9"/><text x="68" y="114.5" font-size="5.5" fill="#fff" text-anchor="middle" font-weight="700">本部</text></g>
+  <g transform="translate(46 112)"><circle r="4.5" fill="#F5F6F7" stroke="#FC7D78" stroke-width="1"/><path d="M-2.6 0H2.6M0 -2.6V2.6" stroke="#FC7D78" stroke-width="1.4"/></g>
+  <g transform="translate(176 168)"><circle r="4.5" fill="#F5F6F7" stroke="#FC7D78" stroke-width="1"/><path d="M-2.6 0H2.6M0 -2.6V2.6" stroke="#FC7D78" stroke-width="1.4"/></g>
+  <!-- guards (navy) -->
+  <g fill="#2A2C28"><circle cx="40" cy="88" r="2.4"/><circle cx="82" cy="88" r="2.4"/><circle cx="40" cy="122" r="2.4"/><circle cx="84" cy="122" r="2.4"/><circle cx="92" cy="78" r="2.4"/><circle cx="138" cy="78" r="2.4"/><circle cx="94" cy="128" r="2.4"/><circle cx="146" cy="137" r="2.4"/><circle cx="136" cy="140" r="2.4"/><circle cx="174" cy="158" r="2.4"/><circle cx="132" cy="181" r="2.4"/><circle cx="176" cy="182" r="2.4"/><circle cx="92" cy="28" r="2.4"/><circle cx="144" cy="28" r="2.4"/></g>
+  <!-- patrol route -->
+  <path d="M84 30 L84 86 M150 32 L150 132" stroke="#2A2C28" stroke-width=".7" stroke-dasharray="1.5 2" fill="none"/>
+  <text x="152" y="60" font-size="5.5" fill="#2A2C28">巡回警備</text>
+  <!-- staff (teal triangles) -->
+  <g fill="#3B95A9"><path d="M60 84l3 5h-6z"/><path d="M28 104l3 5h-6z"/><path d="M155 133l3 5h-6z"/><path d="M150 176l3 5h-6z"/><path d="M98 72l3 5h-6z"/><path d="M158 62l3 5h-6z"/></g>
+  <!-- rescue boat -->
+  <g transform="translate(124 194)"><path d="M-7 0 L7 0 L5 4 L-5 4Z" fill="#F0A030"/><rect x="-2" y="-4" width="4" height="4" fill="#F0A030"/></g>
+  <text x="102" y="206" font-size="5.5" fill="#B4691A" font-weight="700">監視船</text>
+  <g transform="translate(112 80)"><path d="M-6 0 L6 0 L4 3.5 L-4 3.5Z" fill="#86C4B0"/></g>
+  <text x="114" y="90" font-size="5.5" fill="#2E7D63">D 屋形船発着</text>
+</svg></div>
+      <div class="lg"><span><i style="background:#2A2C28"></i>警備員</span><span><i style="background:#3B95A9;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)"></i>誘導スタッフ</span><span><i style="background:#fff;border:.4mm solid #F2716B"></i>救護所</span><span><i style="background:#3B95A9;border-radius:.5mm"></i>運営本部</span><span><i style="background:#EE9A2E;border-radius:.5mm"></i>監視船</span><span><i style="background:#4FA88A;border-radius:0;height:.8mm;vertical-align:.6mm"></i>避難・退場の動線</span></div>
+    </div>
+
+    <div class="grid" style="gap:2.5mm;grid-template-rows:auto 1fr">
+      <div class="card" style="padding:2.5mm">
+        <div class="lbl" style="margin:0 0 1mm">配置人数（1日あたり・仮）</div>
+        <table class="stf">
+          <tr><th>配置場所</th><th>平日</th><th>土日</th><th>メイン<br>アクト日</th></tr>
+          <tr><td>運営本部・救護</td><td>6</td><td>6</td><td>8</td></tr>
+          <tr><td>A 貴賓館前</td><td>14</td><td>16</td><td>16</td></tr>
+          <tr><td>B 橋上広場</td><td>8</td><td>10</td><td>10</td></tr>
+          <tr><td>C 南端広場・水上</td><td>–</td><td>10</td><td>40</td></tr>
+          <tr><td>D 屋形船発着</td><td>4</td><td>4</td><td>4</td></tr>
+          <tr><td>マルシェ・橋の巡回</td><td>10</td><td>12</td><td>16</td></tr>
+          <tr class="sum"><td>合計</td><td>42</td><td>58</td><td>94</td></tr>
+        </table>
+      </div>
+      <div class="soft" style="padding:2.5mm 3mm">
+        <div class="lbl" style="margin:0 0 .5mm">安全対策・緊急時対応</div>
+        <ul class="dot" style="font-size:11pt"><li>メインアクトは整理券制、観覧エリアを区切る</li><li>水上：救命胴衣・監視船</li><li>本部に救護所、医療機関と連携</li><li>災害・テロ時の避難誘導、雨・強風時の中止基準</li></ul>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="padding:2mm 3.5mm">
+    <div style="font-size:11pt"><b>関係者調整・許認可</b>　地域・屋台組合、警察・消防、保健所、公園・河川管理者と契約直後から協議し、<b class="t">占用許可・道路使用・食品営業</b>を進める。詳細な警備計画は実施計画書で示す</div>
+  </div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 4 スケジュール ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">4 運営スケジュール</span></div>
+  <div class="pno">8</div>
+  <div class="catch" style="margin-bottom:3mm">許認可と出演者の確定を<em>12月中に前倒し</em>し、無理のない工程で3月を迎える</div>
+
+  <div class="card" style="padding:3mm">
+  <table class="gantt">
+    <colgroup><col style="width:44mm"><col span="10"></colgroup>
+    <tr><th style="background:none"></th><th colspan="2">11月</th><th colspan="2">12月</th><th colspan="2">1月</th><th colspan="2">2月</th><th colspan="2">3月</th></tr>
+    <tr><th class="sub" style="background:none"></th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th><th class="sub">上</th><th class="sub">下</th></tr>
+    <tr><td class="item">契約・実施計画書</td><td></td><td><span class="ms" style="left:60%"></span><div class="bar" style="left:75%;width:300%;background:var(--teal)">実施計画書の作成</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">関係者協議・許認可</td><td></td><td><div class="bar" style="left:80%;width:620%;background:var(--teal-d)">公園・河川・警察・保健所との協議と申請</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">出演者交渉・確定</td><td></td><td><div class="bar" style="left:80%;width:330%;background:var(--coral)">出演交渉→確定</div></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">アート制作・設置</td><td></td><td></td><td><div class="bar" style="left:0;width:700%;background:#F2A39F">設計・制作</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:100%;background:var(--coral)">設置</div></td><td></td></tr>
+    <tr><td class="item">会場設計・設営</td><td></td><td></td><td><div class="bar" style="left:0;width:600%;background:var(--teal-m);color:var(--teal-d)">会場設計・資機材手配</div></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:100%;background:var(--teal)">設営</div></td><td></td></tr>
+    <tr><td class="item">回遊ツール開発</td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:400%;background:var(--green)">スタンプラリー開発・テスト</div></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">広報・プロモーション</td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:0;width:600%;background:var(--orange)">サイト公開 → 出演者発表 → 会期中の発信</div></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td class="item">イベント開催</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:40%;width:110%;background:var(--navy)">開催</div></td><td></td></tr>
+    <tr><td class="item">撤去・効果検証・報告</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="bar" style="left:40%;width:60%;background:var(--sub)">報告</div></td></tr>
+  </table>
+  </div>
+
+  <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:2.5mm;margin-top:auto;font-size:11pt">
+    <div class="soft"><b class="num" style="color:var(--coral)">11/25〜</b> 契約締結<div class="small">すぐに関係者協議を開始</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">12月下旬</b> 実施計画書の提出<div class="small">出演者・会場計画を確定</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">3/14〜3/22（案）</b> 開催<div class="small">三連休を含む9日間、夕方〜夜</div></div>
+    <div class="soft"><b class="num" style="color:var(--coral)">3/31</b> 実施報告書の提出<div class="small">効果検証・今後の展開</div></div>
+  </div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+<!-- ============ 5 追加提案 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">5 追加提案</span></div>
+  <div class="pno">9</div>
+  <div class="catch">弊社だから用意できる会場と、コンテンツがある</div>
+  <div class="grid grow" style="grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6mm;margin-bottom:0">
+    <div class="card imgcard" style="grid-template-columns:40% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">南端広場 台船ステージ<br>イメージ</span></div>
+      <div><span class="num" style="font-size:20pt;font-weight:900;color:var(--teal)">01</span><h3>指定管理者の三連休枠で、南端広場に台船ステージを</h3><div class="small" style="margin-top:1mm">3/20〜22の三連休は、本来は清流公園の指定管理者（FJグループ）の利用枠です。弊社はFJグループと連携しているため、<b class='t'>この枠を本イベントに提供してもらえます</b>。三連休の3日間、南端広場の前に台船の水上ステージを開き、最終日はアイナ・ジ・エンドのメインアクトで締めくくります</div></div></div>
+    <div class="card imgcard" style="grid-template-columns:40% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">THEATER 010・GohGan<br>写真</span></div>
+      <div><span class="num" style="font-size:20pt;font-weight:900;color:var(--coral)">02</span><h3>自社の THEATER 010・GohGan を全面投入</h3><div class="small" style="margin-top:1mm"><b>THEATER 010</b>は、ニューヨーク・ロンドンの「THE BOX」の制作チームが演出するイマーシブシアター。<b>GohGan</b>は、福山剛シェフとガガン・アナンド氏によるレストランです。どちらも弊社のコンテンツなので、<b class='t'>水上ステージの特別演目や屋形船・マルシェの料理監修を、本イベントに合わせて組めます</b>。会場の中洲から歩ける010 BUILDINGも、回遊の行き先にします</div></div></div>
+    <div class="card imgcard" style="grid-template-columns:40% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">クーポン画面・<br>参加店舗ステッカー</span></div>
+      <div><span class="num" style="font-size:20pt;font-weight:900;color:var(--green)">03</span><h3>「ナイトパス」で周辺店舗と連携</h3><div class="small" style="margin-top:1mm">スタンプラリーの特典を周辺の飲食店や屋台で使えるようにし、<b class='t'>イベントの外まで消費を広げます</b></div></div></div>
+    <div class="card imgcard" style="grid-template-columns:40% 1fr"><div class="ph" style=""><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg><span class="phl">IMAGE</span><span class="pht">人流ヒートマップの<br>分析イメージ</span></div>
+      <div><span class="num" style="font-size:20pt;font-weight:900;color:var(--orange)">04</span><h3>データで効果を検証する</h3><div class="small" style="margin-top:1mm">人流データ・回遊ログ・アンケートで<b class='t'>滞在時間と消費の変化</b>を示し、次年度以降の判断材料にします</div></div></div>
+  </div>
+  <div class="ft"><span></span><span></span></div>
+</section>
+
+<!-- ============ 見積書 ============ -->
+<section class="page">
+  <div class="hd"><span class="sec">別紙</span>｜見積書<span class="tbd">概算・精査中</span></div>
+  <div class="pno">10</div>
+  <div class="catch" style="margin:3mm 0 3mm;font-size:15pt">見積書（概算）</div>
+  <table class="est">
+    <tr><th style="width:26%">項目</th><th>内訳</th><th style="width:16%;text-align:right">金額（円・税抜）</th></tr>
+    <tr><td>企画・制作管理費</td><td class="d">全体企画、実施計画書の作成、制作進行管理、関係者調整、許認可申請</td><td class="r">2,800,000</td></tr>
+    <tr><td>会場設営・装飾費</td><td class="d">ステージ2か所（A・B）、音響・照明・映像、電源・通信、テント・備品、装飾デザイン</td><td class="r">8,100,000</td></tr>
+    <tr><td>出演・コンテンツ制作費</td><td class="d">メインアクト、サーカス・ジャズ・DJ等の出演料、演出制作</td><td class="r">9,000,000</td></tr>
+    <tr><td>水上ステージ費</td><td class="d">台船の手配・曳航・係留、ステージ設営、水上の安全管理（三連休）</td><td class="r">4,200,000</td></tr>
+    <tr><td>屋形船ジャズ費</td><td class="d">屋形船チャーター、ジャズ出演料、予約システム</td><td class="r">1,600,000</td></tr>
+    <tr><td>アート制作・設置費</td><td class="d">常設アート2基の制作・輸送・設置・基礎工事、キュレーション</td><td class="r">5,500,000</td></tr>
+    <tr><td>回遊施策費</td><td class="d">デジタルスタンプラリーの開発・運用（5言語）、回遊マップ、特典・ノベルティ</td><td class="r">1,400,000</td></tr>
+    <tr><td>マルシェ運営費</td><td class="d">出店者の募集・調整、什器、リユース食器、衛生管理</td><td class="r">1,000,000</td></tr>
+    <tr><td>広報・プロモーション費</td><td class="d">シティドレッシング、公式サイト（5言語）、SNS運用・広告、インフルエンサー招待、PR、印刷物</td><td class="r">3,200,000</td></tr>
+    <tr><td>警備・安全対策費</td><td class="d">警備員の配置、救護所、整理券の運用、保険</td><td class="r">3,300,000</td></tr>
+    <tr><td>運営スタッフ・清掃費</td><td class="d">運営スタッフ、通訳、清掃・廃棄物処理</td><td class="r">1,800,000</td></tr>
+    <tr><td>効果検証・報告書作成費</td><td class="d">人流データ分析、アンケート、実施報告書の作成</td><td class="r">600,000</td></tr>
+    <tr class="sum"><td colspan="2">小計</td><td class="r">42,500,000</td></tr>
+    <tr class="sum"><td colspan="2">消費税及び地方消費税（10%）</td><td class="r">4,250,000</td></tr>
+    <tr class="total"><td colspan="2">合計（提案限度額 46,750,000円 以内）</td><td class="r">46,750,000</td></tr>
+  </table>
+  <div class="note" style="margin-top:1.5mm">※協賛金を得た場合は、上記に上乗せして事業内容の充実にあてる。出演料・アート費は交渉により変わる可能性あり</div>
+  <div class="ft"><span>那珂川の水辺空間を活かした回遊促進・賑わい創出事業企画運営業務委託 企画提案書</span><span></span></div>
+</section>
+
+</body>
+</html>
