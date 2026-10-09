@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+
+/* Layout: summary strip on top, calendar (or vertical schedule) left, day panel right; stacks on phones */
+:root{
+  --bg:#f4f5f9; --surface:#ffffff; --fg:#1c2033; --muted:#5d6380; --line:#dfe2ee;
+  --night:#3d3f8f; --night-soft:#e4e5f6; --night-ink:#2c2e70;
+  --ok:#2f7a4f; --ok-soft:#e1f1e7; --warn:#a85d12; --warn-soft:#fbeedd; --bad:#b0302a; --bad-soft:#f8e3e1;
+  --draft:#6b7090; --draft-soft:#eceef5; --weekend:#f0f1f7;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12131c; --surface:#1b1d2a; --fg:#e7e8f2; --muted:#9a9fbd; --line:#2d3044;
+  --night:#9fa3ff; --night-soft:#272a4d; --night-ink:#c9cbff;
+  --ok:#6fcf97; --ok-soft:#1d3327; --warn:#f0b25e; --warn-soft:#3a2c17; --bad:#f08a82; --bad-soft:#3d1f1d;
+  --draft:#a3a8c6; --draft-soft:#262839; --weekend:#171926; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12131c; --surface:#1b1d2a; --fg:#e7e8f2; --muted:#9a9fbd; --line:#2d3044;
+  --night:#9fa3ff; --night-soft:#272a4d; --night-ink:#c9cbff;
+  --ok:#6fcf97; --ok-soft:#1d3327; --warn:#f0b25e; --warn-soft:#3a2c17; --bad:#f08a82; --bad-soft:#3d1f1d;
+  --draft:#a3a8c6; --draft-soft:#262839; --weekend:#171926; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.6;padding:0 16px 96px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:16px;padding-block:20px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--night);outline-offset:2px}
+
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font-size:22px;margin:0;font-weight:700;text-wrap:balance}
+.sub{color:var(--muted);font-size:13px}
+.sample{display:inline-block;font-size:11px;letter-spacing:.06em;background:var(--warn-soft);color:var(--warn);padding:1px 8px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.toggles{display:flex;gap:8px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:6px 12px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--night);color:var(--surface);font-weight:700}
+
+/* summary */
+.summary{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.tile h2{font-size:12px;letter-spacing:.06em;color:var(--muted);margin:0 0 4px;font-weight:500}
+.big{font-size:28px;font-weight:600;line-height:1.2}
+.big small{font-size:14px;color:var(--muted);font-weight:500}
+.gauge{position:relative;height:14px;background:var(--draft-soft);border-radius:4px;margin:10px 0 22px;overflow:visible}
+.gauge .seg-a,.gauge .seg-p,.gauge .seg-d{position:absolute;top:0;bottom:0}
+.gauge .seg-a{background:var(--night);border-radius:4px 0 0 4px}
+.gauge .seg-p{background:color-mix(in srgb,var(--night) 55%,transparent)}
+.gauge .seg-d{background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--night) 35%,transparent) 0 4px,transparent 4px 8px)}
+.mark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--warn)}
+.mark.law{background:var(--bad)}
+.mark span{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-size:10.5px;white-space:nowrap;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.state{font-size:12.5px;margin-top:4px}
+.state.warn{color:var(--warn)} .state.bad{color:var(--bad)} .state.ok{color:var(--ok)}
+.breakdown{display:flex;flex-direction:column;gap:2px;font-size:12.5px;color:var(--muted);margin-top:6px}
+.breakdown div{display:flex;justify-content:space-between;gap:8px}
+
+/* main */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;min-width:0}
+.cal-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);gap:8px;flex-wrap:wrap}
+.cal-head strong{font-size:16px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr)) 64px}
+.dow{font-size:11.5px;color:var(--muted);text-align:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.dow.wk{background:var(--weekend)}
+.cell{min-height:98px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:5px 5px 6px;display:flex;flex-direction:column;gap:3px;background:transparent;text-align:left;border-top:0;border-left:0;min-width:0}
+.cell.off{background:var(--bg);cursor:default}
+.cell.we{background:var(--weekend)}
+.cell.sel{outline:2px solid var(--night);outline-offset:-2px}
+.cell .d{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.cell .d b{font-weight:600}
+.cell.today .d b{background:var(--night);color:var(--surface);border-radius:999px;padding:0 6px}
+.cell .act{font-size:11px;color:var(--muted)}
+.chip{display:block;font-size:11px;border-radius:4px;padding:1px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid}
+.st-approved{background:var(--ok-soft);border-color:var(--ok);color:var(--fg)}
+.st-pending{background:var(--night-soft);border-color:var(--night);color:var(--fg)}
+.st-draft{background:var(--draft-soft);border-color:var(--draft);color:var(--fg);border-left-style:dashed}
+.st-rejected{background:var(--bad-soft);border-color:var(--bad);color:var(--fg);text-decoration:line-through}
+.cmt{font-size:11px;color:var(--night-ink)}
+.wk-total{border-bottom:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;color:var(--muted);padding:4px}
+.wk-total .num{font-size:15px;color:var(--fg)}
+.wk-total.over{background:var(--warn-soft)}
+.wk-total.over .num{color:var(--warn)}
+
+/* vertical list */
+.list{display:flex;flex-direction:column}
+.wk-head{display:flex;justify-content:space-between;gap:8px;padding:8px 14px;background:var(--bg);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.wk-head.over{background:var(--warn-soft);color:var(--warn)}
+.row{display:grid;grid-template-columns:72px minmax(0,1fr) 64px;gap:10px;padding:8px 14px;border-bottom:1px solid var(--line);background:transparent;border-left:0;border-right:0;border-top:0;text-align:left;width:100%}
+.row.we{background:var(--weekend)}
+.row.sel{outline:2px solid var(--night);outline-offset:-2px}
+.row .dt{font-size:13px}
+.row .dt.today b{color:var(--night)}
+.row .items{display:flex;flex-direction:column;gap:3px;min-width:0}
+.row .items .chip{font-size:12.5px;padding:2px 8px}
+.row .h{text-align:right;font-size:13px;color:var(--muted)}
+.empty{color:var(--muted);font-size:12px}
+
+/* panel */
+.panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);padding:16px;display:flex;flex-direction:column;gap:14px}
+.panel h3{margin:0;font-size:17px}
+.panel h4{margin:0 0 6px;font-size:12px;letter-spacing:.06em;color:var(--muted);font-weight:500}
+.entry{border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px;border-left:4px solid}
+.entry .t{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.entry .t b{font-size:15px}
+.pill{font-size:11px;border-radius:999px;padding:1px 9px;font-weight:700;white-space:nowrap}
+.pill.approved{background:var(--ok-soft);color:var(--ok)}
+.pill.pending{background:var(--night-soft);color:var(--night-ink)}
+.pill.draft{background:var(--draft-soft);color:var(--draft)}
+.pill.rejected{background:var(--bad-soft);color:var(--bad)}
+.entry .meta{font-size:12px;color:var(--muted)}
+.btns{display:flex;gap:6px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:5px 12px;font-size:13px}
+.btn.primary{background:var(--night);border-color:var(--night);color:var(--surface);font-weight:700}
+.btn.okb{background:var(--ok);border-color:var(--ok);color:var(--surface);font-weight:700}
+.btn.badb{color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+form.add{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+form.add label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px}
+form.add .full{grid-column:1/-1}
+select,input[type=text],textarea{border:1px solid var(--line);background:var(--bg);border-radius:7px;padding:6px 8px;width:100%;font-size:13.5px}
+textarea{resize:vertical;min-height:56px}
+.calc{font-size:12.5px;background:var(--night-soft);border-radius:7px;padding:6px 10px;color:var(--night-ink)}
+.thread{display:flex;flex-direction:column;gap:8px}
+.msg{display:flex;flex-direction:column;gap:1px;padding:7px 10px;border-radius:8px;background:var(--bg);font-size:13px}
+.msg.mgr{background:var(--warn-soft)}
+.msg .who{font-size:11.5px;color:var(--muted)}
+.dayact{font-size:13px;color:var(--muted)}
+
+/* bottom bar + sheet */
+.bar{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--line);z-index:5}
+.bar .in{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.bar .msgtxt{font-size:13px;color:var(--muted)}
+.sheet-bg{position:fixed;inset:0;background:color-mix(in srgb,var(--fg) 35%,transparent);z-index:10;display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.sheet{background:var(--surface);border-radius:12px;max-width:560px;width:100%;padding:18px;display:flex;flex-direction:column;gap:12px;max-height:calc(100% - 32px);overflow:auto}
+.sheet h3{margin:0;font-size:17px}
+.sheet table{width:100%;border-collapse:collapse;font-size:13px}
+.sheet td{padding:4px 0;border-bottom:1px solid var(--line)}
+.sheet td:last-child{text-align:right}
+.alert{border-radius:8px;padding:8px 12px;font-size:13px}
+.alert.warn{background:var(--warn-soft);color:var(--warn)}
+.alert.ok{background:var(--ok-soft);color:var(--ok)}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:8px;font-size:13px;z-index:20}
+
+@media (max-width:900px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  .panel{position:static}
+  .summary{grid-template-columns:1fr 1fr}
+  .summary .tile:first-child{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .cal{grid-template-columns:repeat(7,minmax(0,1fr)) 44px}
+  .cell{min-height:64px;padding:3px}
+  .chip{font-size:10px;padding:0 3px}
+  .cell .cmt,.cell .act{display:none}
+  .wk-total{font-size:10px}
+  .wk-total .num{font-size:12px}
+  .row{grid-template-columns:56px minmax(0,1fr) 48px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+
+.monthnav{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:2px}
+.monthnav button{border:0;background:transparent;padding:4px 10px;font-size:15px;border-radius:6px}
+.monthnav button:disabled{opacity:.3;cursor:not-allowed}
+.monthnav strong{font-size:14px;min-width:98px;text-align:center}
+.closed{background:var(--draft-soft);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--muted)}
+.closed b{color:var(--fg)}
+.flag{font-size:10.5px;color:var(--bad);font-weight:700}
+.memsel{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.memsel select{width:auto;background:var(--surface)}
+.summary.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tbl-wrap{overflow-x:auto}
+table.team{width:100%;border-collapse:collapse;font-size:13.5px;min-width:720px}
+table.team th{font-size:11.5px;letter-spacing:.04em;color:var(--muted);font-weight:500;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.team td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.team tbody tr{cursor:pointer}
+table.team tbody tr:hover{background:var(--bg)}
+table.team td.r{text-align:right}
+.mini{position:relative;height:10px;background:var(--draft-soft);border-radius:3px;min-width:140px}
+.mini .fill{position:absolute;left:0;top:0;bottom:0;background:var(--night);border-radius:3px}
+.mini .fill.warn{background:var(--warn)}
+.mini .fill.bad{background:var(--bad)}
+.mini .m40{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--warn)}
+.ot{display:flex;align-items:center;gap:10px}
+.ot .num{min-width:46px;text-align:right}
+.tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{font-size:11px;border-radius:4px;padding:1px 7px;white-space:nowrap}
+.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.tag.info{background:var(--night-soft);color:var(--night-ink)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}
+.st-furi{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:700}
+.chip.hol{font-weight:700}
+.hname{font-size:10.5px;color:var(--bad)}
+.avg{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:10px}
+.avg select{width:auto}
+.namecell{font-weight:700;white-space:nowrap}
+.tile .big.bad{color:var(--bad)} .tile .big.warn{color:var(--warn)}
+@media (max-width:900px){.summary.four{grid-template-columns:1fr 1fr}.summary.four .tile:first-child{grid-column:auto}}
+
+.busy{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:color-mix(in srgb,var(--bg) 55%,transparent)}
+.busy span{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 18px;font-size:13px}
+.fatal{max-width:640px;margin:48px auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px}
+.fatal h1{font-size:18px;margin:0 0 8px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header class="top">
+    <div>
+      <h1 id="h1">深夜・休日出勤カレンダー</h1>
+      <div class="sub" id="sub">読み込み中…</div>
+    </div>
+    <div class="toggles">
+      <div class="seg" role="group" aria-label="立場" id="roleseg" hidden>
+        <button id="r-member" aria-pressed="true">自分の申請</button>
+        <button id="r-mgr" aria-pressed="false">マネージャー</button>
+      </div>
+      <button class="btn" id="reload" title="最新の内容を読み込みます">更新</button>
+    </div>
+  </header>
+
+  <div class="toggles" style="justify-content:space-between;align-items:center">
+    <div class="toggles" style="align-items:center">
+      <div class="monthnav" aria-label="表示する月">
+        <button id="m-prev" aria-label="前の月">‹</button><strong id="m-label"></strong><button id="m-next" aria-label="次の月">›</button>
+      </div>
+      <div class="seg" role="group" aria-label="画面" id="tabs" hidden>
+        <button id="t-team" aria-pressed="true">チーム一覧</button>
+        <button id="t-cal" aria-pressed="false">個人のカレンダー</button>
+      </div>
+      <label class="memsel" id="memsel" hidden>担当者 <select id="mem"></select></label>
+    </div>
+    <div class="seg" role="group" aria-label="表示" id="viewseg">
+      <button id="v-cal" aria-pressed="true">カレンダー</button>
+      <button id="v-list" aria-pressed="false">縦スケジュール</button>
+    </div>
+  </div>
+
+  <div class="closed" id="closed" hidden></div>
+  <section class="summary" id="summary"></section>
+
+  <div class="main" id="mainwrap">
+    <section class="card" id="board"></section>
+    <aside class="card panel" id="panel"></aside>
+  </div>
+  <section class="card" id="team" hidden></section>
+</div>
+
+<div class="fatal" id="fatal" hidden></div>
+<div class="bar"><div class="in" id="bar"></div></div>
+<div class="sheet-bg" id="sheet" hidden></div>
+<div class="busy" id="busy" hidden><span>処理しています…</span></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const WD=['日','月','火','水','木','金','土'];
+const STATUS={approved:'承認済',pending:'申請中',draft:'下書き',rejected:'差し戻し'};
+const NG=/作業したい|進めたい|やりたい|片付けたい|終わらせたい|自主的|作業のため$|作業するため$|特になし|^なし$/;
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const md=s=>{const d=parse(s);return `${d.getMonth()+1}/${d.getDate()}`};
+const hm=h=>`${Math.floor(h)}:${pad(Math.round((h%1)*60))}`;
+const hrs=h=>(Math.round(h*10)/10).toString();
+const ymLabel=ym=>{const [y,m]=ym.split('-');return `${y}年${+m}月`};
+const shiftYm=(ym,k)=>{const [y,m]=ym.split('-').map(Number);const d=new Date(y,m-1+k,1);return `${d.getFullYear()}-${pad(d.getMonth()+1)}`};
+const fmtAt=s=>{const m=String(s||'').match(/^\d{4}-(\d{2})-(\d{2}) (\d{2}:\d{2})$/);return m?`${+m[1]}/${+m[2]} ${m[3]}`:(s||'')};
+
+let D=null, members=[], HOL={}, TODAY='', CUR_YM='';
+const state={role:'member',tab:'team',view:'cal',ym:'',mid:'',sel:''};
+const L=()=>({M:+D.config.LIMIT_M,LAW:+D.config.LAW_M,W:+D.config.LIMIT_W,FURI:+D.config.MIN_FURI,STD:+D.config.STD,STREAK:+D.config.STREAK});
+const isOff=s=>{const w=parse(s).getDay();return w===0||w===6||!!HOL[s]};
+const isHol=e=>e.kind==='holiday';
+const dur=e=>isHol(e)?e.hours:e.end-e.start;
+const otOf=e=>isHol(e)?(e.furikae?Math.max(0,e.hours-L().STD):e.hours):e.end-e.start;
+const counted=e=>e.status!=='rejected';
+const isLocked=ym=>ym<D.lockYm;
+const me=()=>members.find(m=>m.id===state.mid)||members[0];
+const isSelf=()=>state.mid===D.me.email;
+const mgrView=()=>state.role==='mgr';
+function reasonCheck(t){
+  if(!t) return '理由を書いてください';
+  if(t.length<8||NG.test(t)) return '「作業したいので」などの理由は認められません。顧客都合・イベント当日・障害対応など、休日でなければならない理由を書いてください';
+  return '';
+}
+
+/* ---------- サーバーとのやり取り ---------- */
+function call(fn,...args){return new Promise((res,rej)=>google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...args))}
+async function run(fn,args,okMsg){
+  $('#busy').hidden=false;
+  try{const d=await call(fn,...args);load(d);if(okMsg)toast(okMsg);return true}
+  catch(e){toast(String((e&&e.message)||e).replace(/^Error:\s*/,''));return false}
+  finally{$('#busy').hidden=true}
+}
+function load(d){
+  D=d; HOL=d.holidays||{}; TODAY=d.today; CUR_YM=TODAY.slice(0,7);
+  const byTarget={};
+  d.comments.forEach(c=>{((byTarget[c.target]=byTarget[c.target]||{})[c.date]=(byTarget[c.target][c.date]||[])).push({who:c.who,mgr:c.mgr,text:c.text,at:fmtAt(c.at)})});
+  members=d.members.map(m=>({id:m.email,name:m.name,role:m.role,entries:d.entries.filter(e=>e.email===m.email),comments:byTarget[m.email]||{},avg:{},avgAt:{}}));
+  d.avg.forEach(a=>{const m=members.find(x=>x.id===a.email);if(m){m.avg[a.ym]=a.value;m.avgAt[a.ym]=fmtAt(a.at)}});
+  if(!state.ym){
+    state.ym=CUR_YM; state.sel=TODAY; state.mid=d.me.email;
+    if(d.me.role==='manager'){state.role='mgr';state.tab='team'}
+    if(window.matchMedia('(max-width:560px)').matches) state.view='list';
+  }
+  if(d.me.role!=='manager') state.role='member';
+  if(!members.some(m=>m.id===state.mid)) state.mid=d.me.email;
+  $('#roleseg').hidden=d.me.role!=='manager';
+  $('#mem').innerHTML=members.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('');
+  syncSeg(); renderAll();
+}
+
+/* ---------- 計算 ---------- */
+function monthDays(ym){const [y,m]=ym.split('-').map(Number);const out=[];const d=new Date(y,m-1,1);while(d.getMonth()===m-1){out.push(iso(d));d.setDate(d.getDate()+1)}return out}
+function weeks(ym){
+  const [y,m]=ym.split('-').map(Number);const first=new Date(y,m-1,1),d=new Date(first);d.setDate(1-((first.getDay()+6)%7));
+  const out=[];while(true){const w=[];for(let i=0;i<7;i++){w.push(iso(d));d.setDate(d.getDate()+1)}out.push(w);if(d.getMonth()!==m-1)break}return out;
+}
+const inYm=(ym,s)=>s.slice(0,7)===ym;
+const dayEntries=(m,date)=>m.entries.filter(e=>e.date===date);
+const furikaeOn=(m,d)=>m.entries.find(e=>isHol(e)&&counted(e)&&e.furikae===d);
+function dayLoad(m,date){
+  const base=(!isOff(date)&&!furikaeOn(m,date))?(m.avg[date.slice(0,7)]||0):0;
+  return base+dayEntries(m,date).filter(counted).reduce((s,e)=>s+otOf(e),0);
+}
+const weekTotal=(m,ym,w)=>w.filter(s=>inYm(ym,s)).reduce((s,x)=>s+dayLoad(m,x),0);
+function isWorking(m,d){
+  if(furikaeOn(m,d)) return false;
+  if(!isOff(d)) return true;
+  return dayEntries(m,d).some(e=>isHol(e)&&counted(e));
+}
+function maxStreak(m,ym){let best=0,cur=0;monthDays(ym).forEach(d=>{if(isWorking(m,d)){cur++;best=Math.max(best,cur)}else cur=0});return best}
+function totals(m,ym){
+  const days=monthDays(ym);
+  const wdays=days.filter(d=>!isOff(d)&&!furikaeOn(m,d)).length;
+  const act=wdays*(m.avg[ym]||0);
+  const ents=m.entries.filter(e=>inYm(ym,e.date)&&counted(e));
+  const filed=ents.filter(e=>e.status!=='draft').reduce((s,e)=>s+otOf(e),0);
+  const draft=ents.filter(e=>e.status==='draft').reduce((s,e)=>s+otOf(e),0);
+  const night={approved:0,pending:0,draft:0};
+  ents.filter(e=>!isHol(e)).forEach(e=>night[e.status]+=dur(e));
+  const hol=ents.filter(isHol);
+  const ws=weeks(ym).map(w=>weekTotal(m,ym,w));
+  const pending=m.entries.filter(e=>inYm(ym,e.date)&&e.status==='pending').length;
+  return {act,filed,draft,total:act+filed+draft,night,nightTotal:night.approved+night.pending+night.draft,
+    maxW:Math.max(...ws),overW:ws.filter(x=>x>L().W).length,pending,holDays:hol.length,holNoF:hol.filter(e=>!e.furikae).length,
+    streak:maxStreak(m,ym),wdays,noAvg:m.avg[ym]==null};
+}
+
+/* ---------- 表示 ---------- */
+function renderHeader(){
+  const team=mgrView()&&state.tab==='team';
+  $('#h1').textContent=team?'深夜・休日出勤 チーム一覧':'深夜・休日出勤カレンダー';
+  $('#sub').innerHTML=`${team?`${esc(D.config.TEAM_NAME||'チーム')}（${members.length}名）`:`担当者：${esc(me().name)}`}　今日 ${md(TODAY)}　残業は見込み（日中の自己申告＋申請）`;
+  $('#m-label').textContent=ymLabel(state.ym);
+  $('#m-prev').disabled=state.ym<=shiftYm(CUR_YM,-24); $('#m-next').disabled=state.ym>=shiftYm(CUR_YM,3);
+  $('#tabs').hidden=!mgrView(); $('#memsel').hidden=!mgrView()||team; $('#viewseg').hidden=team;
+  $('#mainwrap').hidden=team; $('#team').hidden=!team;
+  const c=$('#closed');
+  if(isLocked(state.ym)){c.hidden=false;c.innerHTML=`<b>${ymLabel(state.ym)}は締め済みです。</b>申請・承認の記録は変更できません（コメントの追記のみ可）。実際の労働時間はKING OF TIMEで確認します。`}
+  else c.hidden=true;
+}
+
+function renderSummary(){
+  const m=me(), ym=state.ym, t=totals(m,ym), lim=L(), scale=Math.max(50,lim.LAW+5), pct=v=>Math.min(100,v/scale*100), locked=isLocked(ym);
+  const lvl=t.total>lim.M?'bad':t.total>lim.M*.85?'warn':'ok';
+  const msg=t.total>lim.M?`社内基準${lim.M}hを ${hrs(t.total-lim.M)}h 超え${locked?'ました':'る見込みです'}`:`社内基準${lim.M}hまで あと ${hrs(lim.M-t.total)}h`;
+  const canAvg=!mgrView()&&isSelf()&&!locked;
+  $('#summary').className='summary';
+  $('#summary').innerHTML=`
+  <div class="tile">
+    <h2>${locked?'残業の見込み（申請の記録）':'今月の残業 見込み（日中＋申請）'}</h2>
+    <div class="big num">${hrs(t.total)}<small> h ／ ${lim.M}h</small></div>
+    <div class="gauge" aria-hidden="true">
+      <div class="seg-a" style="left:0;width:${pct(t.act)}%"></div>
+      <div class="seg-p" style="left:${pct(t.act)}%;width:${pct(t.filed)}%"></div>
+      <div class="seg-d" style="left:${pct(t.act+t.filed)}%;width:${pct(t.draft)}%"></div>
+      <div class="mark" style="left:${pct(lim.M)}%"><span>社内${lim.M}h</span></div>
+      <div class="mark law" style="left:${pct(lim.LAW)}%"><span>36協定${lim.LAW}h</span></div>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--night)"></i>日中 <b class="num">${hrs(t.act)}h</b>（${m.avg[ym]==null?'未入力':`${hrs(m.avg[ym])}h×${t.wdays}日`}）</span>
+      <span><i style="background:color-mix(in srgb,var(--night) 55%,transparent)"></i>申請中・承認済 <b class="num">${hrs(t.filed)}h</b></span>
+      <span><i style="background:repeating-linear-gradient(135deg,color-mix(in srgb,var(--night) 35%,transparent) 0 3px,transparent 3px 6px)"></i>下書き <b class="num">${hrs(t.draft)}h</b></span>
+    </div>
+    <div class="state ${lvl}">${msg}${t.overW?`　／　週${lim.W}h超えの週が ${t.overW} つ`:''}</div>
+    ${canAvg?`<label class="avg" for="avg">1日あたりの日中残業（月初に入力）<select id="avg"><option value="">未入力</option>${[0,.5,1,1.5,2,2.5,3,3.5,4,4.5,5].map(v=>`<option value="${v}"${m.avg[ym]===v?' selected':''}>${hrs(v)}h</option>`).join('')}</select>${m.avgAt[ym]?`<span>入力 ${esc(m.avgAt[ym])}</span>`:''}</label>`
+      :`<div class="avg">日中残業の見込み：${m.avg[ym]==null?'<b style="color:var(--bad)">未入力</b>':`<b class="num">${hrs(m.avg[ym])}h</b>／日`}${m.avgAt[ym]?`（入力 ${esc(m.avgAt[ym])}）`:''}</div>`}
+    ${t.noAvg&&!locked?`<div class="alert warn" style="margin-top:6px">${ymLabel(ym)}の日中残業の見込みが未入力です。1日あたりのおおよその平均を入力してください。</div>`:''}
+  </div>
+  <div class="tile">
+    <h2>深夜作業 月合計</h2>
+    <div class="big num">${hrs(t.nightTotal)}<small> h</small></div>
+    <div class="breakdown">
+      <div><span>承認済</span><span class="num">${hrs(t.night.approved)}h</span></div>
+      <div><span>申請中</span><span class="num">${hrs(t.night.pending)}h</span></div>
+      <div><span>下書き</span><span class="num">${hrs(t.night.draft)}h</span></div>
+    </div>
+  </div>
+  <div class="tile">
+    <h2>週の最大（見込み）</h2>
+    <div class="big num">${hrs(t.maxW)}<small> h ／ ${lim.W}h</small></div>
+    <div class="state ${t.maxW>lim.W?'warn':'ok'}">${t.maxW>lim.W?'週の目安を超える週があります':'すべての週が目安内です'}</div>
+    <div class="breakdown">
+      <div><span>休日出勤</span><span class="num">${t.holDays}日${t.holNoF?`（振替なし ${t.holNoF}日）`:''}</span></div>
+      <div><span>連続勤務 最長</span><span class="num" style="color:${t.streak>=lim.STREAK?'var(--warn)':'inherit'}">${t.streak}日</span></div>
+    </div>
+  </div>`;
+  const av=$('#avg');
+  if(av) av.onchange=()=>run('setAvg',[ym,av.value===''?'':+av.value],'日中残業の見込みを保存しました');
+}
+
+function chip(e,short){
+  if(isHol(e)){
+    const f=e.furikae?`→${md(e.furikae)}公休`:'振替なし';
+    const label=short?`休出${hrs(e.hours)}h ${f}`:`休日出勤 ${hrs(e.hours)}h（${f}）${e.project}`;
+    return `<span class="chip st-${e.status} hol" title="${esc(STATUS[e.status]+'：'+e.project)}">${esc(label)}</span>`;
+  }
+  const label=short?`${hm(e.start)}–${hm(e.end)}`:`${hm(e.start)}–${hm(e.end)} ${e.project}`;
+  return `<span class="chip st-${e.status}" title="${esc(STATUS[e.status]+'：'+e.project)}">${esc(label)}</span>`;
+}
+function furiChip(m,d){const src=furikaeOn(m,d);return src?`<span class="chip st-furi">振替公休（${md(src.date)}分）</span>`:''}
+const hname=d=>HOL[d]?`<span class="hname">${esc(HOL[d])}</span>`:'';
+
+function renderCalendar(){
+  const m=me(), ym=state.ym, lim=L();
+  let h=`<div class="cal-head"><strong>${ymLabel(ym)}</strong><span class="legend">
+    <span><i style="background:var(--ok)"></i>承認済</span><span><i style="background:var(--night)"></i>申請中</span>
+    <span><i style="background:var(--draft)"></i>下書き</span><span><i style="background:var(--bad)"></i>差し戻し</span></span></div><div class="cal">`;
+  ['月','火','水','木','金','土','日'].forEach((w,i)=>h+=`<div class="dow${i>4?' wk':''}">${w}</div>`);
+  h+=`<div class="dow">週計</div>`;
+  weeks(ym).forEach(w=>{
+    w.forEach(d=>{
+      if(!inYm(ym,d)){h+=`<div class="cell off"></div>`;return}
+      const es=dayEntries(m,d), c=(m.comments[d]||[]).length;
+      const cls=['cell',isOff(d)?'we':'',d===TODAY?'today':'',d===state.sel?'sel':''].join(' ');
+      h+=`<button class="${cls}" data-d="${d}" aria-label="${md(d)}">
+        <span class="d"><b class="num">${parse(d).getDate()}</b>${c?`<span class="cmt">💬${c}</span>`:''}</span>
+        ${hname(d)}${furiChip(m,d)}${es.map(e=>chip(e,true)).join('')}
+      </button>`;
+    });
+    const t=weekTotal(m,ym,w);
+    h+=`<div class="wk-total${t>lim.W?' over':''}"><span class="num">${hrs(t)}h</span>${t>lim.W?'目安超え':''}</div>`;
+  });
+  $('#board').innerHTML=h+`</div>`;
+}
+
+function renderList(){
+  const m=me(), ym=state.ym, lim=L();
+  let h=`<div class="cal-head"><strong>${ymLabel(ym)}</strong><span class="sub">日ごとの予定とコメント</span></div><div class="list">`;
+  weeks(ym).forEach((w,i)=>{
+    const days=w.filter(s=>inYm(ym,s)); if(!days.length) return;
+    const t=weekTotal(m,ym,w);
+    h+=`<div class="wk-head${t>lim.W?' over':''}"><span>第${i+1}週 ${md(days[0])}〜${md(days[days.length-1])}</span><span class="num">週計 ${hrs(t)}h${t>lim.W?`（目安${lim.W}h超え）`:''}</span></div>`;
+    days.forEach(d=>{
+      const dt=parse(d), es=dayEntries(m,d), cs=m.comments[d]||[], load=dayLoad(m,d);
+      h+=`<button class="row${isOff(d)?' we':''}${d===state.sel?' sel':''}" data-d="${d}">
+        <span class="dt${d===TODAY?' today':''}"><b class="num">${dt.getMonth()+1}/${dt.getDate()}</b>（${WD[dt.getDay()]}）${hname(d)}</span>
+        <span class="items">
+          ${furiChip(m,d)}
+          ${es.map(e=>chip(e,false)).join('')}
+          ${cs.map(c=>`<span class="cmt">💬 ${esc(c.who)}：${esc(c.text)}</span>`).join('')}
+          ${!es.length&&!cs.length&&!furikaeOn(m,d)?`<span class="empty">—</span>`:''}
+        </span>
+        <span class="h num">${load?hrs(load)+'h':''}</span>
+      </button>`;
+    });
+  });
+  $('#board').innerHTML=h+`</div>`;
+}
+
+function hourOptions(from,to,sel){let o='';for(let h=from;h<=to;h+=0.5)o+=`<option value="${h}"${h===sel?' selected':''}>${hm(h)}${h>=24?`（翌${hm(h-24)}）`:''}</option>`;return o}
+
+function renderPanel(){
+  const m=me(), d=state.sel, ym=state.ym, lim=L();
+  if(!d||!inYm(ym,d)){$('#panel').innerHTML=`<div class="empty">日付を選ぶと、その日の申請とコメントが表示されます</div>`;return}
+  const dt=parse(d), es=dayEntries(m,d), cs=m.comments[d]||[], mgr=mgrView(), locked=isLocked(ym);
+  const fsrc=furikaeOn(m,d), off=isOff(d), canEdit=!mgr&&isSelf()&&!locked;
+  let h=`<div><h3>${dt.getMonth()+1}月${dt.getDate()}日（${WD[dt.getDay()]}）${HOL[d]?` ${esc(HOL[d])}`:''}</h3>
+    <div class="dayact">${fsrc?`振替公休（${md(fsrc.date)}の休日出勤の分）`:off?'公休日':'出勤日'}　この日の残業見込み：<b class="num">${hrs(dayLoad(m,d))}h</b>${!off&&!fsrc&&m.avg[ym]?`（日中 ${hrs(m.avg[ym])}h を含む）`:''}</div></div>`;
+  h+=`<div><h4>深夜作業・休日出勤</h4><div class="thread">`;
+  if(!es.length) h+=`<div class="empty">この日の申請はありません</div>`;
+  es.forEach(e=>{
+    const color={approved:'var(--ok)',pending:'var(--night)',draft:'var(--draft)',rejected:'var(--bad)'}[e.status];
+    const rc=isHol(e)?reasonCheck(e.reason):'';
+    h+=`<div class="entry" style="border-left-color:${color}">
+      <div class="t"><b class="num">${isHol(e)?`休日出勤 ${hrs(e.hours)}h`:`${hm(e.start)}–${hm(e.end)}（${hrs(dur(e))}h）`}</b><span class="pill ${e.status}">${STATUS[e.status]}</span></div>
+      <div>${esc(e.project)}</div>
+      ${isHol(e)?`<div class="meta">振替公休：${e.furikae?`${md(e.furikae)}（${WD[parse(e.furikae).getDay()]}）`:`なし（${lim.FURI}h未満のため取れません）`}　残業への加算 ${hrs(otOf(e))}h</div>`:''}
+      <div class="meta">理由：${esc(e.reason)}</div>
+      ${rc&&e.status!=='approved'?`<div class="alert warn">AIチェック：${esc(rc)}</div>`:''}
+      ${e.sent?`<div class="meta">申請：${esc(fmtAt(e.sent))}</div>`:''}
+      ${e.status==='approved'?`<div class="meta">承認：${esc(e.by)}　${esc(fmtAt(e.at))}</div>`:''}
+      <div class="btns">${locked?'':entryActions(e,mgr)}</div>
+    </div>`;
+  });
+  h+=`</div></div>`;
+  const late=d<TODAY?`<div class="alert warn full">過去の日付のため、事後申請になります。</div>`:'';
+  if(canEdit&&off){
+    const opts=monthDays(ym).filter(x=>x>=TODAY&&x!==d&&!isOff(x)&&!furikaeOn(m,x));
+    h+=`<div><h4>休日出勤を追加（下書き）</h4>
+    <form class="add" id="addh">
+      ${late}
+      <label>実働時間<select id="h-hours">${[...Array(23)].map((_,k)=>1+k*.5).map(v=>`<option value="${v}"${v===lim.STD?' selected':''}>${hrs(v)}h</option>`).join('')}</select></label>
+      <label id="h-furi-wrap">振替公休日<select id="h-furi"><option value="">選んでください</option>${opts.map(x=>`<option value="${x}">${md(x)}（${WD[parse(x).getDay()]}）</option>`).join('')}</select></label>
+      <label class="full">案件・作業<input type="text" id="h-proj" placeholder="例：PPO イベント当日運営" required></label>
+      <label class="full">休日に出勤する理由<input type="text" id="h-why" placeholder="例：イベント開催日が土曜のため（顧客指定）" required></label>
+      <div class="full" id="h-ai"></div>
+      <div class="calc full" id="h-calc"></div>
+      <div class="full btns"><button class="btn primary" type="submit">下書きに追加</button></div>
+    </form></div>`;
+  }
+  if(canEdit&&!off&&!fsrc){
+    h+=`<div><h4>深夜作業を追加（下書き）</h4>
+    <form class="add" id="add">
+      ${late}
+      <label>開始<select id="f-start">${hourOptions(18,28,22)}</select></label>
+      <label>終了<select id="f-end">${hourOptions(18.5,30,25)}</select></label>
+      <label class="full">案件・作業<input type="text" id="f-proj" placeholder="例：B案件 本番リリース" required></label>
+      <label class="full">日中にできない理由<input type="text" id="f-reason" placeholder="例：顧客システムの停止枠が22時以降のため" required></label>
+      <div class="calc full" id="f-calc"></div>
+      <div class="full btns"><button class="btn primary" type="submit">下書きに追加</button></div>
+    </form></div>`;
+  }
+  const canComment=mgr||isSelf();
+  h+=`<div><h4>この日のコメント</h4><div class="thread">
+    ${cs.length?cs.map(c=>`<div class="msg${c.mgr?' mgr':''}"><span class="who">${esc(c.who)}　${esc(c.at)}</span>${esc(c.text)}</div>`).join(''):'<div class="empty">まだコメントはありません</div>'}
+    ${canComment?`<form id="cform" class="thread"><textarea id="c-text" placeholder="${locked?'追記（例：事後に本人へ確認済み）':mgr?'例：連日になるので翌週に寄せられないか？':'例：この日は顧客側の都合で22時以降しか作業できません'}"></textarea>
+    <div class="btns"><button class="btn" type="submit">${locked?'追記する':'コメントする'}</button></div></form>`:''}
+  </div></div>`;
+  $('#panel').innerHTML=h;
+
+  if($('#addh')){
+    const updh=()=>{
+      const n=+$('#h-hours').value, fu=$('#h-furi').value, t=totals(m,ym);
+      const big=n>=lim.FURI; $('#h-furi-wrap').hidden=!big;
+      const add=big?(fu?Math.max(0,n-lim.STD):n):n;
+      const why=$('#h-why').value.trim(), chk=reasonCheck(why);
+      $('#h-ai').innerHTML=(!big?`<div class="alert warn">${lim.FURI}h未満は振替公休を取れません。休日出勤の時間がそのまま残業になります。明確な理由がない限り認められません。</div>`:'')
+        +(why&&chk?`<div class="alert warn" style="margin-top:6px">AIチェック：${esc(chk)}</div>`:'');
+      $('#h-calc').innerHTML=`${big?(fu?`振替公休 ${md(fu)}。${lim.STD}hを超えた分（${hrs(add)}h）だけ残業に加算`:'振替公休日を選んでください'):`残業に ${hrs(n)}h 加算`}　→　今月の見込み <b class="num">${hrs(t.total+add)}h</b> ／ ${lim.M}h`;
+    };
+    ['#h-hours','#h-furi'].forEach(s=>$(s).onchange=updh); $('#h-why').oninput=updh; updh();
+    $('#addh').onsubmit=ev=>{ev.preventDefault();
+      const n=+$('#h-hours').value, fu=$('#h-furi').value, why=$('#h-why').value.trim();
+      if(n>=lim.FURI&&!fu){toast(`${lim.FURI}h以上の休日出勤は、振替公休日を選んでください`);return}
+      if(reasonCheck(why)){toast('理由を具体的に書いてください');return}
+      run('saveEntry',[{kind:'holiday',date:d,hours:n,furikae:n>=lim.FURI?fu:'',project:$('#h-proj').value.trim(),reason:why}],'休日出勤を下書きに追加しました');
+    };
+  }
+  if($('#add')){
+    const upd=()=>{
+      const s=+$('#f-start').value,e=+$('#f-end').value,n=e-s;
+      const t=totals(m,ym), w=weeks(ym).find(w=>w.includes(d));
+      $('#f-calc').innerHTML=n>0?`追加すると　今月 <b class="num">${hrs(t.total+n)}h</b> ／ ${lim.M}h　・　この週 <b class="num">${hrs(weekTotal(m,ym,w)+n)}h</b> ／ ${lim.W}h`:'終了は開始より後にしてください';
+    };
+    $('#f-start').onchange=upd;$('#f-end').onchange=upd;upd();
+    $('#add').onsubmit=ev=>{ev.preventDefault();
+      const s=+$('#f-start').value,e=+$('#f-end').value;
+      if(e<=s){toast('終了は開始より後にしてください');return}
+      run('saveEntry',[{kind:'night',date:d,start:s,end:e,project:$('#f-proj').value.trim(),reason:$('#f-reason').value.trim()}],'深夜作業を下書きに追加しました');
+    };
+  }
+  if($('#cform')) $('#cform').onsubmit=ev=>{ev.preventDefault();const t=$('#c-text').value.trim();if(!t)return;run('addComment',[m.id,d,t])};
+  $('#panel').querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>act(b.dataset.act,b.dataset.id));
+}
+
+function entryActions(e,mgr){
+  if(mgr) return e.status==='pending'&&e.email!==D.me.email?`<button class="btn okb" data-act="approve" data-id="${esc(e.id)}">承認</button><button class="btn badb" data-act="reject" data-id="${esc(e.id)}">差し戻し</button>`:'';
+  if(!isSelf()) return '';
+  if(e.status==='draft') return `<button class="btn" data-act="del" data-id="${esc(e.id)}">削除</button>`;
+  if(e.status==='pending') return `<button class="btn" data-act="withdraw" data-id="${esc(e.id)}">取り下げて下書きに戻す</button>`;
+  if(e.status==='rejected') return `<button class="btn" data-act="redo" data-id="${esc(e.id)}">見直して下書きに戻す</button>`;
+  return '';
+}
+function act(a,id){
+  if(a==='approve') return run('approveEntry',[id],'承認しました');
+  if(a==='reject'){
+    const t=$('#c-text')?$('#c-text').value.trim():'';
+    if(!t){toast('差し戻しの理由をコメント欄に書いてから押してください');if($('#c-text'))$('#c-text').focus();return}
+    return run('rejectEntry',[id,t],'差し戻しました');
+  }
+  if(a==='del') return run('deleteEntry',[id],'削除しました');
+  if(a==='withdraw') return run('withdrawEntry',[id],'取り下げました');
+  if(a==='redo') return run('redoEntry',[id],'下書きに戻しました。内容を見直して再申請してください');
+}
+
+/* ---------- チーム一覧 ---------- */
+function renderTeam(){
+  const ym=state.ym, lim=L(), scale=Math.max(50,lim.LAW+5);
+  const rows=members.map(m=>({m,t:totals(m,ym)})).sort((a,b)=>b.t.total-a.t.total);
+  const pend=rows.reduce((s,r)=>s+r.t.pending,0), over40=rows.filter(r=>r.t.total>lim.M).length,
+        near=rows.filter(r=>r.t.total>lim.M*.85&&r.t.total<=lim.M).length,
+        overW=rows.filter(r=>r.t.overW).length, noAvg=rows.filter(r=>r.t.noAvg).length;
+  $('#summary').className='summary four';
+  $('#summary').innerHTML=`
+    <div class="tile"><h2>承認待ち</h2><div class="big num${pend?' warn':''}">${pend}<small> 件</small></div><div class="state">${isLocked(ym)?'締め済みの月です':'下のバーから順に開けます'}</div></div>
+    <div class="tile"><h2>${lim.M}h超えの見込み</h2><div class="big num${over40?' bad':''}">${over40}<small> 人</small></div><div class="state warn">${near?`あと少しで超える人 ${near}人`:''}</div></div>
+    <div class="tile"><h2>週${lim.W}h超えの週がある人</h2><div class="big num${overW?' warn':''}">${overW}<small> 人</small></div></div>
+    <div class="tile"><h2>日中残業の見込み 未入力</h2><div class="big num${noAvg?' bad':''}">${noAvg}<small> 人</small></div><div class="state">月初に本人が入力します</div></div>`;
+  const pct=v=>Math.min(100,v/scale*100);
+  $('#team').innerHTML=`<div class="cal-head"><strong>${ymLabel(ym)}　${esc(D.config.TEAM_NAME||'')}</strong><span class="sub">見込み＝日中の自己申告＋申請（下書き含む）・行を押すと個人のカレンダーを開きます</span></div>
+  <div class="tbl-wrap"><table class="team">
+    <thead><tr><th>担当者</th><th class="r">日中/日</th><th>残業 見込み（／${lim.M}h）</th><th class="r">深夜</th><th class="r">休日出勤</th><th class="r">最大の週</th><th class="r">承認待ち</th><th>注意</th></tr></thead>
+    <tbody>${rows.map(({m,t})=>{
+      const lv=t.total>lim.M?'bad':t.total>lim.M*.85?'warn':'';
+      const tags=[];
+      if(t.total>lim.M) tags.push(`<span class="tag bad">${lim.M}h超え</span>`);
+      else if(lv) tags.push(`<span class="tag warn">${lim.M}h間近</span>`);
+      if(t.overW) tags.push(`<span class="tag warn">週${lim.W}h超え ${t.overW}週</span>`);
+      if(t.noAvg) tags.push(`<span class="tag bad">日中見込み 未入力</span>`);
+      if(t.holNoF) tags.push(`<span class="tag warn">振替なし休出 ${t.holNoF}日</span>`);
+      if(t.streak>=lim.STREAK) tags.push(`<span class="tag warn">連続勤務 ${t.streak}日</span>`);
+      if(!tags.length) tags.push(`<span class="tag ok">問題なし</span>`);
+      return `<tr data-m="${esc(m.id)}" tabindex="0">
+        <td class="namecell">${esc(m.name)}</td>
+        <td class="r num">${m.avg[ym]==null?'—':hrs(m.avg[ym])+'h'}</td>
+        <td><div class="ot"><span class="num">${hrs(t.total)}h</span><div class="mini"><div class="fill ${lv}" style="width:${pct(t.total)}%"></div><div class="m40" style="left:${pct(lim.M)}%"></div></div></div></td>
+        <td class="r num">${hrs(t.nightTotal)}h</td>
+        <td class="r num">${t.holDays?t.holDays+'日':'—'}</td>
+        <td class="r num" style="color:${t.maxW>lim.W?'var(--warn)':'inherit'}">${hrs(t.maxW)}h</td>
+        <td class="r num">${t.pending||'—'}</td>
+        <td><div class="tags">${tags.join('')}</div></td></tr>`;}).join('')}
+    </tbody></table></div>`;
+  $('#team').querySelectorAll('tr[data-m]').forEach(tr=>{
+    const go=()=>{state.mid=tr.dataset.m;state.tab='cal';state.sel=firstSel();syncSeg();renderAll()};
+    tr.onclick=go; tr.onkeydown=e=>{if(e.key==='Enter')go()};
+  });
+}
+
+/* ---------- 下のバーと申請 ---------- */
+function renderBar(){
+  const lim=L();
+  if(mgrView()){
+    const list=[];members.forEach(m=>m.entries.filter(e=>e.status==='pending'&&e.email!==D.me.email&&!isLocked(e.date.slice(0,7))).forEach(e=>list.push({m,e})));
+    list.sort((a,b)=>a.e.date<b.e.date?-1:1);
+    $('#bar').innerHTML=`<span class="msgtxt">チーム全体の承認待ち <b class="num">${list.length}</b> 件</span>${list.length?`<button class="btn primary" id="go-p">次の承認待ちを開く（${esc(list[0].m.name)} ${md(list[0].e.date)}）</button>`:''}`;
+    if(list.length) $('#go-p').onclick=()=>{state.mid=list[0].m.id;state.tab='cal';state.ym=list[0].e.date.slice(0,7);state.sel=list[0].e.date;syncSeg();renderAll()};
+    return;
+  }
+  const m=members.find(x=>x.id===D.me.email); if(!m){$('#bar').innerHTML='';return}
+  const dr=m.entries.filter(e=>e.status==='draft'&&!isLocked(e.date.slice(0,7)));
+  const t=totals(m,state.ym);
+  $('#bar').innerHTML=`<span class="msgtxt">下書き <b class="num">${dr.length}</b> 件　${ymLabel(state.ym)}の見込み <b class="num">${hrs(t.total)}h</b> ／ ${lim.M}h</span>
+    <button class="btn primary" id="submit" ${dr.length?'':'disabled'}>残業時間を確認してマネージャーに申請</button>`;
+  if(dr.length) $('#submit').onclick=()=>openSheet(m,dr);
+}
+
+function openSheet(m,dr){
+  const lim=L();
+  dr=dr.slice().sort((a,b)=>a.date<b.date?-1:1);
+  const yms=[...new Set(dr.map(e=>e.date.slice(0,7)))];
+  const lines=[]; let need=false;
+  yms.forEach(ym=>{
+    const t=totals(m,ym), overWs=weeks(ym).filter(w=>weekTotal(m,ym,w)>lim.W);
+    if(t.total>lim.M||overWs.length) need=true;
+    lines.push(`${ymLabel(ym)}の見込み：<b class="num">${hrs(t.total)}h</b> ／ ${lim.M}h（日中 ${hrs(t.act)}h ＋ 申請 ${hrs(t.filed+t.draft)}h）`);
+    overWs.forEach(w=>lines.push(`${md(w.find(s=>inYm(ym,s)))}の週：<b class="num">${hrs(weekTotal(m,ym,w))}h</b>（目安${lim.W}h超え）`));
+    if(t.streak>=lim.STREAK) lines.push(`連続勤務が最長 ${t.streak}日 になります`);
+  });
+  const bad=dr.filter(e=>isHol(e)&&reasonCheck(e.reason));
+  const t0=totals(m,yms[0]);
+  $('#sheet').innerHTML=`<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-t">
+    <h3 id="sh-t">マネージャーに申請する前に確認</h3>
+    <table>${dr.map(e=>`<tr><td>${md(e.date)}（${WD[parse(e.date).getDay()]}）${isHol(e)?'休日出勤 ':''}${esc(e.project)}</td><td class="num">${isHol(e)?`${hrs(e.hours)}h　${e.furikae?`→${md(e.furikae)}公休`:'振替なし'}`:`${hm(e.start)}–${hm(e.end)}　${hrs(dur(e))}h`}</td></tr>`).join('')}</table>
+    ${bad.length?`<div class="alert" style="background:var(--bad-soft);color:var(--bad)">AIチェック：次の休日出勤は理由が不十分なため申請できません。削除して、理由を具体的にして登録し直してください。<br>${bad.map(e=>`${md(e.date)} ${esc(e.project)}：「${esc(e.reason)}」`).join('<br>')}</div>`:''}
+    <div class="alert ${need?'warn':'ok'}">${lines.join('<br>')}</div>
+    ${need?`<label for="sh-why" class="sub">基準を超える理由（マネージャーと記録に残ります）</label><textarea id="sh-why" placeholder="例：B案件のリリースとC社の移行が同じ週に重なったため"></textarea>`:''}
+    <div class="btns" style="justify-content:flex-end"><button class="btn" id="sh-cancel">戻る</button><button class="btn primary" id="sh-ok" ${bad.length?'disabled':''}>この内容で申請</button></div>
+  </div>`;
+  $('#sheet').hidden=false;
+  $('#sh-cancel').onclick=()=>{$('#sheet').hidden=true};
+  $('#sh-ok').onclick=async()=>{
+    const why=need?$('#sh-why').value.trim():'';
+    if(need&&!why){toast('基準を超える理由を書いてください');$('#sh-why').focus();return}
+    const ok=await run('submitDrafts',[dr.map(e=>e.id),why,`${ymLabel(yms[0])}の見込み ${hrs(t0.total)}h／${lim.M}h`],`${dr.length}件をマネージャーに申請しました`);
+    if(ok) $('#sheet').hidden=true;
+  };
+}
+
+let tt;function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3200)}
+
+function firstSel(){
+  const m=me(), ym=state.ym;
+  const p=m.entries.filter(e=>inYm(ym,e.date)&&e.status==='pending').sort((a,b)=>a.date<b.date?-1:1)[0];
+  if(p) return p.date;
+  return inYm(ym,TODAY)?TODAY:monthDays(ym)[0];
+}
+function syncSeg(){
+  const set=(a,b,on)=>{$(a).setAttribute('aria-pressed',on);$(b).setAttribute('aria-pressed',!on)};
+  set('#r-member','#r-mgr',state.role==='member'); set('#t-team','#t-cal',state.tab==='team'); set('#v-cal','#v-list',state.view==='cal');
+  $('#mem').value=state.mid;
+}
+function renderAll(){
+  if(!D) return;
+  renderHeader();
+  if(mgrView()&&state.tab==='team'){renderTeam();renderBar();return}
+  renderSummary();
+  state.view==='cal'?renderCalendar():renderList();
+  renderPanel();renderBar();
+  $('#board').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{state.sel=b.dataset.d;renderAll()});
+}
+
+$('#mem').onchange=e=>{state.mid=e.target.value;state.sel=firstSel();renderAll()};
+$('#r-member').onclick=()=>{state.role='member';state.mid=D.me.email;state.sel=firstSel();syncSeg();renderAll()};
+$('#r-mgr').onclick=()=>{state.role='mgr';state.tab='team';syncSeg();renderAll()};
+$('#t-team').onclick=()=>{state.tab='team';syncSeg();renderAll()};
+$('#t-cal').onclick=()=>{state.tab='cal';state.sel=firstSel();syncSeg();renderAll()};
+$('#v-cal').onclick=()=>{state.view='cal';syncSeg();renderAll()};
+$('#v-list').onclick=()=>{state.view='list';syncSeg();renderAll()};
+$('#m-prev').onclick=()=>{state.ym=shiftYm(state.ym,-1);state.sel=firstSel();renderAll()};
+$('#m-next').onclick=()=>{state.ym=shiftYm(state.ym,1);state.sel=firstSel();renderAll()};
+$('#reload').onclick=()=>run('getData',[],'最新の内容を読み込みました');
+
+$('#busy').hidden=false;
+google.script.run
+  .withSuccessHandler(d=>{$('#busy').hidden=true;load(d)})
+  .withFailureHandler(e=>{$('#busy').hidden=true;$('#app').hidden=true;$('#fatal').hidden=false;
+    $('#fatal').innerHTML=`<h1>開けませんでした</h1><p>${esc(String((e&&e.message)||e).replace(/^Error:\s*/,''))}</p>`})
+  .getData();
+</script>
+
+</body>
+</html>
