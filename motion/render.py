@@ -165,6 +165,83 @@ def network(ctx, seed, t, origin, spread, n=14, col=WHITE, alpha=0.9):
         ctx.fill()
 
 
+# ---------------------------------------------------------------- shaded sphere sprites
+def _norm(v):
+    v = np.array(v, np.float32)
+    return v / np.linalg.norm(v)
+
+KEY = _norm((-0.55, -0.70, 0.55))      # warm key light, upper left front
+FILL = _norm((0.85, 0.15, 0.45))       # cool fill, right
+RIM = _norm((0.35, 0.55, -0.75))       # back light, lower right behind
+HALF_KEY = _norm(KEY + np.array((0, 0, 1), np.float32))
+SS = 3                                 # supersampling for clean edges
+
+def _lin(c):
+    c = np.asarray(c, np.float32)
+    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+
+def _srgb(x):
+    x = np.clip(x, 0, 1)
+    return np.where(x <= 0.0031308, x * 12.92, 1.055 * x ** (1 / 2.4) - 0.055)
+
+def _tonemap(x):  # ACES fitted curve
+    return np.clip((x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14), 0, 1)
+
+@lru_cache(maxsize=4096)
+def sphere_sprite(color, r, ao=0, blur=0, gloss=1.0):
+    """Per-pixel lit sphere: lambert key+fill, rim, blinn spec + clearcoat, softbox reflection, AO."""
+    size = (r + 2) * 2
+    n = size * SS
+    yy, xx = (np.mgrid[0:n, 0:n].astype(np.float32) + 0.5) / SS - size / 2
+    d2 = (xx ** 2 + yy ** 2) / (r * r)
+    inside = d2 < 1
+    nz = np.sqrt(np.clip(1 - d2, 0, 1))
+    N = np.stack([xx / r, yy / r, nz], -1)
+    alb = _lin(color)
+    ndk = np.clip(N @ KEY, 0, 1)
+    wrap = np.clip((N @ KEY + 0.25) / 1.25, 0, 1)            # soft terminator
+    ndf = np.clip(N @ FILL, 0, 1)
+    fres = (1 - nz) ** 3
+    rim = np.clip(N @ RIM + 0.4, 0, 1) * fres
+    nh = np.clip(N @ HALF_KEY, 0, 1)
+    spec = nh ** 90 * 2.2 * gloss + nh ** 14 * 0.18 * gloss
+    # reflection of an overhead softbox (stretched highlight band near top)
+    refl_y = 2 * N[..., 1] * nz                                 # reflect view vector, y comp
+    box = np.clip(1 - np.abs(refl_y + 0.75) / 0.18, 0, 1) * np.clip(1 - np.abs(N[..., 0] + 0.15) / 0.45, 0, 1)
+    occl = 1 - 0.55 * (ao / 3)
+    bottom_ao = 1 - 0.45 * np.clip(N[..., 1], 0, 1) ** 1.5 * (0.5 + ao / 6)
+    diffuse = alb * (wrap[..., None] * 1.25 * np.array((1.0, 0.96, 0.9)) + ndf[..., None] * 0.30 * np.array((0.7, 0.8, 1.0))
+                     + 0.06) * (occl * bottom_ao)[..., None]
+    col = diffuse + (spec * occl)[..., None] + rim[..., None] * (0.55 * alb + 0.25) + \
+        (box * (0.12 + 0.6 * fres) * gloss)[..., None]
+    col = _srgb(_tonemap(col * 1.15))
+    a = inside.astype(np.float32)
+    img = np.concatenate([col * a[..., None], a[..., None]], -1)          # premultiplied
+    img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
+    if blur:
+        img = cv2.GaussianBlur(img, (0, 0), blur)
+    bgra = np.ascontiguousarray((img[..., [2, 1, 0, 3]] * 255).astype(np.uint8))
+    surf = cairo.ImageSurface.create_for_data(memoryview(bgra), cairo.FORMAT_ARGB32, size, size)
+    return surf, bgra  # keep buffer alive
+
+def contact_shadow(ctx, x, y, r, strength=0.55):
+    g = cairo.RadialGradient(x + r * 0.12, y + r * 0.18, r * 0.85, x + r * 0.12, y + r * 0.18, r * 1.5)
+    g.add_color_stop_rgba(0, 0, 0, 0, strength)
+    g.add_color_stop_rgba(1, 0, 0, 0, 0)
+    ctx.set_source(g)
+    ctx.arc(x + r * 0.12, y + r * 0.18, r * 1.5, 0, 2 * math.pi)
+    ctx.fill()
+
+def sphere(ctx, x, y, r, c, ao=0, blur=0, shadow=True, gloss=1.0):
+    ri = max(1, int(round(r)))
+    if shadow and ri > 3:
+        contact_shadow(ctx, x, y, ri)
+    surf, _ = sphere_sprite(tuple(round(v, 3) for v in c), ri, ao, blur, gloss)
+    s = surf.get_width()
+    ctx.set_source_surface(surf, x - s / 2, y - s / 2)
+    ctx.paint()
+
+
 # ---------------------------------------------------------------- sphere clusters
 CLUSTER_PALETTES = {
     "green": [MINT, (0.10, 0.75, 0.70), (0.55, 0.85, 0.15), (0.05, 0.35, 0.55), (0.95, 0.95, 0.4)],
@@ -179,34 +256,28 @@ def make_cluster(seed, n=420, lumps=6):
     idx = rng.integers(0, lumps, n)
     pts = centers[idx] + rng.normal(0, 0.17, (n, 3))
     rad = rng.uniform(0.04, 0.12, n) * (1.3 - 0.9 * np.linalg.norm(pts - centers[idx], axis=1))
+    rad = np.clip(rad, 0.02, 0.14)
     col = rng.integers(0, 64, n)
-    return pts, np.clip(rad, 0.02, 0.14), col
-
-def sphere(ctx, x, y, r, c):
-    g = cairo.RadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r)
-    hi = mix(c, WHITE, 0.65)
-    g.add_color_stop_rgb(0, *hi)
-    g.add_color_stop_rgb(0.45, *c)
-    g.add_color_stop_rgb(1, *mix(c, BLACK, 0.7))
-    ctx.set_source(g)
-    ctx.arc(x, y, r, 0, 2 * math.pi)
-    ctx.fill()
+    # ambient occlusion level 0..3 from local crowding
+    dist = np.linalg.norm(pts[:, None] - pts[None], axis=-1)
+    crowd = (dist < 0.22).sum(1) - 1
+    ao = np.clip((crowd - crowd.min()) / max(1, np.ptp(crowd)) * 3.99, 0, 3).astype(int)
+    return pts, rad, col, ao
 
 def cluster(ctx, cx, cy, scale, rot, palette, seed, grow=1.0, n=420):
-    pts, rad, col = make_cluster(seed, n)
+    pts, rad, col, ao = make_cluster(seed, n)
     pal = CLUSTER_PALETTES[palette]
     ca, sa = math.cos(rot), math.sin(rot)
     x = pts[:, 0] * ca + pts[:, 2] * sa
     z = -pts[:, 0] * sa + pts[:, 2] * ca
     y = pts[:, 1]
     persp = 1.0 / (1.0 + z * 0.25)
-    order = np.argsort(-z)
-    for i in order:
+    for i in np.argsort(-z):
         r = rad[i] * scale * persp[i] * grow
-        if r < 0.6:
+        if r < 0.8:
             continue
         sphere(ctx, cx + x[i] * scale * persp[i] * grow, cy + y[i] * scale * persp[i] * grow, r,
-               pal[col[i] % len(pal)])
+               pal[col[i] % len(pal)], ao=int(ao[i]))
 
 
 # ---------------------------------------------------------------- particle field
@@ -231,16 +302,11 @@ def particle_field(ctx, t, cx=W / 2, cy=H * 0.47):
     for i in np.argsort(depth):
         rr = s[i] * depth[i]
         if -20 < x[i] < W + 20 and -20 < y[i] < H + 20:
-            c = FIELD_COLS[band[i]]
-            ctx.set_source_rgb(*mix(c, BLACK, 0.45))
-            ctx.arc(x[i], y[i], rr, 0, 2 * math.pi)
-            ctx.fill()
-            ctx.set_source_rgb(*c)
-            ctx.arc(x[i] - rr * 0.18, y[i] - rr * 0.2, rr * 0.72, 0, 2 * math.pi)
-            ctx.fill()
-            ctx.set_source_rgb(*mix(c, WHITE, 0.7))
-            ctx.arc(x[i] - rr * 0.35, y[i] - rr * 0.38, rr * 0.25, 0, 2 * math.pi)
-            ctx.fill()
+            # shallow depth of field: far dots are blurred and darker, near dots crisp
+            blur = 2 if depth[i] < 0.5 else (1 if depth[i] < 0.7 else 0)
+            c = mix(FIELD_COLS[band[i]], BLACK, clamp((0.9 - depth[i]) * 0.9))
+            sphere(ctx, x[i], y[i], rr, c, ao=int(clamp((1.1 - depth[i]) * 4, 0, 3)), blur=blur,
+                   shadow=depth[i] > 0.6)
 
 
 # ---------------------------------------------------------------- scenes
