@@ -1,0 +1,10 @@
+﻿section_ja,section_en,section_zh,section_ko,name_ja,name_en,name_zh,name_ko,desc_ja,desc_en,desc_zh,desc_ko,price,allergens,marks
+定食,Set Meals,套餐,정식,鶏の唐揚げ定食,Fried Chicken Set Meal,日式炸鸡套餐,닭튀김 정식,ご飯・味噌汁・小鉢付き。,"Served with rice, miso soup and a small side dish.",配米饭、味噌汤和小菜。,"밥, 된장국, 작은 반찬이 함께 나옵니다.",980,小麦;大豆;鶏肉,おすすめ
+定食,Set Meals,套餐,정식,焼き魚定食（さば）,Grilled Mackerel Set Meal,烤青花鱼套餐,고등어구이 정식,ご飯・味噌汁・小鉢付き。,"Served with rice, miso soup and a small side dish.",配米饭、味噌汤和小菜。,"밥, 된장국, 작은 반찬이 함께 나옵니다.",1080,さば;大豆,
+定食,Set Meals,套餐,정식,豚の生姜焼き定食,Ginger Pork Set Meal,姜汁烧猪肉套餐,돼지고기 생강구이 정식,しょうが醤油で焼いた豚肉。ご飯・味噌汁付き。,Pork grilled with ginger and soy sauce. Served with rice and miso soup.,用姜汁酱油煎烤的猪肉。配米饭和味噌汤。,생강 간장으로 구운 돼지고기. 밥과 된장국이 함께 나옵니다.,1050,小麦;大豆;豚肉,
+定食,Set Meals,套餐,정식,麻婆豆腐定食,Mapo Tofu Set Meal,麻婆豆腐套餐,마파두부 정식,ピリ辛の豆腐とひき肉の炒め煮。ご飯・スープ付き。,Tofu and minced pork in a spicy sauce. Served with rice and soup.,微辣的豆腐炒肉末。配米饭和汤。,매콤한 두부와 다진 고기 볶음. 밥과 국이 함께 나옵니다.,950,小麦;大豆;豚肉;ごま,辛さ2
+一品料理,Small Dishes,单点小菜,일품요리,だし巻き卵,Japanese Rolled Omelet,日式高汤蛋卷,일본식 계란말이,だしを入れて焼いた、やわらかい卵焼き。,A soft omelet cooked with Japanese soup stock.,加入高汤煎制的松软蛋卷。,육수를 넣어 부드럽게 구운 계란말이.,450,卵;小麦;大豆,
+一品料理,Small Dishes,单点小菜,일품요리,枝豆,Edamame (Boiled Green Soybeans),毛豆,풋콩 (에다마메),塩ゆで。,Boiled with salt.,盐水煮。,소금물에 삶았습니다.,350,大豆,肉・魚介不使用
+一品料理,Small Dishes,单点小菜,일품요리,ざるそば,Chilled Soba Noodles,日式冷荞麦面,냉 메밀국수 (자루소바),冷たいそばを、つゆにつけて食べます。,Cold buckwheat noodles. Dip them in the sauce to eat.,冷荞麦面，蘸酱汁食用。,차가운 메밀면을 쯔유에 찍어 드세요.,800,そば;小麦;大豆,
+飲み物,Drinks,饮品,음료,ウーロン茶,Oolong Tea,乌龙茶,우롱차,,,,,250,,
+飲み物,Drinks,饮品,음료,生ビール（中）,Draft Beer (Medium),生啤酒（中杯）,생맥주 (중),,,,,550,,アルコール

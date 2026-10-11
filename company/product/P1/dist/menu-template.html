@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多言語メニュー（日・英・中・韓）テンプレート</title>
+<script>
+/* =====================================================================
+   ここから下が「お店のデータ」です。ここだけ書き換えてください。
+   - 文字は必ず " " （半角のダブルクォート）で囲みます。
+   - 行の終わりの , （カンマ）を消さないでください。
+   - 書き換えたら保存して、ブラウザで開き直す（再読み込み）と反映されます。
+   - 中国語（zh）・韓国語（ko）の見本訳は参考訳です。
+     掲示する前に、ご自身または詳しい方の確認をおすすめします。
+   - 表計算ソフトで編集したい場合は、同梱の menu-data.csv を使い、
+     画面上の「CSVを読み込む」から取り込めます（データの書き換え方法も画面に出ます）。
+   ===================================================================== */
+
+/* ---- 1. お店の情報 ---- */
+const SHOP = {
+  name: {
+    ja: "〇〇食堂（見本）",
+    en: "(Sample) ○○ Shokudo",
+    zh: "（样本）○○食堂",
+    ko: "(견본) ○○ 식당"
+  },
+  tagline: {
+    ja: "ここに一言紹介を書きます（例：昔ながらの定食と一品料理）",
+    en: "Write a short introduction here (e.g. Classic Japanese set meals and small dishes)",
+    zh: "在此填写简短介绍（例：传统日式套餐和小菜）",
+    ko: "여기에 짧은 소개를 적습니다 (예: 옛날식 정식과 일품요리)"
+  },
+  // メニューの一番下に出る注意書き（1行ずつ。不要な行は消してかまいません）
+  notes: [
+    { ja: "価格はすべて税込です。",
+      en: "All prices include tax.",
+      zh: "价格均已含税。",
+      ko: "모든 가격은 세금 포함입니다." },
+    { ja: "アレルゲンは主な原材料をもとに記載しています。同じ調理場で他の食材も扱っています。アレルギーのある方はスタッフにお尋ねください。",
+      en: "Allergens are listed based on main ingredients. Other ingredients are handled in the same kitchen. If you have allergies, please ask our staff.",
+      zh: "过敏原根据主要原料标注。同一厨房也处理其他食材。如有过敏，请咨询店员。",
+      ko: "알레르기 유발 성분은 주요 원재료를 기준으로 표시했습니다. 같은 주방에서 다른 식재료도 취급합니다. 알레르기가 있으신 분은 직원에게 문의해 주세요." }
+  ]
+};
+
+/* ---- 2. メニュー ----
+   section  … 見出し（例：定食、一品料理、飲み物）
+   items    … その見出しの料理
+     name      … 料理名（ja / en / zh / ko）
+     desc      … 説明（なくてもかまいません。行ごと消せます）
+     price     … 価格（数字だけ。例 980）
+     allergens … アレルゲン。下の「4. アレルゲンの訳」にある日本語名で書きます
+                 例 ["小麦", "卵"]。なければ []
+     marks     … 目印。下の「5. 目印の訳」にある名前で書きます
+                 例 ["おすすめ", "辛さ2"]。なければ []
+   ※ 見本のアレルゲン欄は例です。実際の表示はお店で必ず確認してください。 */
+const MENU = [
+  {
+    section: { ja: "定食", en: "Set Meals", zh: "套餐", ko: "정식" },
+    items: [
+      {
+        name: { ja: "鶏の唐揚げ定食", en: "Fried Chicken Set Meal", zh: "日式炸鸡套餐", ko: "닭튀김 정식" },
+        desc: { ja: "ご飯・味噌汁・小鉢付き。", en: "Served with rice, miso soup and a small side dish.", zh: "配米饭、味噌汤和小菜。", ko: "밥, 된장국, 작은 반찬이 함께 나옵니다." },
+        price: 980,
+        allergens: ["小麦", "大豆", "鶏肉"],
+        marks: ["おすすめ"]
+      },
+      {
+        name: { ja: "焼き魚定食（さば）", en: "Grilled Mackerel Set Meal", zh: "烤青花鱼套餐", ko: "고등어구이 정식" },
+        desc: { ja: "ご飯・味噌汁・小鉢付き。", en: "Served with rice, miso soup and a small side dish.", zh: "配米饭、味噌汤和小菜。", ko: "밥, 된장국, 작은 반찬이 함께 나옵니다." },
+        price: 1080,
+        allergens: ["さば", "大豆"],
+        marks: []
+      },
+      {
+        name: { ja: "豚の生姜焼き定食", en: "Ginger Pork Set Meal", zh: "姜汁烧猪肉套餐", ko: "돼지고기 생강구이 정식" },
+        desc: { ja: "しょうが醤油で焼いた豚肉。ご飯・味噌汁付き。", en: "Pork grilled with ginger and soy sauce. Served with rice and miso soup.", zh: "用姜汁酱油煎烤的猪肉。配米饭和味噌汤。", ko: "생강 간장으로 구운 돼지고기. 밥과 된장국이 함께 나옵니다." },
+        price: 1050,
+        allergens: ["小麦", "大豆", "豚肉"],
+        marks: []
+      },
+      {
+        name: { ja: "麻婆豆腐定食", en: "Mapo Tofu Set Meal", zh: "麻婆豆腐套餐", ko: "마파두부 정식" },
+        desc: { ja: "ピリ辛の豆腐とひき肉の炒め煮。ご飯・スープ付き。", en: "Tofu and minced pork in a spicy sauce. Served with rice and soup.", zh: "微辣的豆腐炒肉末。配米饭和汤。", ko: "매콤한 두부와 다진 고기 볶음. 밥과 국이 함께 나옵니다." },
+        price: 950,
+        allergens: ["小麦", "大豆", "豚肉", "ごま"],
+        marks: ["辛さ2"]
+      }
+    ]
+  },
+  {
+    section: { ja: "一品料理", en: "Small Dishes", zh: "单点小菜", ko: "일품요리" },
+    items: [
+      {
+        name: { ja: "だし巻き卵", en: "Japanese Rolled Omelet", zh: "日式高汤蛋卷", ko: "일본식 계란말이" },
+        desc: { ja: "だしを入れて焼いた、やわらかい卵焼き。", en: "A soft omelet cooked with Japanese soup stock.", zh: "加入高汤煎制的松软蛋卷。", ko: "육수를 넣어 부드럽게 구운 계란말이." },
+        price: 450,
+        allergens: ["卵", "小麦", "大豆"],
+        marks: []
+      },
+      {
+        name: { ja: "枝豆", en: "Edamame (Boiled Green Soybeans)", zh: "毛豆", ko: "풋콩 (에다마메)" },
+        desc: { ja: "塩ゆで。", en: "Boiled with salt.", zh: "盐水煮。", ko: "소금물에 삶았습니다." },
+        price: 350,
+        allergens: ["大豆"],
+        marks: ["肉・魚介不使用"]
+      },
+      {
+        name: { ja: "ざるそば", en: "Chilled Soba Noodles", zh: "日式冷荞麦面", ko: "냉 메밀국수 (자루소바)" },
+        desc: { ja: "冷たいそばを、つゆにつけて食べます。", en: "Cold buckwheat noodles. Dip them in the sauce to eat.", zh: "冷荞麦面，蘸酱汁食用。", ko: "차가운 메밀면을 쯔유에 찍어 드세요." },
+        price: 800,
+        allergens: ["そば", "小麦", "大豆"],
+        marks: []
+      }
+    ]
+  },
+  {
+    section: { ja: "飲み物", en: "Drinks", zh: "饮品", ko: "음료" },
+    items: [
+      {
+        name: { ja: "ウーロン茶", en: "Oolong Tea", zh: "乌龙茶", ko: "우롱차" },
+        price: 250,
+        allergens: [],
+        marks: []
+      },
+      {
+        name: { ja: "生ビール（中）", en: "Draft Beer (Medium)", zh: "生啤酒（中杯）", ko: "생맥주 (중)" },
+        price: 550,
+        allergens: [],
+        marks: ["アルコール"]
+      }
+    ]
+  }
+];
+
+/* ---- 3. 価格の書き方（ふつうは変更不要） ---- */
+const PRICE_FORMAT = {
+  ja: n => n.toLocaleString("ja-JP") + "円",
+  en: n => "¥" + n.toLocaleString("en-US"),
+  zh: n => n.toLocaleString("en-US") + "日元",
+  ko: n => n.toLocaleString("en-US") + "엔"
+};
+
+/* ---- 4. アレルゲンの訳（足りないものは同じ形で追加できます） ---- */
+const ALLERGENS = {
+  "えび":   { en: "Shrimp",    zh: "虾",     ko: "새우" },
+  "かに":   { en: "Crab",      zh: "蟹",     ko: "게" },
+  "くるみ": { en: "Walnut",    zh: "核桃",   ko: "호두" },
+  "小麦":   { en: "Wheat",     zh: "小麦",   ko: "밀" },
+  "そば":   { en: "Buckwheat", zh: "荞麦",   ko: "메밀" },
+  "卵":     { en: "Egg",       zh: "鸡蛋",   ko: "달걀" },
+  "乳":     { en: "Milk",      zh: "乳制品", ko: "우유" },
+  "落花生": { en: "Peanut",    zh: "花生",   ko: "땅콩" },
+  "大豆":   { en: "Soybean",   zh: "大豆",   ko: "대두" },
+  "ごま":   { en: "Sesame",    zh: "芝麻",   ko: "참깨" },
+  "さば":   { en: "Mackerel",  zh: "青花鱼", ko: "고등어" },
+  "さけ":   { en: "Salmon",    zh: "三文鱼", ko: "연어" },
+  "いか":   { en: "Squid",     zh: "鱿鱼",   ko: "오징어" },
+  "あわび": { en: "Abalone",   zh: "鲍鱼",   ko: "전복" },
+  "いくら": { en: "Salmon roe", zh: "鲑鱼子", ko: "연어알" },
+  "豚肉":   { en: "Pork",      zh: "猪肉",   ko: "돼지고기" },
+  "鶏肉":   { en: "Chicken",   zh: "鸡肉",   ko: "닭고기" },
+  "牛肉":   { en: "Beef",      zh: "牛肉",   ko: "쇠고기" },
+  "ゼラチン": { en: "Gelatin", zh: "明胶",   ko: "젤라틴" },
+  "キウイフルーツ": { en: "Kiwi fruit", zh: "猕猴桃", ko: "키위" },
+  "バナナ": { en: "Banana",    zh: "香蕉",   ko: "바나나" },
+  "もも":   { en: "Peach",     zh: "桃子",   ko: "복숭아" },
+  "りんご": { en: "Apple",     zh: "苹果",   ko: "사과" },
+  "オレンジ": { en: "Orange",  zh: "橙子",   ko: "오렌지" },
+  "やまいも": { en: "Yam",     zh: "山药",   ko: "마" },
+  "まつたけ": { en: "Matsutake mushroom", zh: "松茸", ko: "송이버섯" },
+  "カシューナッツ": { en: "Cashew nut", zh: "腰果", ko: "캐슈너트" },
+  "アーモンド": { en: "Almond", zh: "杏仁",  ko: "아몬드" },
+  "マカダミアナッツ": { en: "Macadamia nut", zh: "夏威夷果", ko: "마카다미아" }
+};
+
+/* ---- 5. 目印の訳（文字で表示します。足りないものは追加できます） ---- */
+const MARKS = {
+  "おすすめ":       { ja: "おすすめ",       en: "Recommended",       zh: "推荐",     ko: "추천" },
+  "辛さ1":          { ja: "辛さ：小",       en: "Spicy: mild",       zh: "辣度：微辣", ko: "매운맛: 약간" },
+  "辛さ2":          { ja: "辛さ：中",       en: "Spicy: medium",     zh: "辣度：中辣", ko: "매운맛: 보통" },
+  "辛さ3":          { ja: "辛さ：大",       en: "Spicy: hot",        zh: "辣度：特辣", ko: "매운맛: 매우" },
+  "肉・魚介不使用": { ja: "肉・魚介不使用", en: "No meat or seafood", zh: "不含肉类和海鲜", ko: "고기·해산물 미사용" },
+  "アルコール":     { ja: "アルコール",     en: "Contains alcohol",  zh: "含酒精",   ko: "알코올 포함" },
+  "数量限定":       { ja: "数量限定",       en: "Limited quantity",  zh: "限量",     ko: "한정 수량" },
+  "期間限定":       { ja: "期間限定",       en: "Limited time",      zh: "期间限定", ko: "기간 한정" }
+};
+/* ===================== お店のデータはここまで ===================== */
+</script>
+<style>
+  :root {
+    --bg: #f7f4ef; --card: #ffffff; --text: #24201c; --muted: #625a52;
+    --accent: #1f5c4a; --accent-text: #ffffff; --line: #ddd5ca; --chip: #f0ebe3;
+    --panel: #fff8e1; --panel-text: #5c4300; --panel-line: #e8d59a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #191714; --card: #24211d; --text: #f1ece5; --muted: #b9afa4;
+      --accent: #7cc4ad; --accent-text: #10201b; --line: #3b3630; --chip: #302b26;
+      --panel: #2e2817; --panel-text: #f1dc9c; --panel-line: #5a4c22;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text); line-height: 1.55;
+    font-family: system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo",
+                 "Noto Sans JP", "Noto Sans CJK JP", "WenQuanYi Zen Hei", sans-serif;
+  }
+  :lang(zh-Hans) body, body:lang(zh-Hans) {
+    font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", "WenQuanYi Zen Hei", sans-serif;
+  }
+  :lang(ko) body, body:lang(ko) {
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", "WenQuanYi Zen Hei", sans-serif;
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 16px; }
+
+  /* 編集用パネル（印刷されません） */
+  .panel { background: var(--panel); color: var(--panel-text); border: 1px solid var(--panel-line);
+           border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 14px; }
+  .panel strong { display: block; margin-bottom: 4px; }
+  .panel ul { margin: 6px 0 0; padding-left: 1.2em; }
+  .panel details { margin-top: 8px; }
+  .panel summary { cursor: pointer; font-weight: 700; padding: 4px 0; }
+  .panel textarea { width: 100%; min-height: 120px; font-family: ui-monospace, Menlo, Consolas, monospace;
+                    font-size: 12px; border: 1px solid var(--panel-line); border-radius: 6px; padding: 6px;
+                    background: var(--card); color: var(--text); }
+  .panel .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; align-items: center; }
+  .panel button, .panel label.file { border: 1px solid var(--panel-line); background: var(--card); color: var(--text);
+                    border-radius: 6px; padding: 6px 10px; font-size: 14px; cursor: pointer; }
+  .panel input[type=file] { display: none; }
+  #check { margin-top: 8px; font-size: 13px; }
+  #csvMsg { font-size: 13px; }
+
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px; }
+  .langs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .langs button { border: 1px solid var(--line); background: var(--card); color: var(--text);
+                  padding: 8px 14px; border-radius: 999px; font-size: 15px; cursor: pointer; min-height: 40px; }
+  .langs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 700; }
+  .langs button[aria-pressed="true"]::before { content: "✓ "; }
+  .opt { font-size: 14px; display: flex; align-items: center; gap: 6px; }
+  .printbtn { border: 1px solid var(--line); background: var(--card); color: var(--text); border-radius: 8px;
+              padding: 8px 12px; font-size: 14px; cursor: pointer; min-height: 40px; }
+
+  header.shop { border-bottom: 2px solid var(--text); padding-bottom: 10px; margin-bottom: 14px; }
+  header.shop h1 { margin: 0; font-size: 26px; line-height: 1.3; overflow-wrap: anywhere; }
+  header.shop p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+  section.cat { margin-bottom: 18px; }
+  section.cat h2 { font-size: 19px; margin: 0 0 8px; padding: 2px 0 2px 10px; border-left: 5px solid var(--accent); }
+  section.cat h2 .sub { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 8px; }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .name { font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
+  .orig { font-size: 13px; color: var(--muted); }
+  .price { font-weight: 700; white-space: nowrap; font-size: 17px; }
+  .desc { margin: 6px 0; font-size: 14px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px; font-size: 13px; margin-top: 6px; }
+  .mark { border: 1.5px solid var(--text); border-radius: 4px; padding: 0 6px; font-weight: 700; }
+  .allergen { color: var(--text); }
+  .allergen b { font-weight: 700; }
+  footer.notes { font-size: 13px; color: var(--muted); margin: 16px 0 32px; border-top: 1px solid var(--line); padding-top: 10px; }
+  footer.notes p { margin: 0 0 4px; }
+
+  /* ===== A4 印刷 ===== */
+  @page { size: A4; margin: 12mm 12mm 14mm; }
+  @media print {
+    :root { --bg: #fff; --card: #fff; --text: #000; --muted: #333; --line: #999; --accent: #000; }
+    body { background: #fff; color: #000; font-size: 10.5pt; }
+    main { max-width: none; padding: 0; }
+    .no-print { display: none !important; }
+    header.shop { margin-bottom: 8pt; padding-bottom: 6pt; }
+    header.shop h1 { font-size: 20pt; }
+    header.shop p { font-size: 10.5pt; }
+    #menu { column-count: 2; column-gap: 10mm; }
+    section.cat { break-inside: auto; margin-bottom: 8pt; }
+    section.cat h2 { font-size: 13pt; break-after: avoid; page-break-after: avoid; border-left-width: 4pt; margin-bottom: 4pt; }
+    section.cat h2 .sub { font-size: 10pt; }
+    .item { border: none; border-bottom: 0.5pt solid #999; border-radius: 0; padding: 4pt 0 5pt; margin: 0;
+            break-inside: avoid; page-break-inside: avoid; }
+    .name { font-size: 11.5pt; }
+    .price { font-size: 11.5pt; }
+    .orig, .desc, .meta { font-size: 10pt; }
+    .desc { margin: 2pt 0; }
+    .meta { margin-top: 2pt; gap: 4pt; }
+    .mark { border-width: 1pt; }
+    footer.notes { font-size: 10pt; color: #000; margin: 10pt 0 0; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <!-- 編集用パネル：画面だけに表示され、印刷はされません -->
+  <div class="panel no-print" id="panel">
+    <strong>お店の方へ（この枠は印刷されません）</strong>
+    <ul>
+      <li>店名・料理はファイル先頭の「お店のデータ」を書き換えて編集します。表示中の店名は見本です。</li>
+      <li>中国語・韓国語の見本訳は参考訳です（ネイティブ確認をしていません）。掲示前に、ご自身または詳しい方の確認をおすすめします。</li>
+      <li>アレルゲン欄は見本の例です。外食はアレルゲン表示の義務の対象外ですが、お客様に出す情報はお店の責任で確認してください。</li>
+      <li>印刷：言語を選んで「印刷」→ 用紙 A4、倍率 100% で印刷してください。</li>
+    </ul>
+    <div id="check"></div>
+    <details>
+      <summary>CSV（表計算ソフトの表）から読み込む</summary>
+      <p>同梱の menu-data.csv を表計算ソフトで編集し、UTF-8 の CSV で保存してから選んでください。インターネットには送信されません。</p>
+      <div class="btns">
+        <label class="file">CSVファイルを選ぶ<input type="file" id="csvFile" accept=".csv,text/csv"></label>
+        <button type="button" id="csvExport">今のメニューをCSVで保存</button>
+      </div>
+      <p>または、CSVの中身をここに貼り付けて「読み込む」：</p>
+      <textarea id="csvText" placeholder="ここにCSVを貼り付け"></textarea>
+      <div class="btns"><button type="button" id="csvLoad">読み込む</button><span id="csvMsg"></span></div>
+      <div id="codeOut" hidden>
+        <p>読み込んだ内容は、このページを閉じると消えます。ずっと使うには、下の文字をすべてコピーし、ファイル先頭の <code>const MENU = [ … ];</code> の部分（「2. メニュー」）と置き換えて保存してください。</p>
+        <textarea id="codeText" readonly></textarea>
+        <div class="btns"><button type="button" id="codeCopy">コピー</button></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="toolbar no-print">
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-lang="ja">日本語</button>
+      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="zh">简体中文</button>
+      <button type="button" data-lang="ko">한국어</button>
+    </div>
+    <label class="opt"><input type="checkbox" id="showJa" checked> 日本語名を併記</label>
+    <button type="button" class="printbtn" id="printBtn">印刷 / Print</button>
+  </div>
+
+  <header class="shop">
+    <h1 id="shopName"></h1>
+    <p id="tagline"></p>
+  </header>
+  <div id="menu"></div>
+  <footer class="notes" id="notes"></footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  const LANGS = ["ja", "en", "zh", "ko"];
+  const HTML_LANG = { ja: "ja", en: "en", zh: "zh-Hans", ko: "ko" };
+  const LABEL = {
+    allergens: { ja: "アレルゲン", en: "Allergens", zh: "过敏原", ko: "알레르기 유발 성분" },
+    none:      { ja: "記載なし", en: "None listed", zh: "未标注", ko: "표시 없음" }
+  };
+  let menu = MENU;
+  let lang = "ja";
+  let showJa = true;
+  try {
+    const s = localStorage.getItem("menu-template-lang");
+    if (LANGS.includes(s)) lang = s;
+    const j = localStorage.getItem("menu-template-showja");
+    if (j === "0") showJa = false;
+  } catch (e) {}
+
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const pick = (obj, l) => (obj && (obj[l] || obj.ja)) || "";
+  const fmtPrice = (p, l) => {
+    if (p === "" || p == null) return "";
+    if (typeof p === "number" && isFinite(p)) return PRICE_FORMAT[l](p);
+    if (typeof p === "object") return pick(p, l);
+    return String(p);
+  };
+  const allergenName = (a, l) => l === "ja" ? a : ((ALLERGENS[a] && ALLERGENS[a][l]) || a);
+  const markName = (m, l) => (MARKS[m] && MARKS[m][l]) || m;
+
+  function render() {
+    document.documentElement.lang = HTML_LANG[lang];
+    document.title = pick(SHOP.name, lang);
+    $("shopName").textContent = pick(SHOP.name, lang);
+    $("tagline").textContent = pick(SHOP.tagline, lang);
+    document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    $("showJa").checked = showJa;
+    const withJa = showJa && lang !== "ja";
+    let html = "";
+    for (const sec of menu) {
+      html += `<section class="cat"><h2>${esc(pick(sec.section, lang))}${withJa ? `<span class="sub">${esc(sec.section.ja)}</span>` : ""}</h2>`;
+      for (const it of sec.items || []) {
+        const marks = (it.marks || []).map(m => `<span class="mark">${esc(markName(m, lang))}</span>`).join("");
+        const al = (it.allergens || []);
+        const alText = al.length ? al.map(a => esc(allergenName(a, lang))).join(lang === "en" ? ", " : "、") : esc(LABEL.none[lang]);
+        html += `<article class="item">
+          <div class="row"><div class="name">${esc(pick(it.name, lang))}</div><div class="price">${esc(fmtPrice(it.price, lang))}</div></div>
+          ${withJa ? `<div class="orig" lang="ja">${esc(it.name.ja)}</div>` : ""}
+          ${it.desc && pick(it.desc, lang) ? `<p class="desc">${esc(pick(it.desc, lang))}</p>` : ""}
+          <div class="meta">${marks}<span class="allergen"><b>${esc(LABEL.allergens[lang])}:</b> ${alText}</span></div>
+        </article>`;
+      }
+      html += `</section>`;
+    }
+    $("menu").innerHTML = html;
+    $("notes").innerHTML = (SHOP.notes || []).map(n => `<p>${esc(pick(n, lang))}</p>`).join("");
+  }
+
+  // 翻訳の欠けを調べる（画面のパネルにだけ表示）
+  function selfCheck() {
+    const miss = [];
+    const need = (obj, where) => { for (const l of LANGS) if (!obj || !obj[l]) miss.push(`${where}（${l}）`); };
+    need(SHOP.name, "店名"); need(SHOP.tagline, "紹介文");
+    (SHOP.notes || []).forEach((n, i) => need(n, `注意書き${i + 1}`));
+    let count = 0;
+    for (const sec of menu) {
+      need(sec.section, `見出し「${pick(sec.section, "ja")}」`);
+      for (const it of sec.items || []) {
+        count++;
+        const nm = pick(it.name, "ja") || "（名前なし）";
+        need(it.name, `${nm} の名前`);
+        if (it.desc && Object.values(it.desc).some(Boolean)) need(it.desc, `${nm} の説明`);
+        for (const a of it.allergens || []) if (!ALLERGENS[a]) miss.push(`${nm}：アレルゲン「${a}」の訳がありません（4. に追加）`);
+        for (const m of it.marks || []) if (!MARKS[m]) miss.push(`${nm}：目印「${m}」の訳がありません（5. に追加）`);
+      }
+    }
+    $("check").textContent = miss.length
+      ? `確認：${miss.length}件の訳が足りません（足りない言語は日本語で表示されます）— ${miss.slice(0, 12).join("、")}${miss.length > 12 ? " ほか" : ""}`
+      : `確認：${count}品 × 4言語、訳の欠けはありません。`;
+  }
+
+  /* ---------- CSV ---------- */
+  const COLS = ["section_ja", "section_en", "section_zh", "section_ko",
+                "name_ja", "name_en", "name_zh", "name_ko",
+                "desc_ja", "desc_en", "desc_zh", "desc_ko",
+                "price", "allergens", "marks"];
+
+  function parseCSV(text) {
+    text = text.replace(/^﻿/, "");
+    const rows = []; let row = []; let f = ""; let q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++; } else q = false; }
+        else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ",") { row.push(f); f = ""; }
+      else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(f); rows.push(row); row = []; f = "";
+      } else f += c;
+    }
+    if (f !== "" || row.length) { row.push(f); rows.push(row); }
+    return rows.filter(r => r.some(v => v.trim() !== ""));
+  }
+  const splitList = s => String(s || "").split(/[;；、,，]/).map(x => x.trim()).filter(Boolean);
+
+  function csvToMenu(text) {
+    const rows = parseCSV(text);
+    if (!rows.length) throw new Error("CSVが空です。");
+    const head = rows[0].map(h => h.trim());
+    const idx = {};
+    for (const c of COLS) { idx[c] = head.indexOf(c); }
+    if (idx.name_ja < 0) throw new Error("1行目に name_ja などの列名が必要です（同梱の menu-data.csv の1行目をそのまま使ってください）。");
+    const out = []; const bySec = {};
+    for (const r of rows.slice(1)) {
+      const g = c => idx[c] >= 0 ? (r[idx[c]] || "").trim() : "";
+      if (!g("name_ja")) continue;
+      const key = g("section_ja") || "メニュー";
+      if (!bySec[key]) {
+        bySec[key] = { section: { ja: key, en: g("section_en"), zh: g("section_zh"), ko: g("section_ko") }, items: [] };
+        out.push(bySec[key]);
+      }
+      const p = g("price").replace(/[,，円¥￥\s]/g, "");
+      const item = { name: { ja: g("name_ja"), en: g("name_en"), zh: g("name_zh"), ko: g("name_ko") } };
+      const d = { ja: g("desc_ja"), en: g("desc_en"), zh: g("desc_zh"), ko: g("desc_ko") };
+      if (Object.values(d).some(Boolean)) item.desc = d;
+      Object.assign(item, {
+        price: p !== "" && !isNaN(Number(p)) ? Number(p) : g("price"),
+        allergens: splitList(g("allergens")),
+        marks: splitList(g("marks"))
+      });
+      bySec[key].items.push(item);
+    }
+    if (!out.length) throw new Error("料理の行が見つかりません（name_ja が空の行は読み飛ばします）。");
+    return out;
+  }
+
+  function menuToCode(m) {
+    const J = v => JSON.stringify(v);
+    const obj = o => `{ ja: ${J(o.ja || "")}, en: ${J(o.en || "")}, zh: ${J(o.zh || "")}, ko: ${J(o.ko || "")} }`;
+    let s = "const MENU = [\n";
+    s += m.map(sec => {
+      let t = `  {\n    section: ${obj(sec.section)},\n    items: [\n`;
+      t += sec.items.map(it => {
+        let u = `      {\n        name: ${obj(it.name)},\n`;
+        if (it.desc) u += `        desc: ${obj(it.desc)},\n`;
+        u += `        price: ${J(it.price)},\n        allergens: ${J(it.allergens || [])},\n        marks: ${J(it.marks || [])}\n      }`;
+        return u;
+      }).join(",\n");
+      return t + "\n    ]\n  }";
+    }).join(",\n");
+    return s + "\n];";
+  }
+
+  function menuToCSV(m) {
+    const q = v => { v = String(v == null ? "" : v); return /[",\r\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v; };
+    const lines = [COLS.join(",")];
+    for (const sec of m) for (const it of sec.items) {
+      const d = it.desc || {};
+      lines.push([sec.section.ja, sec.section.en, sec.section.zh, sec.section.ko,
+        it.name.ja, it.name.en, it.name.zh, it.name.ko, d.ja, d.en, d.zh, d.ko,
+        typeof it.price === "object" ? pick(it.price, "ja") : it.price,
+        (it.allergens || []).join(";"), (it.marks || []).join(";")].map(q).join(","));
+    }
+    return "﻿" + lines.join("\r\n") + "\r\n";
+  }
+
+  function loadCSV(text) {
+    try {
+      menu = csvToMenu(text);
+      render(); selfCheck();
+      const n = menu.reduce((a, s) => a + s.items.length, 0);
+      $("csvMsg").textContent = `${n}品を読み込みました。`;
+      $("codeText").value = menuToCode(menu);
+      $("codeOut").hidden = false;
+    } catch (e) {
+      $("csvMsg").textContent = "読み込めませんでした：" + e.message;
+    }
+  }
+
+  $("csvFile").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      // UTF-8 で読めない場合（Excel の「CSV（カンマ区切り）」= Shift_JIS）は Shift_JIS として読み直す
+      let text = new TextDecoder("utf-8").decode(r.result);
+      if (text.includes("\uFFFD")) { try { text = new TextDecoder("shift_jis").decode(r.result); } catch (e) {} }
+      $("csvText").value = text; loadCSV(text);
+    };
+    r.readAsArrayBuffer(f);
+  });
+  $("csvLoad").addEventListener("click", () => loadCSV($("csvText").value));
+  $("csvExport").addEventListener("click", () => {
+    const blob = new Blob([menuToCSV(menu)], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "menu-data.csv";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+  $("codeCopy").addEventListener("click", () => {
+    const t = $("codeText"); t.select();
+    const done = () => { $("csvMsg").textContent = "コピーしました。"; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(done, () => { document.execCommand("copy"); done(); });
+    else { document.execCommand("copy"); done(); }
+  });
+
+  document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+    lang = b.dataset.lang;
+    try { localStorage.setItem("menu-template-lang", lang); } catch (e) {}
+    render();
+  }));
+  $("showJa").addEventListener("change", e => {
+    showJa = e.target.checked;
+    try { localStorage.setItem("menu-template-showja", showJa ? "1" : "0"); } catch (e2) {}
+    render();
+  });
+  $("printBtn").addEventListener("click", () => window.print());
+
+  // 検証用：?lang=en のように指定すると、その言語で開きます
+  try { const p = new URLSearchParams(location.search).get("lang"); if (LANGS.includes(p)) lang = p; } catch (e) {}
+
+  window.__menuTemplate = { csvToMenu, menuToCSV, menuToCode };
+  render();
+  selfCheck();
+})();
+</script>
+</body>
+</html>
