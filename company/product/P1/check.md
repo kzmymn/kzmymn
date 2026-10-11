@@ -51,3 +51,22 @@
 - PDF には環境のフォント（WenQuanYi Zen Hei、Inter）がサブセット埋め込みされている。いずれもオープンなライセンス（WenQuanYi は GPL＋フォント例外、Inter は SIL OFL）だが、**推測**であり qa でライセンス確認を推奨。
 - 実機（iPhone Safari / Android Chrome / Windows の Excel）では未検証。Chromium のみ。
 - 購入者の環境では OS 標準フォントで表示されるため、見た目（字形・行の折り返し）はスクリーンショットと多少異なる。
+
+## 5. PDF に埋め込まれたフォントのライセンス（追記）
+
+確認の方法：環境に入っている Debian パッケージに同梱されたライセンス文書を読みました（`/usr/share/doc/<パッケージ>/copyright`）。`fc-query` の結果には copyright や license の項目が出なかったため、ここでは使っていません。
+
+| フォント | ファイル | 同梱文書に書かれた権利者 | 同梱文書に書かれたライセンス |
+|---|---|---|---|
+| WenQuanYi Zen Hei | /usr/share/fonts/truetype/wqy/wqy-zenhei.ttc | 2007-2009, Qianqian Fang and The WenQuanYi Project Board of Trustees | 「GPL-2 with Font embedding exception and M+ FONTS License」（`/usr/share/doc/fonts-wqy-zenhei/copyright`） |
+| Inter | /usr/share/fonts/opentype/inter/*.otf | 2016-2023 The Inter Project Authors | 「OFL-1.1 and Apache-2.0」。フォントファイル自体は OFL-1.1 の条文が同梱されている（`/usr/share/doc/fonts-inter/copyright`） |
+
+- WenQuanYi Zen Hei：上の文書には GPL のフォント埋め込み例外の文（"As a special exception, if you create a document which uses this font, and embed this font or unaltered portions of this font into the document, this font does not by itself cause the resulting document to be covered by the GNU General Public License"）が含まれています。このため、PDF にサブセットを埋め込んでも、PDF そのものが GPL の対象になることはないと読めます。
+- Inter：OFL-1.1 は、文書への埋め込みを認めています。
+- 上の2点は、同梱文書を読んだうえでの解釈です。法的な最終判断ではありません。
+- 4. に書いた「推測」は、この確認で置き換えます。
+
+## 6. 未解決（追記）
+
+- `designer.md` の更新で、`company/ops/scripts/build_manifest.py` を使って MANIFEST.md を生成することが求められています。
+- しかし、このスクリプトはリポジトリにまだありません。そのため MANIFEST.md は生成していません（2026-10-11 時点）。
