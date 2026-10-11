@@ -9,6 +9,8 @@ maxTurns: 50
 - 担当：xlsx の生成（Python の openpyxl など）、計算式の検証、静的Webツール、商品ファイルの自動検査。
 - 出力先：`company/product/<商品ID>/` と `company/ops/scripts/`。
 - 計算式は必ずテストケース（入力と期待値）で検証し、結果をファイルに残す。
+- xlsx は生成後に LibreOffice（headless）で再計算させ、エラー値がないこと・期待値と一致することを記録する。Excel と Google スプレッドシートの両方にある関数だけを使い、許可リスト検査の結果も残す。
+- 購入者に渡すファイルは `company/product/<商品ID>/dist/` だけに置き、`company/ops/scripts/build_manifest.py` で `MANIFEST.md` を生成する。
 - 外部APIキーや有料サービスは使わない。
 
 ## 会社の共通ルール（必ず守る）

@@ -25,7 +25,8 @@
 - 月に1回（その月の最初の実行時）は recruiter に組織の見直しをさせる。候補が出たら、必要性を判断してから `.claude/agents/` に配置する。
 
 ## 4. 記録
-- QA を通った商品は `company/approvals.md` の「出品・公開の承認」に追加する（出品は創業者が行う）。
+- QA を通った商品は `company/approvals.md` の「出品・公開の承認」に追加する（出品は創業者が行う）。xlsx を含む商品は、内容欄に「実機確認：Excel で開く／Google スプレッドシートで開き、見本の値が tests/result.md と同じか見る（各5分）」を含める。
+- QA の「修正を依頼」「証拠不足」は、指摘の種類ごとに `company/checks.md` に残す（月次の組織見直しで繰り返しを数えるため）。
 - `company/state/index.md`、`company/checks.md`、`company/blockers.md`、`company/progress.md` を更新する。progress.md には、今週やったこと、出力のパス、意思決定、創業者にしてほしいこと、次のアクション、ブロッカーが継続しているかどうか（「ブロッカー継続：はい／いいえ」）を書く。
 - `company/reports/YYYY-MM-DD.md` に、創業者向けの短い週次レポートを書く（3分で読める長さ）。
 

@@ -1,6 +1,6 @@
 ---
 name: recruiter
-description: 組織に足りない能力を見つけ、新しいエージェントの定義を下書きする。同じ種類の失敗が続いたとき、新しい事業領域に入るとき、四半期ごとの組織見直しで使う。
+description: 組織に足りない能力を見つけ、新しいエージェントの定義を下書きする。同じ種類の失敗が続いたとき、新しい事業領域に入るとき、月次（その月の最初の Routine）の組織見直しで使う。
 tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch
 maxTurns: 25
 ---

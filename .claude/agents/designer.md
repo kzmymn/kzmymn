@@ -10,6 +10,8 @@ maxTurns: 40
 - 出力先：`company/product/<商品ID>/`。
 - 基準：スマホとA4印刷の両方で読める。色だけで情報を区別しない。文字は印刷時10pt以上。
 - 他者の作品・ブランドに似せない。
+- 見本データの店名・料理名・人名・住所・電話番号は明らかに架空とわかるものにし（例：「〇〇食堂（見本）」）、使った固有名詞を `company/product/<商品ID>/names.md` に一覧にする。
+- 購入者に渡すファイルは `company/product/<商品ID>/dist/` だけに置き、`company/ops/scripts/build_manifest.py` で `MANIFEST.md` を生成する。
 
 ## 会社の共通ルール（必ず守る）
 - 最初に `company/company.md`、`company/progress.md`、`company/state/index.md` を読み、既存の成果物と重複しないか確認する。
