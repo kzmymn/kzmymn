@@ -48,3 +48,40 @@
 
 - menu-template.html の CSS `font-family` に、OS に入っているフォントの名前を書いています（Hiragino Sans、Meiryo、Microsoft YaHei、Malgun Gothic、Noto Sans、WenQuanYi Zen Hei など）。
 - これは閲覧する端末のフォントを指定するためのもので、見本データではありません。フォントのファイルは同梱していません。
+
+## 実在・商標の確認（researcher, 2026-10-11）
+
+対象は表 A の店名（4言語）です。表 B の料理名・飲み物名は一般名詞のため、個別の検索はしていません。
+
+### 1. 実在の店舗との一致（WebSearch、検索日 2026-10-11）
+
+| 検索語 | 対象 | 該当の有無 | 主な結果とURL |
+|---|---|---|---|
+| `"〇〇食堂"` | 〇〇食堂（見本） | 「〇〇食堂」という名の店は見つからず | 「地名＋食堂」型の店名の例（まいどおおきに食堂 https://ranking.net/items/05d66c ）、食べログの「食堂」一覧（https://tabelog.com/tw/R8708/rstLst/teishoku/38/ ）だけ |
+| `"○○食堂" 店舗` | 同上 | 同上 | 熊本市の助成金申請書の記載例で「○○食堂」が伏せ字として使われている（https://www.city.kumamoto.jp/kiji0034849/5_4849_351222_up_RY2407HD.pdf ）。ほかは別名の店（食堂くく https://hamoni.jp/shop/0PqbMKJCcs3v29kLekfB 、最強食堂 https://aumo.jp/articles/45315 など） |
+| `"まるまる食堂"` | 「〇〇」の読み | 完全一致の店は見つからず | 似た名前の別店（まるみ食堂 https://retty.me/restaurant/100001346910/ 、まるは食堂 https://epark.jp/shopinfo/jsp629799/ ） |
+| `"Sample" "Shokudo" restaurant name trademark` | (Sample) ○○ Shokudo | 一致なし | "Shokudo" を含む米国の登録商標（下の 2.）が出ただけ |
+| `"样本" "○○食堂"` | （样本）○○食堂 | 一致なし | 上の熊本市の記載例と、「食堂」の辞書の説明（https://hbreader.org/words/10388.html ）だけ |
+| `"○○ 식당" 견본` | (견본) ○○ 식당 | 一致なし | 飲食店のチラシ・メニューのテンプレート集（https://carat.im/de/prompt-gallery/restaurant-flyer など）だけ |
+
+- 判断：4言語のどれも、一致する実在の店は検索の範囲では見つかりませんでした。
+- 限界：WebSearch は米国向けの検索で、日本・中国・韓国の個人店を網羅していません。「見つからなかった」は「存在しない」の証明ではありません。
+
+### 2. 登録商標（J-PlatPat）
+
+- J-PlatPat は環境から接続できませんでした（2026-10-11）。
+  - WebFetch `https://www.j-platpat.inpit.go.jp/` → `getaddrinfo ENOTFOUND www.j-platpat.inpit.go.jp`
+  - curl（プロキシ経由）→ `curl: (56) CONNECT tunnel failed, response 403`
+- 代替の WebSearch（2026-10-11）：
+  - `"〇〇食堂" 商標登録 J-PlatPat` → 商標の情報は出ず、「食堂」の辞書の説明だけ（https://kotobank.jp/word/食堂 ）。
+  - `"Sample" "Shokudo" restaurant name trademark` → 米国の登録例（HONOLULU SHOKUDO https://trademark.justia.com/863/83/honolulu-86383109.html 、SHINYA SHOKUDO https://trademark.justia.com/900/73/shinya-90073094.html ）では "SHOKUDO" の部分は一般語として権利の対象から外されている（ディスクレーム）。「〇〇食堂」「Sample Shokudo」そのものの登録は見つからず。
+- 根拠（商標の問題がないと考える理由）：
+  - 「〇〇／○○」は伏せ字の記号で、特定の名前を指しません。「食堂／Shokudo／식당」は一般名詞です。
+  - 4言語とも「（見本）／(Sample)／（样本）／(견본)」を常に併記しています。
+  - 商品名・ロゴ・出品タイトルには使いません。
+  - ※以上は推測を含みます。J-PlatPat で直接確認したものではありません。
+
+### 未確認の点
+
+- J-PlatPat での直接の検索（「〇〇食堂」「食堂」）。人が別の端末から確認する必要があります。
+- 中国・韓国の商標データベースは調べていません。
