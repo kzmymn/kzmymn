@@ -44,15 +44,19 @@
 
 | 名前 | 使った場所 | 種類 | 扱い |
 |---|---|---|---|
-| Microsoft Excel（Excel）、Google スプレッドシート、Google ドライブ | xlsx「使い方」の「対応ソフト」（「Microsoft Excel（デスクトップ版）」）、README.txt「対応ソフト」（「Excel・Google スプレッドシートで使える関数」など） | 他社の製品名（登録商標） | 対応ソフトの説明として名前を書いているだけで、商品名・ロゴには使っていない |
-| LibreOffice | README.txt「制作について」（「LibreOffice での再計算テスト 19 項目」）、README.txt「対応ソフト」（「LibreOffice で再計算テストをしています」） | 表計算ソフトの名前（オープンソース） | 計算式のテストに使った環境の説明。対応ソフトとして名乗ってはいない。ロゴは使っていない |
-| BOOTH | README.txt「お問い合わせ」 | 販売サイト（ショップ）の名前（他社のサービス名） | 「ご購入いただいた BOOTH の商品ページから、BOOTH のメッセージ機能でご連絡ください」という連絡方法の説明。ロゴは使っていない |
-| XLOOKUP | xlsx「使い方」、README.txt「対応ソフト」 | Excel の関数名 | 「使っていない」という説明 |
+| Microsoft Excel（Excel）、Google スプレッドシート、Google ドライブ（Googleドライブ） | xlsx「使い方」A32（「Microsoft Excel（デスクトップ版）、Google スプレッドシート（Googleドライブにアップロードして開く）」）、README.txt「対応ソフト」（「Excel・Google スプレッドシートで使える関数」など）、README.txt「商標について」（商標の注記）、listing「対応ソフト・動作環境」・「よくある質問」（Google のみ）・実機確認後の差し替え文（HTML コメント）・根拠メモ（HTML コメント。公開しない） | 他社の製品名（登録商標） | 対応ソフトの説明として名前を書いているだけで、商品名・ロゴには使っていない |
+| LibreOffice | README.txt「制作について」（「LibreOffice での再計算テスト 19 項目」）、README.txt「対応ソフト」（「LibreOffice で再計算テストをしています」）、listing「対応ソフト・動作環境」・「仕様・制作について」・差し替え文と根拠メモ（HTML コメント） | 表計算ソフトの名前（オープンソース） | 計算式のテストに使った環境の説明。対応ソフトとして名乗ってはいない。ロゴは使っていない |
+| BOOTH | README.txt「お問い合わせ」、listing の見出し「P2 販売ページ（BOOTH）下書き」と根拠メモ（HTML コメント）。販売ページそのものも BOOTH 上に載る | 販売サイト（ショップ）の名前（他社のサービス名） | 「ご購入いただいた BOOTH の商品ページから、BOOTH のメッセージ機能でご連絡ください」という連絡方法の説明。ロゴは使っていない |
+| XLOOKUP | xlsx「使い方」、README.txt「対応ソフト」、listing「対応ソフト・動作環境」 | Excel の関数名 | 「使っていない」という説明 |
+| Microsoft（Microsoft グループ） | README.txt「商標について」（「Microsoft グループの」） | 他社の会社名 | 商標の注記で権利者として名前を書いているだけ。ロゴは使っていない |
+| Google LLC | README.txt「商標について」（「Google LLC の」） | 他社の会社名 | 同上 |
+| Microsoft 365 | listing の実機確認後の差し替え文（HTML コメント。「例：Microsoft 365」）。今の公開文には出ない | 他社の製品名 | 今は見えない。差し替え後に書けば見える |
 | Meiryo、Calibri | xlsx のセルのフォント指定（styles.xml） | フォント名 | 閲覧端末のフォントを指定するだけ。フォントのファイルは同梱していない |
-| MenuBridge | README.txt「制作について」（「MenuBridge が設計し」）、xlsx のファイルのプロパティ「作成者」（docProps/core.xml） | 当社の仮の社名 | 見本データではない。README では制作者の名前として書いている。プロパティはシートの画面には出ないが、Excel の「ファイル＞情報」で見える。下の確認結果を参照 |
+| MenuBridge | README.txt「制作について」（「MenuBridge が設計し」）、xlsx のファイルのプロパティ「作成者」（docProps/core.xml）、listing「仕様・制作について」と根拠メモ（HTML コメント） | 当社の仮の社名 | 見本データではない。README では制作者の名前として書いている。プロパティはシートの画面には出ないが、Excel の「ファイル＞情報」で見える。下の確認結果を参照 |
 | Openpyxl 3.1.5（値は「Microsoft Excel Compatible / Openpyxl 3.1.5」） | xlsx のプロパティ（docProps/app.xml の Application） | 作成に使ったライブラリ名 | 自動で入る値。「Microsoft Excel Compatible」は形式の互換を示す固定の文字で、画面には出ない |
 
 - 漏れの確認（2026-10-11 追記。researcher。QA の「記載漏れ」の指摘に対応）：README.txt と xlsx の全シートのセル（数式を除く）・入力規則・コメント・ヘッダー／フッター、docProps（core.xml、app.xml）、styles.xml、workbook.xml から、カタカナ2文字以上の語と、大文字で始まる英字の語を機械的に取り出し、1語ずつ上の表と見比べました。材料名（キャベツ、マヨネーズ など）、一般語（シート、ドライブ、レシート など）、関数名（IF、IFERROR、VLOOKUP、ROUND、ROUNDUP、SUM、AND、OR）、エラー表示（#DIV/0!）は固有名詞ではないので入れていません。それ以外の固有名詞は、上の表ですべてです。
+- 再確認（2026-10-11、QA 修正依頼2回目）：README.txt、xlsx の全シートのセル（openpyxl で文字列を全件出力）と入力規則、`company/content/P2/listing.md` を、Microsoft・Google・Excel・LibreOffice・BOOTH・MenuBridge・365・Windows・Mac・Apple・iPhone・Android・LLC・商標で grep し、表の名前と場所を見比べました。Windows・Mac・Apple・iPhone・Android は 0件です。README.txt「商標について」の欄は、文言（writer が修正中）ではなく場所として記録しています。
 
 ## 実在・商標の確認（researcher, 2026-10-11）
 
@@ -86,7 +90,7 @@
 
 - WebSearch `"MenuBridge" OR "メニューブリッジ" 商標`（2026-10-11）→ 商標登録・出願を示すページは見つからず。似た名前の別サービス（MenuNet https://restaurantleadership.com/company/trabon 、Menutech https://menutech.com/llms.txt など）だけでした。
 - **J-PlatPat では確認できていません**（上と同じ理由）。MenuBridge は README.txt「制作について」にも制作者名として書いているため、使い続ける前に、**創業者が別の端末から J-PlatPat（https://www.j-platpat.inpit.go.jp/ ）で「MenuBridge」「メニューブリッジ」を検索し、結果を確認する必要があります**。
-- LibreOffice・BOOTH・Microsoft Excel・Google スプレッドシート・Google ドライブ：他社（LibreOffice は The Document Foundation）の製品名・サービス名で、対応ソフト・テスト環境の説明と連絡方法の案内に名前を書いているだけです。商品名・ロゴ・出品タイトルには使っていません。個別の商標検索はしていません（他社の登録商標であることを前提に扱っています）。
+- LibreOffice・BOOTH・Microsoft Excel・Google スプレッドシート・Google ドライブ・Microsoft 365、および商標の注記に書いた Microsoft（グループ）・Google LLC：他社（LibreOffice は The Document Foundation）の製品名・サービス名で、対応ソフト・テスト環境の説明と連絡方法の案内に名前を書いているだけです。商品名・ロゴ・出品タイトルには使っていません。個別の商標検索はしていません（他社の登録商標であることを前提に扱っています）。
 - 「MenuBridge」は当社の仮の社名で、見本ではありません。今後、屋号・ショップ名として使うなら、創業者が J-PlatPat（区分 第9類・第35類・第42類など）で確認してから使うのが安全です（推測）。それまでは、プロパティの作成者を空欄か一般的な表記にする案もあります。判断は創業者・engineer に任せます。
 
 ### 未確認の点
