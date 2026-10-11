@@ -485,9 +485,8 @@ def _customer(ws):
 
 
 # ---------------------------------------------------------------- 全体
-def build_workbook(path, menus=None, shop=None, items=None):
+def build_workbook(path, menus=None, shop=SAMPLE_SHOP, items=None):
     menus = SAMPLE_MENUS if menus is None else menus
-    shop = SAMPLE_SHOP if shop is None else shop
     items = ITEMS if items is None else items
     wb = Workbook()
     ws = wb.active

@@ -92,18 +92,18 @@ CASES = [
          checks=[("in:2:status", ""), ("in:2:ncont", ""), ("in:2:nunk", ""), ("cu:2:name", ""),
                  ("cu:2:item:えび", ""), ("cu:2:date", ""), ("cu:2:note", ""),
                  ("in:3:status", "確認済み"), ("cu:3:item:そば", C)]),
-    dict(id="T12", title="50品すべて入力（最終行まで計算されるか）。うち7品は？あり",
+    dict(id="T12", title="50品すべて入力（最終行まで計算されるか）。うち8品は？あり",
          shop="テスト店",
          menus=[menu(f"メニュー{k + 1}",
                      vals(N, o={NAMES[k % 29]: C, NAMES[(k + 5) % 29]: (Q if k % 7 == 0 else N)}))
                 for k in range(50)],
-         checks=[("in:50:status", "確認済み"), ("cu:50:name", "メニュー50"), ("cu:50:item:" + NAMES[49 % 29], C),
+         checks=[("in:50:status", "未確認あり"), ("in:49:status", "確認済み"), ("cu:50:name", "メニュー50"), ("cu:50:item:" + NAMES[49 % 29], C),
                  ("in:1:status", "未確認あり"), ("in:sum_unk", 8), ("in:sum_todo", 8)]),
     dict(id="T13", title="店名が空欄 → お客様用の表題は「アレルゲン一覧表」",
          shop=None,
          menus=[menu("おにぎり", vals(N))],
          checks=[("cu:title", "アレルゲン一覧表")]),
-    dict(id="T14", title="品目リストを1件書き換える（同梱ファイルの C12「落花生（ピーナッツ）」→「ピーナッツ」、B13 区分「推奨」→「義務」）"
+    dict(id="T14", title="品目リストを1件書き換える（同梱ファイルの C12「落花生（ピーナッツ）」→「ピーナッツ」、B14「アーモンド」の区分「推奨」→「義務」）"
                        "→ 入力・お客様用の見出しに反映",
          use_dist=True,
          edit_list={"C12": "ピーナッツ", "B14": "義務"},

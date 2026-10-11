@@ -12,3 +12,4 @@
 | P1 | 商品 | 多言語メニューのテンプレート（日・英・中・韓、HTML＋CSV＋定型文） | 制作済み（QA待ち） | `product/P1/`（同梱物は `product/P1/dist/`） |
 | P2 | 商品 | 原価率計算シート（xlsx。Excel／Google スプレッドシート用）。LibreOffice 再計算テスト 19/19 合格、実機確認は未 | 制作済み（販売ページ未・実機確認待ち） | `product/P2/` |
 | O1 | 運用 | 同梱物と販売ページの一致チェック（build_manifest.py / check_listing.py） | 完成 | `ops/scripts/` |
+| M1 | マーケ | BOOTH 出品計画（P1〜P3 の商品名・タグ・カテゴリ・価格案、手取り表、3点セット案、見直し条件、SNS下書き）。P3 は暫定 | 案（価格確定は創業者） | `marketing/2026-10-11-listing-plan.md` |
