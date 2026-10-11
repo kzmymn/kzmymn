@@ -11,8 +11,13 @@
 2. `prompts/one-person-company.md`、`company/company.md`、`company/org/README.md`、`company/progress.md`、`company/checks.md`、`company/approvals.md`、`company/state/index.md`、`company/finance/sales.md` を読む。
 
 ## 1. 停止条件の確認（最初に必ず判断する）
-- `company/approvals.md` の初期設定 A1〜A3 が未処理のまま、`company/progress.md` に「ブロッカー継続」が**2週連続**で記録されていたら：新しい制作はせず、創業者への報告だけを作って push し、Routine「AI会社 週次経営」を無効化する（list_triggers で探して update_trigger で enabled=false）。報告に、再開するにはチャットで指示するよう書く。
+- `company/approvals.md` の初期設定 A1〜A3 が未処理のまま、最初に「ブロッカー継続：はい」を記録した日（2026-10-11）から**14日以上**経っていたら（日数で判断する。実行回数では数えない）：新しい制作はせず、創業者への報告だけを作って push し、Routine「AI会社 週次経営」を無効化する（list_triggers で探して update_trigger で enabled=false）。報告に、再開するにはチャットで指示するよう書く。
 - 予算残が0円以下なら、制作を止めて報告だけにする。
+
+## 1.5 コストの上限
+- 1回の実行で、QA の修正ラウンドは商品ごとに最大2回。それで合格しないものは次週に回す。
+- 1回の実行で起動するサブエージェントは最大10体。
+- 創業者の承認待ちで進められない作業しか残っていない週は、サブエージェントを起動せず、状態の確認と短い報告だけで終える。
 
 ## 2. 今週の計画
 `progress.md` の「次のアクション」と承認キューの状態から、今週の仕事を最大3つ決める。新商品は最大3点。台帳と重複しないこと。
