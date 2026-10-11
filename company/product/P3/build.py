@@ -463,8 +463,8 @@ def _customer(ws):
     ws.column_dimensions["A"].width = 17
     for i in range(N_ITEMS):
         ws.column_dimensions[cu_item_col(i)].width = 3.0
-    ws.column_dimensions[CU_DATE].width = 9.2
-    ws.column_dimensions[CU_NOTE].width = 30
+    ws.column_dimensions[CU_DATE].width = 10.5
+    ws.column_dimensions[CU_NOTE].width = 28.8
 
     ws.freeze_panes = f"A{CU_FIRST}"
     ws.print_title_rows = f"1:{CU_HEAD}"
@@ -480,7 +480,7 @@ def _customer(ws):
     ws.page_margins.bottom = 0.45
     ws.page_margins.header = 0.15
     ws.page_margins.footer = 0.2
-    ws.oddFooter.center.text = "&P / &N"
+    ws.oddFooter.center.text = "&Pページ"
     ws.oddFooter.center.size = 10
 
 
