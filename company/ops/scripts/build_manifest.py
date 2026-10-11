@@ -91,7 +91,7 @@ def main(argv):
         for r in rows:
             t = datetime.datetime.fromtimestamp(os.path.getmtime(r["path"])).timetuple()[:6]
             zi = zipfile.ZipInfo(r["name"], date_time=max(t, (1980, 1, 1, 0, 0, 0)))
-            zi.flag_bits |= 0x800          # ファイル名は UTF-8（日本語名の文字化け防止）
+            zi.flag_bits |= 0x800          # ファイル名は UTF-8（日本語名には zipfile も自動で付ける）
             zi.compress_type = zipfile.ZIP_DEFLATED
             zi.external_attr = 0o644 << 16
             with open(r["path"], "rb") as f:

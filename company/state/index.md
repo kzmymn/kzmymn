@@ -10,3 +10,5 @@
 | R3 | 調査 | BOOTH の規約確認（AI生成物・大量出品・DL商品・手数料・特商法）※公式本文は未閲覧 | 一部未確認 | `research/platform-rules.md` |
 | R4 | 調査 | 最初の商品3点の競合・アレルゲン制度・Excel/スプシ互換性 | 完了（一部未確認） | `research/2026-10-11-first-products.md` |
 | P1 | 商品 | 多言語メニューのテンプレート（日・英・中・韓、HTML＋CSV＋定型文） | 制作済み（QA待ち） | `product/P1/`（同梱物は `product/P1/dist/`） |
+| P2 | 商品 | 原価率計算シート（xlsx。Excel／Google スプレッドシート用）。LibreOffice 再計算テスト 19/19 合格、実機確認は未 | 制作済み（販売ページ未・実機確認待ち） | `product/P2/` |
+| O1 | 運用 | 同梱物と販売ページの一致チェック（build_manifest.py / check_listing.py） | 完成 | `ops/scripts/` |
