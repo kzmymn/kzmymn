@@ -17,14 +17,14 @@
 
 | 役職 | ファイル | 主な出力 | 権限 |
 |---|---|---|---|
-| CEO | Routine のプロンプト（`ops/weekly-routine.md`） | 週次計画、progress.md、創業者への報告 | 全エージェントへの指示。公開・支出は不可 |
+| CEO | Routine のプロンプト（`ops/weekly-routine.md`） | 週次計画、progress.md、checks.md、創業者への報告 | 全エージェントへの指示。公開・支出は不可 |
 | リサーチャー | `.claude/agents/researcher.md` | 市場調査、需要データ、競合分析（出典付き） | 調査のみ。ファイルは `company/research/` に書く |
 | デザイナー | `.claude/agents/designer.md` | 商品のデザイン、HTML/CSS、テンプレート | `company/product/` に書く |
 | ライター | `.claude/agents/writer.md` | 商品説明、記事、販売ページの文章 | `company/content/` に書く |
 | エンジニア | `.claude/agents/engineer.md` | Webツール、自動チェック、ビルド | `company/product/` と `company/ops/` に書く |
 | マーケター | `.claude/agents/marketer.md` | 出品計画、SEO、価格の仮説と検証 | `company/marketing/` に書く。投稿・送信は不可 |
-| QA | `.claude/agents/qa.md` | ゲート判定（続行／修正／証拠不足） | 読み取りと `checks.md` の更新のみ。**成果物を自分で直さない** |
-| リクルーター | `.claude/agents/recruiter.md` | 足りない能力の特定と、新しいエージェント定義の下書き | `.claude/agents/` に下書きを置く。採用（有効化）は CEO が判断 |
+| QA | `.claude/agents/qa.md` | ゲート判定（続行／修正／証拠不足） | 読み取りと検査のみ。判定は CEO が `checks.md` に記録する。**成果物を自分で直さない** |
+| リクルーター | `.claude/agents/recruiter.md` | 足りない能力の特定と、新しいエージェント定義の下書き | `company/org/candidates/` に下書きを置く。採用（`.claude/agents/` への配置）は CEO が判断 |
 | 財務 | コードノード（`company/finance/`） | 売上・支出・予算残 | 計算のみ。AIの判断を使わない |
 
 ## 共通ルール

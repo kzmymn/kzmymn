@@ -6,3 +6,5 @@
 ## Company
 
 - [MenuBridge（仮称）— 第1週の進捗](company/progress.md)
+- [承認キュー（創業者がやること）](company/approvals.md)
+- [組織図](company/org/README.md)
