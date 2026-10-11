@@ -260,7 +260,7 @@ def _cell(ws, ref, value=None, font=F_NORMAL, fill=None, fmt=None, border=True, 
 
 # ---------------------------------------------------------------- 使い方
 def _howto(ws):
-    ws.column_dimensions["A"].width = 110
+    ws.column_dimensions["A"].width = 85
     for i, (text, kind) in enumerate(HOWTO_LINES, start=1):
         font = {"title": F_TITLE, "head": F_HEAD}.get(kind, F_NORMAL)
         if text.startswith(("1. 飲食店", "2. 表の内容", "5. 重い")):

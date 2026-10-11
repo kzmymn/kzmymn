@@ -1,7 +1,7 @@
 # P3 アレルゲン一覧表 — 互換性の検査結果
 
 - 対象: `dist/allergen-ichiran.xlsx`
-- 実行日時: 2026-10-11 10:08
+- 実行日時: 2026-10-11 10:09
 - 方法: xlsx（zip）内の XML を直接読み、全セルの数式・入力規則・条件付き書式を走査（`tests/compat_check.py`）
 - 許可リスト: AND, COUNTBLANK, COUNTIF, IF, IFERROR, INDEX, ISBLANK, MATCH, OR, SUM
 
