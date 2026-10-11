@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MenuBridge 多言語メニュー</title>
+<style>
+  :root { --bg:#faf7f2; --card:#fff; --text:#2b2420; --muted:#6f655d; --accent:#b23a2b; --line:#e7dfd5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1b1816; --card:#26221f; --text:#f1ebe3; --muted:#b3a89e; --accent:#e0705f; --line:#3a342f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif; line-height:1.7; }
+  main { max-width: 720px; margin: 0 auto; padding: 16px; }
+  .hero { padding: 40px 0 24px; }
+  .hero h1 { font-size: 30px; line-height: 1.35; margin: 0 0 12px; }
+  .hero p { color: var(--muted); margin: 0 0 20px; }
+  .cta { display:inline-block; background:var(--accent); color:#fff; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:700; }
+  section { margin: 32px 0; }
+  h2 { font-size: 20px; border-bottom: 2px solid var(--accent); padding-bottom: 4px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .price { font-size: 32px; font-weight: 800; }
+  ol li { margin-bottom: 6px; }
+  footer { color: var(--muted); font-size: 12px; margin: 40px 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero">
+    <h1>外国人のお客さまに、<br>メニューの説明をしなくてよくなる。</h1>
+    <p>個人経営の飲食店向けに、英語・中国語・韓国語のメニューを作ります。<br>スマホで開けるQRコード版と、印刷用の両方をお渡しします。月額料金はありません。</p>
+    <a class="cta" href="../sample-menu/index.html">見本のメニューを見る</a>
+  </div>
+
+  <section>
+    <h2>翻訳だけではありません</h2>
+    <div class="grid">
+      <div class="card"><h3>料理の中身を説明</h3>「何が入っているか」「どんな味か」を、その国の人に伝わる言葉で書きます。</div>
+      <div class="card"><h3>食べ方も案内</h3>つけ麺やお好み焼きなど、初めての人が迷う料理には食べ方を添えます。</div>
+      <div class="card"><h3>アレルゲンと食の制限</h3>小麦・卵・豚肉などの表示やベジタリアン表示を入れます。内容は必ず店主さまに確認していただきます。</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>料金</h2>
+    <div class="card">
+      <div class="price">19,800円 <small style="font-size:14px">（税込・40品まで）</small></div>
+      <p>メニューの追加・変更は1品500円。月額料金はかかりません。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>ご依頼の流れ</h2>
+    <ol>
+      <li>今のメニューの写真を送っていただきます。</li>
+      <li>3営業日以内に、4か国語の下書きをお送りします。</li>
+      <li>料理の中身とアレルゲンを、店主さまに確認していただきます。</li>
+      <li>QRコード版と印刷用データを納品します。</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>お問い合わせ</h2>
+    <p>【公開前に創業者が連絡先を設定】</p>
+  </section>
+
+  <footer>MenuBridge（仮称）／このページは公開前の下書きです。</footer>
+</main>
+</body>
+</html>

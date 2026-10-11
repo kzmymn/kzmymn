@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麺処さくら メニュー（デモ）</title>
+<style>
+  :root {
+    --bg: #faf7f2; --card: #ffffff; --text: #2b2420; --muted: #6f655d;
+    --accent: #b23a2b; --line: #e7dfd5; --tag: #f1ebe3; --warn: #8a5a00; --warnbg: #fff4d6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1816; --card: #26221f; --text: #f1ebe3; --muted: #b3a89e;
+      --accent: #e0705f; --line: #3a342f; --tag: #332d29; --warn: #ffd27a; --warnbg: #3a2f14;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Noto Sans SC", "Noto Sans KR", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 16px; }
+  .demo { background: var(--warnbg); color: var(--warn); border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-bottom: 16px; }
+  header h1 { margin: 0; font-size: 26px; }
+  header p { margin: 4px 0 16px; color: var(--muted); font-size: 14px; }
+  .langs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .langs button { border: 1px solid var(--line); background: var(--card); color: var(--text);
+                  padding: 8px 14px; border-radius: 999px; font-size: 15px; cursor: pointer; }
+  .langs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .name { font-size: 18px; font-weight: 700; }
+  .orig { font-size: 13px; color: var(--muted); }
+  .price { font-weight: 700; white-space: nowrap; }
+  .desc { margin: 8px 0; font-size: 14px; line-height: 1.6; }
+  .howto { font-size: 13px; color: var(--muted); border-left: 3px solid var(--accent); padding-left: 8px; margin: 8px 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { background: var(--tag); border-radius: 6px; padding: 2px 8px; font-size: 12px; }
+  .tag.diet { background: var(--accent); color: #fff; }
+  footer { font-size: 12px; color: var(--muted); margin: 20px 0 40px; line-height: 1.6; }
+  #check { font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="demo">デモ用の架空の店舗です。翻訳とアレルゲン表示は、実際の納品時には店主の確認を経て公開します。</div>
+  <header>
+    <h1 id="shop"></h1>
+    <p id="tagline"></p>
+  </header>
+  <div class="langs" role="group" aria-label="Language">
+    <button data-lang="ja">日本語</button>
+    <button data-lang="en">English</button>
+    <button data-lang="zh">简体中文</button>
+    <button data-lang="ko">한국어</button>
+  </div>
+  <section id="menu"></section>
+  <footer>
+    <div id="note"></div>
+    <div id="check"></div>
+  </footer>
+</main>
+<script>
+const UI = {
+  ja: { shop: "麺処 さくら", tagline: "鶏と魚介のスープ。すべて店内で手づくり。", yen: n => n.toLocaleString() + "円",
+        allergens: "アレルゲン", note: "アレルギーが心配な方は、注文時にスタッフへお声がけください。価格は税込です。" },
+  en: { shop: "Menya Sakura", tagline: "Chicken & seafood broth, all made in-house.", yen: n => "¥" + n.toLocaleString(),
+        allergens: "Allergens", note: "If you have allergies, please tell our staff when ordering. Prices include tax." },
+  zh: { shop: "面处 樱", tagline: "鸡肉与海鲜熬制的汤底，全部店内手工制作。", yen: n => n.toLocaleString() + "日元",
+        allergens: "过敏原", note: "如有过敏，请在点餐时告知店员。价格均已含税。" },
+  ko: { shop: "멘도코로 사쿠라", tagline: "닭과 해산물로 우려낸 육수, 모두 가게에서 직접 만듭니다.", yen: n => n.toLocaleString() + "엔",
+        allergens: "알레르기 유발 성분", note: "알레르기가 있으신 분은 주문 시 직원에게 말씀해 주세요. 가격은 세금 포함입니다." }
+};
+
+const ALLERGEN = {
+  wheat:  { ja: "小麦", en: "Wheat",   zh: "小麦", ko: "밀" },
+  soy:    { ja: "大豆", en: "Soy",     zh: "大豆", ko: "대두" },
+  egg:    { ja: "卵",   en: "Egg",     zh: "鸡蛋", ko: "달걀" },
+  sesame: { ja: "ごま", en: "Sesame",  zh: "芝麻", ko: "참깨" },
+  pork:   { ja: "豚肉", en: "Pork",    zh: "猪肉", ko: "돼지고기" },
+  chicken:{ ja: "鶏肉", en: "Chicken", zh: "鸡肉", ko: "닭고기" },
+  fish:   { ja: "魚介", en: "Seafood", zh: "海鲜", ko: "해산물" }
+};
+
+const DIET = {
+  veg: { ja: "ベジタリアン", en: "Vegetarian", zh: "素食", ko: "채식" }
+};
+
+const MENU = [
+  { ja_name: "醤油らーめん", price: 900, allergens: ["wheat","soy","chicken","fish","pork"],
+    name: { ja: "醤油らーめん", en: "Shoyu Ramen", zh: "酱油拉面", ko: "쇼유 라멘" },
+    desc: { ja: "当店の看板。鶏と魚介のスープに、醤油だれを合わせたすっきりした味。チャーシュー、メンマ、ねぎ入り。",
+            en: "Our signature bowl. A clear chicken-and-seafood broth seasoned with soy sauce. Topped with chashu pork, bamboo shoots and green onion.",
+            zh: "本店招牌。鸡肉与海鲜汤底配酱油调味，口味清爽。配叉烧、笋干和葱。",
+            ko: "가게의 대표 메뉴. 닭과 해산물 육수에 간장 양념을 더한 깔끔한 맛. 차슈, 죽순, 파가 들어갑니다." } },
+  { ja_name: "味噌らーめん", price: 1000, allergens: ["wheat","soy","sesame","chicken","fish","pork"],
+    name: { ja: "味噌らーめん", en: "Miso Ramen", zh: "味噌拉面", ko: "미소 라멘" },
+    desc: { ja: "3種の味噌をブレンドした、コクのある濃厚スープ。ごまの香りが特徴です。",
+            en: "A rich, hearty broth made with a blend of three kinds of miso, finished with toasted sesame.",
+            zh: "混合三种味噌制成的浓郁汤底，带有芝麻香气。",
+            ko: "세 가지 된장(미소)을 섞은 진하고 깊은 맛의 육수. 참깨 향이 특징입니다." } },
+  { ja_name: "つけ麺", price: 1000, allergens: ["wheat","soy","chicken","fish","pork"],
+    name: { ja: "つけ麺", en: "Tsukemen (Dipping Noodles)", zh: "蘸面", ko: "츠케멘 (찍어 먹는 면)" },
+    desc: { ja: "太い冷たい麺を、熱くて濃いスープにつけて食べます。",
+            en: "Thick, chilled noodles served with a hot, concentrated dipping broth on the side.",
+            zh: "粗冷面搭配一碗浓郁的热蘸汁。",
+            ko: "굵고 차가운 면을 뜨겁고 진한 국물에 찍어 먹습니다." },
+    howto: { ja: "食べ方：麺を少しずつスープにつけて食べます。スープを麺にかけないでください。食べ終わったら「スープ割り」をどうぞ。だしでスープを薄めて飲めます。",
+             en: "How to eat: dip a few noodles at a time — don't pour the broth over them. When you finish, ask for \"soup-wari\" and we'll thin the remaining broth so you can drink it.",
+             zh: "吃法：每次夹少量面蘸汁食用，不要把汁倒在面上。吃完后可以说“soup-wari”，我们会加高汤稀释，方便直接饮用。",
+             ko: "먹는 법: 면을 조금씩 국물에 찍어 드세요. 국물을 면에 붓지 않습니다. 다 드신 후 \"수프와리\"를 요청하시면 남은 국물을 육수로 희석해 마실 수 있게 해 드립니다." } },
+  { ja_name: "野菜らーめん", price: 1100, allergens: ["wheat","soy"], diet: ["veg"],
+    name: { ja: "野菜らーめん", en: "Vegetable Ramen", zh: "蔬菜拉面", ko: "야채 라멘" },
+    desc: { ja: "昆布と干し椎茸のスープ。肉・魚・卵は使っていません。季節の野菜をたっぷり。",
+            en: "Kombu and dried shiitake broth with plenty of seasonal vegetables. No meat, fish or egg.",
+            zh: "海带与干香菇熬制的汤底，配大量时令蔬菜。不含肉、鱼、蛋。",
+            ko: "다시마와 말린 표고버섯 육수에 제철 채소를 듬뿍. 고기, 생선, 달걀을 사용하지 않습니다." } },
+  { ja_name: "焼き餃子（5個）", price: 450, allergens: ["wheat","soy","sesame","pork"],
+    name: { ja: "焼き餃子（5個）", en: "Pan-fried Gyoza (5 pcs)", zh: "煎饺（5个）", ko: "군만두 교자 (5개)" },
+    desc: { ja: "豚肉とキャベツの餃子。酢と醤油、お好みでラー油をつけてどうぞ。",
+            en: "Pork and cabbage dumplings. Dip in vinegar and soy sauce, with chili oil if you like.",
+            zh: "猪肉白菜馅饺子。蘸醋和酱油食用，可按喜好加辣油。",
+            ko: "돼지고기와 양배추 교자. 식초와 간장, 취향에 따라 고추기름에 찍어 드세요." } },
+  { ja_name: "味付け玉子", price: 150, allergens: ["egg","soy","wheat"],
+    name: { ja: "味付け玉子", en: "Seasoned Soft-boiled Egg", zh: "溏心卤蛋", ko: "맛달걀 (반숙)" },
+    desc: { ja: "半熟の玉子を醤油だれに一晩漬けました。らーめんのトッピングにどうぞ。",
+            en: "A soft-boiled egg marinated overnight in soy sauce. Great as a ramen topping.",
+            zh: "半熟鸡蛋在酱油汁中腌制一夜，适合加在拉面上。",
+            ko: "반숙 달걀을 간장 양념에 하룻밤 재웠습니다. 라멘 토핑으로 추천합니다." } }
+];
+
+const LANGS = Object.keys(UI);
+let lang = "ja";
+try { const s = localStorage.getItem("menu-lang"); if (LANGS.includes(s)) lang = s; } catch (e) {}
+
+function render() {
+  const t = UI[lang];
+  document.documentElement.lang = { ja: "ja", en: "en", zh: "zh-Hans", ko: "ko" }[lang];
+  document.getElementById("shop").textContent = t.shop;
+  document.getElementById("tagline").textContent = t.tagline;
+  document.getElementById("note").textContent = t.note;
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
+  const root = document.getElementById("menu");
+  root.innerHTML = "";
+  for (const m of MENU) {
+    const el = document.createElement("article");
+    el.className = "item";
+    const tags = m.allergens.map(a => `<span class="tag">${ALLERGEN[a][lang]}</span>`).join("");
+    const diets = (m.diet || []).map(d => `<span class="tag diet">${DIET[d][lang]}</span>`).join("");
+    el.innerHTML = `
+      <div class="row"><div class="name">${m.name[lang]}</div><div class="price">${t.yen(m.price)}</div></div>
+      ${lang !== "ja" ? `<div class="orig">${m.ja_name}</div>` : ""}
+      <p class="desc">${m.desc[lang]}</p>
+      ${m.howto ? `<p class="howto">${m.howto[lang]}</p>` : ""}
+      <div class="tags">${diets}<span class="tag">${t.allergens}:</span>${tags}</div>`;
+    root.appendChild(el);
+  }
+}
+
+// コードノード：全品目が全言語そろっているかを検査する（ゲートの「証拠」）
+function selfCheck() {
+  const missing = [];
+  for (const m of MENU) for (const l of LANGS) {
+    if (!m.name[l]) missing.push(`${m.ja_name}: name.${l}`);
+    if (!m.desc[l]) missing.push(`${m.ja_name}: desc.${l}`);
+    if (m.howto && !m.howto[l]) missing.push(`${m.ja_name}: howto.${l}`);
+    for (const a of m.allergens) if (!ALLERGEN[a] || !ALLERGEN[a][l]) missing.push(`${m.ja_name}: allergen ${a}.${l}`);
+  }
+  const el = document.getElementById("check");
+  el.textContent = missing.length
+    ? `CHECK NG: ${missing.length}件の欠け — ${missing.join(", ")}`
+    : `CHECK OK: ${MENU.length}品 × ${LANGS.length}言語、欠けなし`;
+}
+
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.lang;
+  try { localStorage.setItem("menu-lang", lang); } catch (e) {}
+  render();
+}));
+render();
+selfCheck();
+</script>
+</body>
+</html>
