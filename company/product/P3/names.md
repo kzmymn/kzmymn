@@ -40,6 +40,15 @@
 | Microsoft Excel Compatible / Openpyxl 3.1.5 | xlsx の docProps/app.xml「Application」 | 作成ツール名（openpyxl が自動で書く） | ふつうは見えない |
 | Calc、LibreOffice 24.2 | PDF のプロパティ「Creator」「Producer」 | 作成ツール名（自動） | PDF のプロパティで見える |
 | Carlito、WenQuanYi Zen Hei、Inter | PDF の埋め込みフォント（pdffonts で確認） | フォント名 | PDF のプロパティで見える |
+| LibreOffice（LibreOffice 24.2.7.2） | README.txt「制作について」（「LibreOffice での再計算テスト 15 項目」）、listing 本文「対応ソフト・動作環境」「仕様・制作について」（計5か所）。PDF のプロパティ（上の行）とは別に、本文で名前を出している | 他者のソフト名（The Document Foundation。商標） | 見える（本文） |
+| メイリオ（Meiryo） | listing 本文「対応ソフト・動作環境」（3か所）、xlsx の指定フォント（xl/styles.xml の font name="Meiryo"。セルの文字の書式） | フォント名（Microsoft の製品。商標） | listing は見える。xlsx はフォント欄で見える |
+| BOOTH | README.txt「お問い合わせ」（「BOOTH の商品ページ」「BOOTH のメッセージ機能」）、listing（販売先・FAQ ではなく見出し「販売ページ（BOOTH）」と注記）。販売ページそのものも BOOTH 上に載る | 販売サイト名（ピクシブ株式会社のサービス。商標） | 見える（本文） |
+| Microsoft 365 | listing の HTML コメント（実機確認後の差し替え文の例「例：Microsoft 365」）。今の公開文には出ない | 他社の製品名（商標） | 今は見えない。差し替え後に書けば見える |
+| XLOOKUP、IF、COUNTIF、COUNTBLANK、ISBLANK、AND、OR | listing 本文「対応ソフト・動作環境」、README.txt「対応ソフト」 | 表計算の関数名 | 見える（本文）。一般的な関数名で、商品名としては使っていない |
+| Calibri | xlsx の既定のフォント（xl/styles.xml。openpyxl が自動で入れる。値の入ったセルでは使っていない） | フォント名（Microsoft。商標） | ふつうは見えない |
+
+- 追記（researcher、2026-10-11、QA 修正依頼1回目）：上の LibreOffice（本文）〜Calibri の6行を追加しました。`company/content/P3/listing.md` の本文（HTML コメントを含む）の英字の語と「メイリオ」「BOOTH」「消費者庁」を機械的に抜き出して確認し（grep）、xlsx の書式のフォント名は styles.xml から確認しました。上の表の Excel・Windows・Mac・Google スプレッドシート・Google ドライブ・MenuBridge も listing 本文で使っています（「対応ソフト・動作環境」「よくある質問」「仕様・制作について」）。消費者庁は表 B のとおり、listing 本文でも出典として名前と URL を書いています。listing の根拠メモ（HTML コメント、公開しない）に出る「岡山県」は出典の説明で、購入者には見えません。
+- 追加した名前の実在・商標の確認（J-PlatPat）は、下の 2. と同じ理由で未実施です。LibreOffice・メイリオ・BOOTH・Microsoft 365・Calibri は、対応環境・作成の説明・問い合わせ先として名前を書いているだけで、ロゴや商品名には使っていません。判断は下の 3.・4. と同じ（互換性・事実の説明の範囲。推測）。
 
 ### 1. 実在の店舗との一致（WebSearch、検索日 2026-10-11）
 

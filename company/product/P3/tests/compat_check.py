@@ -167,8 +167,9 @@ def main(path):
         "- **行った**: 上の静的検査（全数式の関数名を許可リストと照合）と、LibreOffice での再計算テスト（`tests/result.md`）。",
         "- **行っていない**: Microsoft Excel と Google スプレッドシートでの実機確認。この環境にはどちらも無いため、"
         "実際に開いて同じ値になるかは未確認。手順は `device-check.md`（創業者が5分で確認）。",
-        "- 補足: 許可リストの関数は、Excel 2010 以降・Google スプレッドシート・LibreOffice のいずれにもある基本関数。"
-        "実際に使っているのは上の「使っている関数」だけ。",
+        "- 補足: 許可リストの関数は、Excel と Google スプレッドシートの両方の公式関数一覧にある基本関数"
+        "（Excel: https://support.microsoft.com/en-us/office/excel-functions-alphabetical-b3944572-255d-4efb-bb96-c6d90033e188 、"
+        "Google: https://support.google.com/docs/table/25273?hl=en ）。実際に使っているのは上の「使っている関数」だけ。",
         "- 補足: 「お客様用」シートの印刷タイトル（各ページに1〜5行目を印刷）と印刷範囲は、Excel の組み込み名（_xlnm.Print_Titles / _xlnm.Print_Area）として保存される。"
         "利用者が作る名前付き範囲ではないため許可した。Google スプレッドシートはこの設定を読まない可能性がある【推測・要実機確認】ため、印刷時に「固定行を繰り返す」をオンにする手順を `使い方` シートと `device-check.md` に書いた。",
         "- 補足: 品目名の見出しは縦書き（文字の向き＝縦。xlsx の textRotation=255）。LibreOffice の PDF では縦に並ぶことを確認した。Excel・Google スプレッドシートでの見え方は実機確認の項目。",
