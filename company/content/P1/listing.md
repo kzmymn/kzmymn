@@ -2,7 +2,7 @@
 
 - 作成：writer（2026-10-11）
 - 状態：下書き（QA 前・未公開）。価格・タグは marketer が決める。
-- 元にしたもの：`company/product/P1/MANIFEST.md`、`dist/` の実ファイル、`check.md`、`names.md`
+- 元にしたもの（拡張子 md は省略）：`company/product/P1/MANIFEST`、`dist/` の実ファイル、`check`、`names`
 
 ---
 
@@ -106,5 +106,5 @@ A. このテンプレートは、お店が自主的に情報を伝えるため�
 - 外食のアレルゲン表示は義務ではない：R4（first-products）3 節「外食は表示義務の対象外」、消費者庁「外食・中食を利用するみなさまへ」https://www.caa.go.jp/policies/policy/food_labeling/food_sanitation/allergy/assets/food_labeling_cms204_230324_04.pdf （公式・抜粋）。「法令対応」と書かない方針も同節。
 - 最終確認は購入者：writer の必須ルール（アレルゲンなど安全に関わる内容）。
 - アレルゲン名の訳の辞書は29語あるが、2026-04 改正後の 9＋20 品目と一致しない（ピスタチオが無い）ため、「29品目対応」とは書かない。
-- 見本の店名は架空（names.md の A 表）。
+- 見本の店名は架空（names の A 表）。
 -->
