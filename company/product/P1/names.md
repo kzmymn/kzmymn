@@ -9,7 +9,8 @@
   - 会社・ブランドの手がかり：株式会社、有限会社、®、™、@
 - 結果：
   - 固有名詞は、下の表 A の見本の店名（4言語）だけです。
-  - 人名・住所・電話番号・メールアドレス・実在の店名・ブランド名・商標は 0件です。
+  - 見本データの中では、人名・住所・電話番号・メールアドレス・実在の店名・ブランド名・商標は 0件です。
+  - 見本データ以外（説明文・CSS・ファイルの情報）には、表 D のソフト名・フォント名・ショップ名・当社の仮の社名があります（2026-10-11 追記。QA の指摘による）。
   - 「様」にヒットしたのは「お客様」「お一人様」などの敬称で、人名ではありません。
   - 「@」にヒットしたのは CSS の `@media` と `@page` です。
   - 第1週のデモの店名（麺処 さくら など）は 0件です（`check.md` の 3. を参照）。
@@ -44,10 +45,26 @@
 - 全25文に、固有名詞（店名・人名・地名・ブランド）はありません。
 - 「300円」「30分」は、店に合わせて書き換える例の数字です（note_ja 列に「お店に合わせて変更」と書いています）。
 
-## D. 名前以外の文字で、上の検索にヒットしうるもの
+## D. 見本データ以外の固有名詞（参考）
 
-- menu-template.html の CSS `font-family` に、OS に入っているフォントの名前を書いています（Hiragino Sans、Meiryo、Microsoft YaHei、Malgun Gothic、Noto Sans、WenQuanYi Zen Hei など）。
-- これは閲覧する端末のフォントを指定するためのもので、見本データではありません。フォントのファイルは同梱していません。
+- 2026-10-11 追記（researcher。QA の「記載漏れ」の指摘に対応）。
+- 漏れの確認の方法：`dist/` の全ファイル（menu-template.html、menu-data.csv、phrases.csv、README.txt、sample-print.pdf を `pdftotext` で文字にしたもの、`pdfinfo` のファイル情報、`pdffonts` の埋め込みフォント）から、カタカナ2文字以上の語と、大文字で始まる英字の語を機械的に取り出し、1語ずつ下の表と見比べました。
+  - 取り出した語のうち、料理名・材料名・アレルゲン名の訳（Apple＝りんご、Orange、Peach など）、一般語（アルコール、ブラウザ、テンプレート、Set Meals、Recommended など）、プログラムの変数名・関数名（SHOP、LANGS、JSON、Object など）、形式名（CSV、HTML、PDF、UTF-8）は固有名詞ではないので、表に入れていません。
+  - それ以外の固有名詞は、下の表ですべてです。
+
+| 名前 | 使った場所 | 種類 | 使い方（扱い） |
+|---|---|---|---|
+| MenuBridge | README.txt「制作について」 | 当社の仮の社名 | 制作者の名前として書いている。見本データではない。商標の確認は下の「3.」を参照 |
+| BOOTH | README.txt「お問い合わせ」 | 販売サイト（ショップ）の名前（他社のサービス名） | 「ご購入いただいた BOOTH の商品ページから、BOOTH のメッセージ機能でご連絡ください」という連絡方法の説明。ロゴは使っていない |
+| Chromium | README.txt「動作を確認した環境」 | ブラウザの名前（オープンソース） | 表示・印刷・CSV の読み込みを確認した環境の説明 |
+| Google Chrome | README.txt「動作を確認した環境」 | 他社の製品名（ブラウザ） | 「Chromium（Google Chrome や Microsoft Edge と同じ表示エンジン）」という互換性の説明。ロゴは使っていない |
+| Microsoft Edge | README.txt「動作を確認した環境」 | 他社の製品名（ブラウザ） | 同上 |
+| Safari | README.txt「動作を確認した環境」 | 他社の製品名（ブラウザ） | 「まだ確認していません」という動作環境の説明 |
+| Firefox | README.txt「動作を確認した環境」 | 他社の製品名（ブラウザ） | 同上 |
+| Excel | README.txt「表計算ソフトで編集する方法」（「表計算ソフト（Excel など）」）、menu-template.html のプログラムのコメント（531行目。Excel の「CSV（カンマ区切り）」は Shift_JIS で保存される、という説明） | 他社の製品名（表計算ソフト） | CSV を編集するソフトの例と、文字コードの互換性の説明。画面には出ない（コメントはテキストエディタで開いたときだけ見える） |
+| Hiragino Sans、Hiragino Kaku Gothic ProN、Yu Gothic、Meiryo、PingFang SC、Microsoft YaHei、Apple SD Gothic Neo、Malgun Gothic、Noto Sans JP／SC／KR、Noto Sans CJK JP／SC／KR、WenQuanYi Zen Hei、Menlo、Consolas | menu-template.html の CSS `font-family`（211・215・218・229行目） | フォント名 | 閲覧する端末に入っているフォントを指定するだけ。フォントのファイルは HTML に同梱していない。`system-ui`、`-apple-system`、`ui-monospace`、`sans-serif`、`monospace` は CSS の一般的な指定で、固有名詞ではない |
+| WenQuanYi Zen Hei、Inter（Inter-Bold、Inter-Regular） | sample-print.pdf に埋め込まれたフォント（`pdffonts` で確認。どれも一部だけの埋め込み） | フォント名 | 印刷見本の PDF を作ったときに使われたフォント。画面の文字には名前は出ない。※PDF への埋め込みは、それぞれのフォントのライセンス（WenQuanYi Zen Hei は GPL＋フォント埋め込みの例外、Inter は SIL Open Font License とされる）で認められていると考えますが、推測です。一次資料での確認は未です |
+| pypdf | sample-print.pdf のファイル情報「Producer」 | 作成に使ったライブラリ名 | 自動で入る値。画面には出ない |
 
 ## 実在・商標の確認（researcher, 2026-10-11）
 
@@ -81,7 +98,13 @@
   - 商品名・ロゴ・出品タイトルには使いません。
   - ※以上は推測を含みます。J-PlatPat で直接確認したものではありません。
 
+### 3. MenuBridge（README.txt「制作について」）と BOOTH ほかの製品名（2026-10-11 追記）
+
+- MenuBridge：P2 の names.md と同じ WebSearch（`"MenuBridge" OR "メニューブリッジ" 商標`、2026-10-11）で、商標登録・出願を示すページは見つかりませんでした。**J-PlatPat では確認できていません**（上の 2. と同じく、この環境から接続できないため）。屋号・ショップ名・制作者名として使い続ける前に、**創業者が別の端末から J-PlatPat（https://www.j-platpat.inpit.go.jp/ ）で「MenuBridge」「メニューブリッジ」を検索し、結果を確認する必要があります**（区分は第9類・第35類・第42類などが目安。推測）。
+- BOOTH・Google Chrome・Microsoft Edge・Safari・Firefox・Excel・Chromium：他社の製品名・サービス名で、動作環境・互換性の説明と連絡方法の案内に名前を書いているだけです。商品名・ロゴ・出品タイトルには使っていません。個別の商標検索はしていません（他社の登録商標であることを前提に扱っています）。
+
 ### 未確認の点
 
-- J-PlatPat での直接の検索（「〇〇食堂」「食堂」）。人が別の端末から確認する必要があります。
+- J-PlatPat での直接の検索（「〇〇食堂」「食堂」「MenuBridge」「メニューブリッジ」）。創業者が別の端末から確認する必要があります。
+- PDF に埋め込んだフォント（WenQuanYi Zen Hei、Inter）のライセンスの一次資料での確認。
 - 中国・韓国の商標データベースは調べていません。
