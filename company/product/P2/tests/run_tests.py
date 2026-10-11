@@ -4,7 +4,7 @@
 1. tests/cases.py の各ケースの入力で、build.py と同じ数式のブックを作る。
 2. LibreOffice（soffice --headless --convert-to xlsx）で開いて保存し直し、数式を再計算させる。
 3. 再計算後のセル値を読み、(a) ケースに手で書いた期待値、(b) model.py で独立に計算した全セルの期待値と照合する。
-4. 結果を tests/result.md に書く。不合格があれば終了コード 1。
+4. 結果を tests/result.md に書く（--no-write を付けると書かない。QA の再実行用）。不合格があれば終了コード 1。
 
 使い方:  python3 company/product/P2/tests/run_tests.py
 """
@@ -181,8 +181,11 @@ def main():
                              f"{diff:+.2%} | {judge} | {rec:,.0f} 円 |")
     lines += ["", "## 確認していないこと", "",
               "- Microsoft Excel と Google スプレッドシートでの実機の計算結果（この環境には無い）。手順は `device-check.md`。"]
-    with open(os.path.join(HERE, "result.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
+    if "--no-write" not in sys.argv[1:]:
+        with open(os.path.join(HERE, "result.md"), "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+    else:
+        print("（--no-write: result.md は書き換えていない）")
     print(f"\n合格 {total_pass} / 不合格 {total_fail}")
     return 0 if total_fail == 0 else 1
 

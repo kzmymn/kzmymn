@@ -1,7 +1,7 @@
 # P2 原価率計算シート — 互換性の検査結果
 
 - 対象: `dist/genka-keisan.xlsx`
-- 実行日時: 2026-10-11 10:00
+- 実行日時: 2026-10-11 10:23
 - 方法: xlsx（zip）内の XML を直接読み、全セルの数式・入力規則・条件付き書式を走査（`tests/compat_check.py`）
 - 許可リスト: AND, IF, IFERROR, INDEX, ISBLANK, MATCH, OR, ROUND, ROUNDDOWN, ROUNDUP, SUM, SUMPRODUCT, VLOOKUP
 
@@ -34,5 +34,6 @@
 
 - **行った**: 上の静的検査（全数式の関数名を許可リストと照合）と、LibreOffice での再計算テスト（`tests/result.md`）。
 - **行っていない**: Microsoft Excel と Google スプレッドシートでの実機確認。この環境にはどちらも無いため、実際に開いて同じ値になるかは未確認。手順は `device-check.md`（創業者が5分で確認）。
-- 補足: 許可リストの関数は、Excel 2010 以降・Google スプレッドシート・LibreOffice のいずれにもある基本関数。ROUNDUP は依頼の例示リストに無いが、推奨売価の10円単位の切り上げに使うため許可リストに加えた（Google スプレッドシートにもある）。
+- 補足: 許可リストの関数は、Excel と Google スプレッドシートの両方の公式関数一覧にある基本関数（Excel: https://support.microsoft.com/en-us/office/excel-functions-alphabetical-b3944572-255d-4efb-bb96-c6d90033e188 、Google: https://support.google.com/docs/table/25273?hl=en ）。実際に使っているのは上の「使っている関数」だけ。ROUNDUP は依頼の例示リストに無いが、推奨売価の10円単位の切り上げに使うため許可リストに加えた（Google スプレッドシートにもある）。
+- 出典 URL の確認方法: この環境からは上の URL を開けず（プロキシで拒否）、本文は未閲覧。関数の選定は一般的な知識と検索結果に基づく。URL の生存と内容は未確認【要確認】。
 - 補足: 同梱ファイルは openpyxl で作るため、計算結果の値をファイルに保存していない（開いたときに再計算させる設定 fullCalcOnLoad を付けている）。Excel と Google スプレッドシートでは開くと計算されるが、スマホのファイルプレビューなど計算しないビューアでは数式のセルが空に見える。

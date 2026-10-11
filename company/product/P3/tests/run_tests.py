@@ -6,7 +6,7 @@
 2. LibreOffice（soffice --headless --convert-to xlsx）で開いて保存し直し、数式を再計算させる。
 3. 再計算後のセル値を読み、(a) ケースに手で書いた期待値、(b) model() で独立に計算した
    入力シート・お客様用シートの全50行・全計算セルの期待値と照合する。全シートにエラー値が無いことも確認する。
-4. 結果を tests/result.md に書く。不合格があれば終了コード 1。
+4. 結果を tests/result.md に書く（--no-write を付けると書かない。QA の再実行用）。不合格があれば終了コード 1。
 
 使い方:  python3 company/product/P3/tests/run_tests.py
 """
@@ -253,8 +253,11 @@ def main():
               "- Microsoft Excel と Google スプレッドシートでの実機の計算結果・プルダウン・縦書きの見出し・印刷（この環境には無い）。"
               "手順は `device-check.md`。",
               "- プルダウンで入力を制限できること（LibreOffice の再計算では入力規則は試せない）。入力規則が付いていることは `compat-check.md` で確認。"]
-    with open(os.path.join(HERE, "result.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
+    if "--no-write" not in sys.argv[1:]:
+        with open(os.path.join(HERE, "result.md"), "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+    else:
+        print("（--no-write: result.md は書き換えていない）")
     print(f"\n合格 {tp} / 不合格 {tf}")
     return 0 if tf == 0 else 1
 

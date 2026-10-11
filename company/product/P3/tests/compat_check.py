@@ -10,7 +10,7 @@ xlsx（zip）の XML を直接読み、次を確認する。
 - 条件付き書式は単純なセル値の条件（cellIs）だけか
 
 使い方:  python3 company/product/P3/tests/compat_check.py [xlsx のパス]
-結果は tests/compat-check.md に書く。問題があれば終了コード 1。
+結果は tests/compat-check.md に書く（--no-write を付けると書かない。QA の再実行用）。問題があれば終了コード 1。
 """
 from __future__ import annotations
 
@@ -39,7 +39,7 @@ def strip(formula: str) -> str:
     return QSHEET_RE.sub("S!", STR_RE.sub('""', formula))
 
 
-def main(path):
+def main(path, write=True):
     problems = []
     notes = []
     funcs = collections.Counter()
@@ -166,18 +166,22 @@ def main(path):
         "",
         "- **行った**: 上の静的検査（全数式の関数名を許可リストと照合）と、LibreOffice での再計算テスト（`tests/result.md`）。",
         "- **行っていない**: Microsoft Excel と Google スプレッドシートでの実機確認。この環境にはどちらも無いため、"
-        "実際に開いて同じ値になるかは未確認。手順は `device-check.md`（創業者が5分で確認）。",
+        "実際に開いて同じ値になるかは未確認。手順は `device-check.md`（創業者が7分ほどで確認）。",
         "- 補足: 許可リストの関数は、Excel と Google スプレッドシートの両方の公式関数一覧にある基本関数"
         "（Excel: https://support.microsoft.com/en-us/office/excel-functions-alphabetical-b3944572-255d-4efb-bb96-c6d90033e188 、"
         "Google: https://support.google.com/docs/table/25273?hl=en ）。実際に使っているのは上の「使っている関数」だけ。",
+        "- 出典 URL の確認方法: この環境からは上の URL を開けず（プロキシで拒否）、本文は未閲覧。関数の選定は一般的な知識と検索結果に基づく。URL の生存と内容は未確認【要確認】。",
         "- 補足: 「お客様用」シートの印刷タイトル（各ページに1〜5行目を印刷）と印刷範囲は、Excel の組み込み名（_xlnm.Print_Titles / _xlnm.Print_Area）として保存される。"
         "利用者が作る名前付き範囲ではないため許可した。Google スプレッドシートはこの設定を読まない可能性がある【推測・要実機確認】ため、印刷時に「固定行を繰り返す」をオンにする手順を `使い方` シートと `device-check.md` に書いた。",
         "- 補足: 品目名の見出しは縦書き（文字の向き＝縦。xlsx の textRotation=255）。LibreOffice の PDF では縦に並ぶことを確認した。Excel・Google スプレッドシートでの見え方は実機確認の項目。",
         "- 補足: 同梱ファイルは openpyxl で作るため、計算結果の値をファイルに保存していない（開いたときに再計算させる設定 fullCalcOnLoad を付けている）。"
         "Excel と Google スプレッドシートでは開くと計算されるが、スマホのファイルプレビューなど計算しないビューアでは数式のセルが空に見える。",
     ]
-    with open(os.path.join(HERE, "compat-check.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
+    if write:
+        with open(os.path.join(HERE, "compat-check.md"), "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
+    else:
+        print("（--no-write: compat-check.md は書き換えていない）")
     print("OK" if not problems else "NG")
     for p in problems[:50]:
         print(" ", p)
@@ -186,4 +190,5 @@ def main(path):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1] if len(sys.argv) > 1 else DEFAULT))
+    args = [a for a in sys.argv[1:] if a != "--no-write"]
+    sys.exit(main(args[0] if args else DEFAULT, write="--no-write" not in sys.argv[1:]))
