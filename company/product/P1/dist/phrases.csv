@@ -1,0 +1,26 @@
+﻿no,category_ja,ja,en,zh_hans,ko,note_ja
+1,支払い,現金のみのお支払いとなります。,Cash only.,仅限现金支付。,현금 결제만 가능합니다.,
+2,支払い,クレジットカードがご利用いただけます。,Credit cards accepted.,可以使用信用卡。,신용카드 사용 가능합니다.,使えるカードの種類は必要に応じて追記
+3,支払い,お会計はレジでお願いします。,Please pay at the register.,请到收银台结账。,계산은 계산대에서 부탁드립니다.,
+4,支払い,お会計はお席で承ります。,Please pay at your table.,请在座位上结账。,계산은 자리에서 해 드립니다.,
+5,料金,価格はすべて税込です。,All prices include tax.,价格均已含税。,모든 가격은 세금 포함입니다.,
+6,料金,お一人様1ドリンクのご注文をお願いします。,"One drink order per person, please.",每位客人请至少点一杯饮品。,1인 1음료 주문 부탁드립니다.,
+7,料金,お通し代として、お一人様300円をいただいております。,A table charge of ¥300 per person applies (includes a small appetizer).,每位收取300日元的小菜费（餐位费）。,1인당 300엔의 기본 안주 요금(자릿세)이 있습니다.,金額はお店に合わせて変更
+8,注文,食券を先にお買い求めください。,Please buy a meal ticket from the machine first.,请先在售票机购买餐券。,먼저 식권 발매기에서 식권을 구입해 주세요.,
+9,注文,ご注文の際は、このボタンを押してください。,Please press this button to order.,点餐时请按此按钮。,주문하실 때 이 버튼을 눌러 주세요.,
+10,注文,ラストオーダーは閉店の30分前です。,Last orders are taken 30 minutes before closing.,最后点餐时间为打烊前30分钟。,라스트 오더는 마감 30분 전입니다.,時間はお店に合わせて変更
+11,注文,本日は売り切れました。,Sold out for today.,今日已售罄。,오늘은 품절되었습니다.,
+12,注文,ご飯の大盛りは無料です。,Large rice portions are free.,米饭加量免费。,밥 곱빼기는 무료입니다.,
+13,アレルギー,アレルギーのある方は、スタッフにお尋ねください。,"If you have any allergies, please ask our staff.",如有过敏，请咨询店员。,알레르기가 있으신 분은 직원에게 문의해 주세요.,
+14,案内,席にご案内しますので、少々お待ちください。,Please wait here to be seated.,请稍候，我们将为您安排座位。,자리로 안내해 드릴 테니 잠시 기다려 주세요.,
+15,案内,お好きな席へどうぞ。,Please sit anywhere you like.,请随意入座。,원하시는 자리에 앉으세요.,
+16,案内,お水はセルフサービスです。,Water is self-service.,饮用水请自取。,물은 셀프서비스입니다.,
+17,案内,お手洗いはこちらです。,Restroom this way.,洗手间在这边。,화장실은 이쪽입니다.,矢印を添えて掲示
+18,案内,お子様連れ歓迎です。,Children are welcome.,欢迎带孩子用餐。,어린이 동반 환영합니다.,
+19,案内,外国語のメニューがあります。スタッフにお声がけください。,We have menus in English. Please ask our staff.,我们有中文菜单，请询问店员。,한국어 메뉴가 있습니다. 직원에게 말씀해 주세요.,各言語で「その言語のメニューがある」という意味の文
+20,禁止・お願い,店内は全席禁煙です。,No smoking anywhere in the restaurant.,店内全面禁烟。,매장 내 전 좌석 금연입니다.,
+21,禁止・お願い,ほかのお客様の撮影はご遠慮ください。,Please do not take photos of other customers.,请勿拍摄其他客人。,다른 손님의 촬영은 삼가 주세요.,
+22,禁止・お願い,お持ち込みはご遠慮ください。,Outside food and drinks are not allowed.,禁止自带食物和饮料。,외부 음식 및 음료 반입은 삼가 주세요.,
+23,禁止・お願い,食べ残しのお持ち帰りはできません。,"Sorry, leftovers cannot be taken home.",抱歉，剩余食物不能打包带走。,죄송하지만 남은 음식은 포장해 가실 수 없습니다.,衛生上の理由で断る店向け
+24,営業,営業中,Open,营业中,영업 중,
+25,営業,準備中,Closed (preparing),准备中,준비 중,営業時間外の札
