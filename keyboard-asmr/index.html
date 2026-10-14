@@ -1,0 +1,626 @@
+<title>Skeleton Keys ASMR</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800&display=swap">
+<style>
+  /* レイアウト：縦長9:16のステージを中央に置き、下に「楽譜」と操作ボタン */
+  :root {
+    --bg: #efe9ff;          /* ラベンダーの紙 */
+    --ink: #2a2352;         /* 濃いブルーベリー */
+    --ink-soft: #6a62a0;
+    --panel: #ffffff;
+    --line: #d8cff5;
+    --accent: #ff5d8f;      /* ストロベリー */
+    --font-ui: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+    color-scheme: light;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-weight: 500;
+    overflow: hidden;
+  }
+  .app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-block: 12px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+  }
+  .stage-wrap { flex: 1; min-height: 0; width: 100%; display: flex; justify-content: center; align-items: center; }
+  .stage {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    max-width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(80, 60, 160, .25);
+    background: #e6dcff;
+  }
+  .stage canvas { display: block; width: 100%; height: 100%; }
+  .start {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding-bottom: 22%;
+    gap: 6px;
+    border: 0; background: transparent; cursor: pointer;
+    font-family: var(--font-ui); color: var(--ink);
+  }
+  .start-pill {
+    background: var(--panel); border-radius: 999px; padding: 12px 22px;
+    font-weight: 800; font-size: 16px; letter-spacing: .04em;
+    box-shadow: 0 6px 20px rgba(80, 60, 160, .25);
+  }
+  .start-note { font-size: 12px; color: var(--ink-soft); background: rgba(255,255,255,.7); border-radius: 999px; padding: 4px 10px; }
+  .start:focus-visible .start-pill { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .safe {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .safe .zone { position: absolute; background: rgba(255, 93, 143, .22); border: 1px dashed rgba(255, 93, 143, .8); box-sizing: border-box; }
+  .safe .label { position: absolute; font-size: 11px; color: #a3204d; padding: 4px 6px; }
+  .bottom { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 8px; }
+  .score {
+    background: var(--panel); border-radius: 12px; padding: 8px 10px 6px;
+    border: 1px solid var(--line);
+  }
+  .score-head { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-soft); letter-spacing: .04em; }
+  .score-head b { color: var(--ink); font-weight: 800; }
+  #scoreCanvas { width: 100%; height: 52px; display: block; }
+  .controls { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .controls button {
+    font-family: var(--font-ui); font-weight: 800; font-size: 13px;
+    color: var(--ink); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 14px; cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .controls button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+  .controls button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .controls button:disabled { opacity: .45; cursor: default; }
+</style>
+
+<div class="app">
+  <div class="stage-wrap" id="stageWrap">
+    <div class="stage" id="stage">
+      <canvas id="three"></canvas>
+      <div class="safe" id="safe" hidden>
+        <div class="zone" style="left:0;right:0;top:0;height:11%"><span class="label">上部：アカウント名など</span></div>
+        <div class="zone" style="left:0;right:0;bottom:0;height:22%"><span class="label">下部：キャプション・音源名</span></div>
+        <div class="zone" style="right:0;top:42%;bottom:22%;width:14%"><span class="label">いいね等</span></div>
+      </div>
+      <button class="start" id="start" type="button">
+        <span class="start-pill">タップして音を出す</span>
+        <span class="start-note">イヤホン推奨・左右で音の位置が変わります</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="score">
+      <div class="score-head"><span>楽譜（10秒で1周）</span><span>パターン <b id="seedLabel">#0001</b></span></div>
+      <canvas id="scoreCanvas"></canvas>
+    </div>
+    <div class="controls">
+      <button type="button" id="playBtn" disabled>一時停止</button>
+      <button type="button" id="shuffleBtn">別のパターン</button>
+      <button type="button" id="safeBtn" aria-pressed="false">セーフゾーン表示</button>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+/* ==========================================================
+   設定（ここを書き換えると見た目・音・リズムが変わります）
+   ========================================================== */
+const LOOP = 10;                 // 1周の長さ（秒）
+const COLS = 4, ROWS = 2;        // キーの並び（4×2 = 8キー）
+const KEY_COLORS = [             // キーキャップの色（左上から右へ）
+  "#ff9f45", "#ff5d8f", "#9b6cff", "#4d7cff",
+  "#8fe04a", "#2fd4d9", "#ffd84d", "#dfeeff",
+];
+// 本物の録音に差し替えるときは、ここに音声ファイル名を入れます（空なら合成音）
+const SAMPLE_URLS = { press: [], release: [] };
+
+/* ==========================================================
+   楽譜：何秒にどのキーを押すか。映像と音の両方がこれを見る
+   ========================================================== */
+function rng(seed) {             // 同じ番号なら毎回同じ「ランダム」になる
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function makeScore(seed) {
+  const r = rng(seed);
+  const n = COLS * ROWS;
+  const events = [];
+  const busyUntil = new Array(n).fill(-1);
+  let t = 0.02, last = -1;
+  while (t < LOOP - 0.35) {
+    // 次に押すキー：直前と同じキーは少なめ、まだ戻りきっていないキーは避ける
+    let key = -1;
+    for (let tries = 0; tries < 20; tries++) {
+      const k = Math.floor(r() * n);
+      if (k === last && r() > 0.12) continue;
+      if (busyUntil[k] > t) continue;
+      key = k; break;
+    }
+    if (key >= 0) {
+      const hold = 0.05 + r() * 0.08;
+      events.push({ t, key, hold, vel: 0.7 + r() * 0.3 });
+      busyUntil[key] = t + hold + 0.3;
+      last = key;
+    }
+    // 間隔：ふつうの間／素早い連打／ひと呼吸 を混ぜる
+    const roll = r();
+    if (roll < 0.28) t += 0.07 + r() * 0.06;
+    else if (roll < 0.9) t += 0.17 + r() * 0.38;
+    else t += 0.6 + r() * 0.4;
+  }
+  // ループのつなぎ目：最初の打鍵と近すぎる最後の打鍵を外す
+  return events.filter(e => {
+    const first = events.find(f => f.key === e.key);
+    return e === first || e.t + e.hold + 0.3 < LOOP + first.t;
+  });
+}
+
+let seed = 1;
+let score = makeScore(seed);
+
+/* キーがどれだけ沈んでいるか（0 = 上、1 = 底）を時刻から計算 */
+function depression(key, loopT) {
+  let d = 0;
+  for (const e of score) {
+    if (e.key !== key) continue;
+    let dt = loopT - e.t;
+    if (dt < 0) dt += LOOP;                    // 前の周の打鍵の余韻
+    if (dt > e.hold + 0.6) continue;
+    let v;
+    if (dt < 0.028) v = Math.pow(dt / 0.028, 1.6) * e.vel;          // 押し込み
+    else if (dt < e.hold) v = e.vel;                                 // 底についている
+    else {                                                           // バネで戻る（少し跳ねる）
+      const u = dt - e.hold;
+      v = e.vel * Math.exp(-26 * u) * Math.cos(22 * u);
+    }
+    if (Math.abs(v) > Math.abs(d)) d = v;
+  }
+  return Math.max(-0.12, d);
+}
+
+/* ==========================================================
+   音（Web Audio）
+   ========================================================== */
+let ctx = null, master = null, noiseBuf = null;
+const samples = { press: [], release: [] };
+
+function initAudio() {
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const comp = ctx.createDynamicsCompressor();
+  comp.threshold.value = -14; comp.ratio.value = 3; comp.attack.value = 0.002; comp.release.value = 0.08;
+  master = ctx.createGain(); master.gain.value = 0.9;
+  // 小さな部屋の響き
+  const verb = ctx.createConvolver();
+  const len = Math.floor(ctx.sampleRate * 0.35);
+  const ir = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const ch = ir.getChannelData(c);
+    for (let i = 0; i < len; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 4);
+  }
+  verb.buffer = ir;
+  const wet = ctx.createGain(); wet.gain.value = 0.12;
+  master.connect(comp); master.connect(verb); verb.connect(wet); wet.connect(comp);
+  comp.connect(ctx.destination);
+
+  noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+  const nd = noiseBuf.getChannelData(0);
+  for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+
+  for (const kind of ["press", "release"]) {
+    for (const url of SAMPLE_URLS[kind]) {
+      fetch(url).then(r => r.arrayBuffer()).then(b => ctx.decodeAudioData(b))
+        .then(buf => samples[kind].push(buf)).catch(() => {});
+    }
+  }
+}
+
+function panFor(key) { return ((key % COLS) / (COLS - 1) - 0.5) * 0.9; }
+
+function noiseBurst(when, out, { freq, q, gain, decay, type = "bandpass" }) {
+  const src = ctx.createBufferSource(); src.buffer = noiseBuf;
+  const f = ctx.createBiquadFilter(); f.type = type; f.frequency.value = freq; f.Q.value = q;
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, when);
+  g.gain.linearRampToValueAtTime(gain, when + 0.0008);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + decay);
+  src.connect(f); f.connect(g); g.connect(out);
+  src.start(when, Math.random() * 0.1); src.stop(when + decay + 0.02);
+}
+
+function playSound(kind, key, when, vel) {
+  const pan = ctx.createStereoPanner(); pan.pan.value = panFor(key);
+  pan.connect(master);
+  const list = samples[kind];
+  if (list.length) {                               // 録音素材がある場合
+    const src = ctx.createBufferSource();
+    src.buffer = list[Math.floor(Math.random() * list.length)];
+    src.playbackRate.value = 0.96 + Math.random() * 0.08;
+    const g = ctx.createGain(); g.gain.value = vel;
+    src.connect(g); g.connect(pan); src.start(when);
+    return;
+  }
+  // 合成音：キーごとに少しずつ音の高さを変える（キャップの個体差のイメージ）
+  const tone = 1 + (key - 3.5) * 0.035 + (Math.random() - 0.5) * 0.06;
+  if (kind === "press") {
+    noiseBurst(when, pan, { freq: 3800 * tone, q: 1.4, gain: 0.55 * vel, decay: 0.018 });        // 「カ」
+    noiseBurst(when + 0.002, pan, { freq: 1150 * tone, q: 4, gain: 0.7 * vel, decay: 0.05 });    // 「チ」プラスチックの響き
+    const o = ctx.createOscillator(); o.type = "triangle";                                         // 底に当たる「コト」
+    o.frequency.setValueAtTime(260 * tone, when);
+    o.frequency.exponentialRampToValueAtTime(140 * tone, when + 0.04);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0, when);
+    g.gain.linearRampToValueAtTime(0.35 * vel, when + 0.002);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + 0.06);
+    o.connect(g); g.connect(pan); o.start(when); o.stop(when + 0.08);
+  } else {
+    noiseBurst(when, pan, { freq: 5200 * tone, q: 1.8, gain: 0.22 * vel, decay: 0.012 });        // 戻りの「ッ」
+    noiseBurst(when + 0.001, pan, { freq: 1700 * tone, q: 5, gain: 0.25 * vel, decay: 0.03 });
+  }
+}
+
+/* 少し先の打鍵を前もって予約しておく（タイミングのズレを防ぐ） */
+let t0 = 0, cursor = 0;
+function startClock() { t0 = ctx.currentTime + 0.12; cursor = t0 - 0.001; }
+function scheduler() {
+  if (!ctx || ctx.state !== "running") return;
+  const end = ctx.currentTime + 0.2;
+  const nFrom = Math.floor((cursor - t0) / LOOP), nTo = Math.floor((end - t0) / LOOP);
+  for (let n = Math.max(0, nFrom); n <= nTo; n++) {
+    for (const e of score) {
+      const gt = t0 + n * LOOP + e.t;
+      if (gt > cursor && gt <= end) {
+        playSound("press", e.key, gt, e.vel);
+        playSound("release", e.key, gt + e.hold, e.vel);
+      }
+    }
+  }
+  cursor = end;
+}
+
+/* 映像の時計：音が鳴り始めたら音の時計に合わせる */
+const perf0 = performance.now();
+function loopTime() {
+  if (ctx && ctx.state !== "closed" && started) {
+    const lat = ctx.outputLatency || ctx.baseLatency || 0;
+    const g = ctx.currentTime - t0 - lat;
+    return ((g % LOOP) + LOOP) % LOOP;
+  }
+  return ((performance.now() - perf0) / 1000) % LOOP;
+}
+
+/* ==========================================================
+   3Dシーン
+   ========================================================== */
+const canvas = document.getElementById("three");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+const scene = new THREE.Scene();
+scene.background = (() => {                 // 背景：ラベンダー → 水色のグラデーション
+  const c = document.createElement("canvas"); c.width = 8; c.height = 512;
+  const g = c.getContext("2d");
+  const grd = g.createLinearGradient(0, 0, 0, 512);
+  grd.addColorStop(0, "#d9c8ff");
+  grd.addColorStop(0.55, "#f3e6ff");
+  grd.addColorStop(1, "#bdeeff");
+  g.fillStyle = grd; g.fillRect(0, 0, 8, 512);
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+})();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(30, 9 / 16, 0.1, 100);
+
+const key = new THREE.DirectionalLight(0xffffff, 2.2);
+key.position.set(-3, 9, 5);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = -5; key.shadow.camera.right = 5;
+key.shadow.camera.top = 5; key.shadow.camera.bottom = -5;
+key.shadow.radius = 6; key.shadow.bias = -0.0005;
+scene.add(key);
+scene.add(new THREE.HemisphereLight(0xf3e6ff, 0xbdeeff, 0.6));
+
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ opacity: 0.16, color: 0x3a2a80 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true;
+scene.add(ground);
+
+/* --- 形をつくる道具 --- */
+function roundedRect(w, h, r, x = 0, y = 0) {
+  const s = new THREE.Shape();
+  const l = x - w / 2, b = y - h / 2;
+  s.moveTo(l + r, b);
+  s.lineTo(l + w - r, b); s.quadraticCurveTo(l + w, b, l + w, b + r);
+  s.lineTo(l + w, b + h - r); s.quadraticCurveTo(l + w, b + h, l + w - r, b + h);
+  s.lineTo(l + r, b + h); s.quadraticCurveTo(l, b + h, l, b + h - r);
+  s.lineTo(l, b + r); s.quadraticCurveTo(l, b, l + r, b);
+  return s;
+}
+function slab(shape, depth, bevel = 0.02) {   // 平面の形を上向きに厚みをつける
+  const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: bevel > 0, bevelSize: bevel, bevelThickness: bevel, bevelSegments: 3, curveSegments: 8 });
+  g.rotateX(-Math.PI / 2);
+  return g;
+}
+
+const PITCH = 1.0;
+const W = COLS * PITCH + 0.5, D = ROWS * PITCH + 0.5;
+const board = new THREE.Group();
+scene.add(board);
+const keyPos = i => new THREE.Vector3(((i % COLS) - (COLS - 1) / 2) * PITCH, 0, (Math.floor(i / COLS) - (ROWS - 1) / 2) * PITCH);
+
+/* 透明ケース（スケルトン） */
+const clearMat = new THREE.MeshPhysicalMaterial({
+  color: 0xf4f0ff, transmission: 1, thickness: 0.4, roughness: 0.08, ior: 1.45,
+  attenuationColor: new THREE.Color("#c9b8ff"), attenuationDistance: 2.5, clearcoat: 1, clearcoatRoughness: 0.05,
+});
+const base = new THREE.Mesh(slab(roundedRect(W, D, 0.32), 0.18), clearMat);
+base.position.y = 0.02; base.castShadow = true;
+board.add(base);
+const wallShape = roundedRect(W, D, 0.32);
+wallShape.holes.push(roundedRect(W - 0.24, D - 0.24, 0.2));
+const wall = new THREE.Mesh(slab(wallShape, 0.62), clearMat);
+wall.position.y = 0.22; wall.castShadow = true;
+board.add(wall);
+
+/* 中の基板（透けて見える部分） */
+const pcbTex = (() => {
+  const c = document.createElement("canvas"); c.width = 1024; c.height = 600;
+  const g = c.getContext("2d");
+  g.fillStyle = "#ffc6e0"; g.fillRect(0, 0, 1024, 600);
+  g.strokeStyle = "#e7b14a"; g.lineWidth = 6; g.lineCap = "round"; g.lineJoin = "round";
+  const px = i => 512 + ((i % COLS) - 1.5) * (1024 / (W - 0.24)) * PITCH;
+  const py = i => 300 + (Math.floor(i / COLS) - 0.5) * (600 / (D - 0.24)) * PITCH;
+  for (let i = 0; i < COLS * ROWS; i++) {
+    const x = px(i), y = py(i);
+    g.beginPath(); g.moveTo(x - 40, y - 30); g.lineTo(x - 70, y - 60); g.lineTo(x - 70, 20); g.stroke();
+    g.beginPath(); g.moveTo(x + 30, y + 20); g.lineTo(x + 60, y + 50); g.lineTo(1000, y + 50); g.stroke();
+    g.fillStyle = "#f2c35b";
+    g.beginPath(); g.arc(x - 40, y - 30, 14, 0, 7); g.fill();
+    g.beginPath(); g.arc(x + 30, y + 20, 14, 0, 7); g.fill();
+  }
+  g.fillStyle = "#c2508a"; g.font = "bold 28px monospace";
+  g.fillText("KZ-08  SKELETON REV.2000", 30, 585);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+})();
+const pcb = new THREE.Mesh(new THREE.BoxGeometry(W - 0.24, 0.05, D - 0.24),
+  new THREE.MeshPhysicalMaterial({ map: pcbTex, roughness: 0.35, clearcoat: 0.6 }));
+pcb.position.y = 0.3; pcb.receiveShadow = true;
+board.add(pcb);
+
+/* スイッチを固定する透明プレート（キーの穴あき） */
+const plateShape = roundedRect(W - 0.26, D - 0.26, 0.18);
+for (let i = 0; i < COLS * ROWS; i++) {
+  const p = keyPos(i);
+  plateShape.holes.push(roundedRect(0.6, 0.6, 0.04, p.x, -p.z));
+}
+const plate = new THREE.Mesh(slab(plateShape, 0.04, 0.01),
+  new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.35, roughness: 0.1, metalness: 0, clearcoat: 1 }));
+plate.position.y = 0.62;
+board.add(plate);
+
+/* キー（スイッチ＋バネ＋キーキャップ） */
+const springCurve = new (class extends THREE.Curve {
+  getPoint(t, target = new THREE.Vector3()) {
+    const a = t * Math.PI * 2 * 6;
+    return target.set(Math.cos(a) * 0.13, t, Math.sin(a) * 0.13);
+  }
+})();
+const springGeo = new THREE.TubeGeometry(springCurve, 160, 0.014, 6, false);
+const chrome = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 1, roughness: 0.12, iridescence: 0.6 });
+const housingMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.4, roughness: 0.15, clearcoat: 1 });
+const housingGeo = new RoundedBoxGeometry(0.62, 0.4, 0.62, 3, 0.05);
+const capGeo = new RoundedBoxGeometry(0.86, 0.36, 0.86, 5, 0.12);
+const stemGeoA = new THREE.BoxGeometry(0.06, 0.34, 0.2);
+const stemGeoB = new THREE.BoxGeometry(0.2, 0.34, 0.06);
+
+const TRAVEL = 0.2;
+const keys = [];
+for (let i = 0; i < COLS * ROWS; i++) {
+  const p = keyPos(i);
+  const col = new THREE.Color(KEY_COLORS[i]);
+  const housing = new THREE.Mesh(housingGeo, housingMat);
+  housing.position.set(p.x, 0.53, p.z);
+  board.add(housing);
+
+  const spring = new THREE.Mesh(springGeo, chrome);
+  spring.position.set(p.x, 0.34, p.z);
+  board.add(spring);
+
+  const moving = new THREE.Group();          // 押すと一緒に沈む部分
+  moving.position.set(p.x, 0, p.z);
+  board.add(moving);
+
+  const stemMat = new THREE.MeshPhysicalMaterial({ color: col, roughness: 0.3, emissive: col, emissiveIntensity: 0 });
+  const stemA = new THREE.Mesh(stemGeoA, stemMat), stemB = new THREE.Mesh(stemGeoB, stemMat);
+  stemA.position.y = stemB.position.y = 0.86;
+  moving.add(stemA, stemB);
+
+  const capMat = new THREE.MeshPhysicalMaterial({
+    color: col.clone().lerp(new THREE.Color(0xffffff), 0.35),
+    transmission: 0.92, thickness: 0.6, roughness: 0.14, ior: 1.5,
+    attenuationColor: col, attenuationDistance: 0.55,
+    clearcoat: 1, clearcoatRoughness: 0.08,
+    emissive: col, emissiveIntensity: 0,
+  });
+  const cap = new THREE.Mesh(capGeo, capMat);
+  cap.position.y = 1.18; cap.castShadow = true;
+  moving.add(cap);
+
+  keys.push({ moving, spring, stemMat, capMat });
+}
+
+/* Y2Kのキラキラ星（虹色のクローム） */
+function starShape(r1, r2) {
+  const s = new THREE.Shape();
+  for (let i = 0; i <= 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + Math.PI / 2, r = i % 2 ? r2 : r1;
+    const x = Math.cos(a) * r, y = Math.sin(a) * r;
+    i ? s.lineTo(x, y) : s.moveTo(x, y);
+  }
+  return s;
+}
+const starMat = new THREE.MeshPhysicalMaterial({ color: 0xf6eaff, metalness: 0.55, roughness: 0.18, iridescence: 1, iridescenceIOR: 1.6, iridescenceThicknessRange: [200, 600], clearcoat: 1, emissive: 0x8a6cff, emissiveIntensity: 0.12 });
+const starGeo = new THREE.ExtrudeGeometry(starShape(0.5, 0.12), { depth: 0.06, bevelEnabled: true, bevelSize: 0.04, bevelThickness: 0.04, bevelSegments: 3 });
+starGeo.center();
+const STARS = [
+  { p: [-1.7, 2.6, -3.0], s: 0.85, ph: 0.0 },
+  { p: [1.6, 3.4, -4.2], s: 1.2, ph: 0.3 },
+  { p: [-0.2, 4.4, -6.0], s: 0.55, ph: 0.55 },
+  { p: [1.5, 1.2, 3.4], s: 0.6, ph: 0.8 },
+  { p: [-1.6, 1.6, 4.6], s: 0.8, ph: 0.15 },
+  { p: [0.3, 2.4, 6.4], s: 0.45, ph: 0.65 },
+];
+const stars = STARS.map(d => {
+  const m = new THREE.Mesh(starGeo, starMat);
+  m.scale.setScalar(d.s); m.position.set(...d.p);
+  scene.add(m);
+  return { m, d };
+});
+
+/* ==========================================================
+   毎フレームの更新
+   ========================================================== */
+function update(t) {
+  const ph = (t / LOOP) * Math.PI * 2;          // 1周でちょうど元に戻る動きにする
+  for (let i = 0; i < keys.length; i++) {
+    const d = depression(i, t);
+    const k = keys[i];
+    k.moving.position.y = -d * TRAVEL;
+    k.spring.scale.y = 0.35 - d * TRAVEL;      // バネが縮む
+    const glow = Math.max(0, d);
+    k.capMat.emissiveIntensity = glow * 0.35;
+    k.stemMat.emissiveIntensity = glow * 1.2;
+  }
+  // カメラ：ゆっくり左右に揺れる（10秒で1往復）
+  const az = Math.sin(ph) * 0.07, el = 0.95 + Math.sin(ph * 2) * 0.03;
+  const dist = 19;
+  camera.position.set(Math.sin(az) * Math.cos(el) * dist, Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
+  camera.lookAt(0, 0.2, 0.3);
+  for (const { m, d } of stars) {
+    const a = ph + d.ph * Math.PI * 2;
+    m.position.y = d.p[1] + Math.sin(a) * 0.15;
+    m.rotation.set(-0.7 + 0.15 * Math.sin(a), Math.sin(a) * 0.9, 0.2 + d.ph);
+  }
+}
+
+/* サイズ合わせ（常に9:16） */
+const stage = document.getElementById("stage"), wrap = document.getElementById("stageWrap");
+function resize() {
+  const ww = wrap.clientWidth, wh = wrap.clientHeight;
+  const w = Math.min(ww, wh * 9 / 16), h = w * 16 / 9;
+  stage.style.width = w + "px"; stage.style.height = h + "px";
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(w, h, false);
+  sizeScore();
+}
+
+/* ==========================================================
+   楽譜の表示
+   ========================================================== */
+const sc = document.getElementById("scoreCanvas"), sg = sc.getContext("2d");
+function sizeScore() {
+  const r = window.devicePixelRatio || 1;
+  sc.width = sc.clientWidth * r; sc.height = sc.clientHeight * r;
+  sg.setTransform(r, 0, 0, r, 0, 0);
+}
+function drawScore(t) {
+  const w = sc.clientWidth, h = sc.clientHeight, lane = (h - 12) / (COLS * ROWS);
+  sg.clearRect(0, 0, w, h);
+  sg.fillStyle = "#f4f0ff"; sg.fillRect(0, 0, w, h - 12);
+  sg.fillStyle = "#6a62a0"; sg.font = "10px system-ui"; sg.textBaseline = "bottom";
+  for (let s = 0; s <= LOOP; s += 2) {
+    const x = (s / LOOP) * (w - 1);
+    sg.fillRect(x, 0, 1, h - 12);
+    sg.textAlign = s === 0 ? "left" : s === LOOP ? "right" : "center";
+    sg.fillText(s + "s", x, h);
+  }
+  for (const e of score) {
+    sg.fillStyle = KEY_COLORS[e.key] === "#dfeeff" ? "#9fb6dd" : KEY_COLORS[e.key];
+    const x = (e.t / LOOP) * w, y = e.key * lane;
+    sg.fillRect(x, y + 0.5, Math.max(2, (e.hold / LOOP) * w), lane - 1);
+  }
+  sg.fillStyle = "#ff5d8f"; sg.fillRect((t / LOOP) * w - 1, 0, 2, h - 12);
+}
+
+/* ==========================================================
+   操作
+   ========================================================== */
+let started = false;
+const startBtn = document.getElementById("start");
+const playBtn = document.getElementById("playBtn");
+startBtn.addEventListener("click", async () => {
+  if (!ctx) initAudio();
+  await ctx.resume();
+  startClock();
+  started = true;
+  startBtn.hidden = true;
+  playBtn.disabled = false;
+  scheduler();
+});
+setInterval(scheduler, 25);
+
+playBtn.addEventListener("click", async () => {
+  if (!ctx) return;
+  if (ctx.state === "running") { await ctx.suspend(); playBtn.textContent = "再生"; }
+  else { await ctx.resume(); playBtn.textContent = "一時停止"; }
+});
+
+document.getElementById("shuffleBtn").addEventListener("click", () => {
+  seed = 1 + Math.floor(Math.random() * 9999);
+  score = makeScore(seed);
+  document.getElementById("seedLabel").textContent = "#" + String(seed).padStart(4, "0");
+  if (ctx && started) startClock();      // 新しいパターンを頭から
+});
+
+const safeBtn = document.getElementById("safeBtn"), safe = document.getElementById("safe");
+safeBtn.addEventListener("click", () => {
+  safe.hidden = !safe.hidden;
+  safeBtn.setAttribute("aria-pressed", String(!safe.hidden));
+});
+
+window.addEventListener("resize", resize);
+resize();
+renderer.setAnimationLoop(() => {
+  const t = loopTime();
+  update(t);
+  renderer.render(scene, camera);
+  drawScore(t);
+});
+</script>
