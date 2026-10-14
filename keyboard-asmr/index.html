@@ -90,29 +90,29 @@
     <div class="stage" id="stage">
       <canvas id="three"></canvas>
       <div class="safe" id="safe" hidden>
-        <div class="zone" style="left:0;right:0;top:0;height:11%"><span class="label">上部：アカウント名など</span></div>
-        <div class="zone" style="left:0;right:0;bottom:0;height:22%"><span class="label">下部：キャプション・音源名</span></div>
-        <div class="zone" style="right:0;top:42%;bottom:22%;width:14%"><span class="label">いいね等</span></div>
+        <div class="zone" style="left:0;right:0;top:0;height:11%"><span class="label">Top: account name</span></div>
+        <div class="zone" style="left:0;right:0;bottom:0;height:22%"><span class="label">Bottom: caption &amp; audio</span></div>
+        <div class="zone" style="right:0;top:42%;bottom:22%;width:14%"><span class="label">Likes</span></div>
       </div>
       <button class="start" id="start" type="button">
-        <span class="start-pill">タップして音を出す</span>
-        <span class="start-note">イヤホン推奨・左右で音の位置が変わります</span>
+        <span class="start-pill">Tap to play sound</span>
+        <span class="start-note">Best with headphones · sound pans left to right</span>
       </button>
     </div>
   </div>
 
   <div class="bottom">
     <div class="score">
-      <div class="score-head"><span>楽譜（10秒で1周）</span><span>パターン <b id="seedLabel">#0001</b></span></div>
+      <div class="score-head"><span>Score (10-second loop)</span><span>Pattern <b id="seedLabel">#0001</b></span></div>
       <canvas id="scoreCanvas"></canvas>
     </div>
     <div class="controls">
-      <button type="button" id="playBtn" disabled>一時停止</button>
-      <button type="button" id="shuffleBtn">別のパターン</button>
-      <button type="button" id="soundBtn">音：コトコト</button>
-      <button type="button" id="bgmBtn" aria-pressed="true">BGM：オン</button>
-      <button type="button" id="paletteBtn">色：オイル</button>
-      <button type="button" id="safeBtn" aria-pressed="false">セーフゾーン表示</button>
+      <button type="button" id="playBtn" disabled>Pause</button>
+      <button type="button" id="shuffleBtn">New pattern</button>
+      <button type="button" id="soundBtn">Sound: Thock</button>
+      <button type="button" id="bgmBtn" aria-pressed="true">BGM: On</button>
+      <button type="button" id="paletteBtn">Color: Oil slick</button>
+      <button type="button" id="safeBtn" aria-pressed="false">Safe zones</button>
     </div>
   </div>
 </div>
@@ -135,13 +135,14 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 const LOOP = 10;                 // 1周の長さ（秒）
 const COLS = 4, ROWS = 2;        // キーの並び（4×2 = 8キー）
 const PALETTES = {               // キーキャップの色（左上から右へ）
-  oil:   { name: "オイル",   keys: ["#2d4bff", "#3a86ff", "#2fc6ff", "#4ef0e6", "#6b48ff", "#5c7cff", "#a35cff", "#e070ff"] },
-  candy: { name: "キャンディ", keys: ["#ff9f45", "#ff5d8f", "#9b6cff", "#4d7cff", "#8fe04a", "#2fd4d9", "#ffd84d", "#dfeeff"] },
+  oil:   { name: "Oil slick", keys: ["#2d4bff", "#3a86ff", "#2fc6ff", "#4ef0e6", "#6b48ff", "#5c7cff", "#a35cff", "#e070ff"] },
+  candy: { name: "Candy", keys: ["#ff9f45", "#ff5d8f", "#9b6cff", "#4d7cff", "#8fe04a", "#2fd4d9", "#ffd84d", "#dfeeff"] },
 };
 let paletteName = "oil";
 const keyColor = i => PALETTES[paletteName].keys[i];
 // 本物の録音に差し替えるときは、ここに音声ファイル名を入れます（空なら合成音）
 const SAMPLE_URLS = { press: [], release: [] };
+const BGM_VOLUME = 0.5;         // BGMの音量（1 = 元の大きさ、0.5 = 半分）
 
 /* ==========================================================
    楽譜：何秒にどのキーを押すか。映像と音の両方がこれを見る
@@ -245,7 +246,7 @@ function initAudio() {
 
   keyBus = ctx.createGain(); keyBus.connect(master);
   // BGM：長い響き＋やまびこで、遠くで鳴っているように
-  bgmBus = ctx.createGain(); bgmBus.gain.value = bgmOn ? 1 : 0;
+  bgmBus = ctx.createGain(); bgmBus.gain.value = bgmOn ? BGM_VOLUME : 0;
   const bgmVerb = ctx.createConvolver();
   const blen = Math.floor(ctx.sampleRate * 2.8);
   const bir = ctx.createBuffer(2, blen, ctx.sampleRate);
@@ -289,9 +290,9 @@ function noiseBurst(when, out, { freq, q, gain, decay, type = "bandpass" }) {
 
 /* 音の種類：ボタンで切り替えて聞き比べる */
 const SOUND_PRESETS = {
-  thock: { name: "コトコト" },   // 低めで丸い。クリーミーな打鍵音
-  click: { name: "カチカチ" },   // 高めで硬い。青軸のようなクリック感
-  pop:   { name: "ポコポコ" },   // 水っぽい。泡がはじけるような音
+  thock: { name: "Thock" },   // 低めで丸い。クリーミーな打鍵音
+  click: { name: "Clicky" },   // 高めで硬い。青軸のようなクリック感
+  pop:   { name: "Bubble pop" },   // 水っぽい。泡がはじけるような音
 };
 let soundName = "thock";
 
@@ -929,8 +930,8 @@ setInterval(scheduler, 25);
 
 playBtn.addEventListener("click", async () => {
   if (!ctx) return;
-  if (ctx.state === "running") { await ctx.suspend(); playBtn.textContent = "再生"; }
-  else { await ctx.resume(); playBtn.textContent = "一時停止"; }
+  if (ctx.state === "running") { await ctx.suspend(); playBtn.textContent = "Play"; }
+  else { await ctx.resume(); playBtn.textContent = "Pause"; }
 });
 
 document.getElementById("shuffleBtn").addEventListener("click", () => {
@@ -944,20 +945,20 @@ const soundBtn = document.getElementById("soundBtn");
 soundBtn.addEventListener("click", () => {
   const names = Object.keys(SOUND_PRESETS);
   soundName = names[(names.indexOf(soundName) + 1) % names.length];
-  soundBtn.textContent = "音：" + SOUND_PRESETS[soundName].name;
+  soundBtn.textContent = "Sound: " + SOUND_PRESETS[soundName].name;
 });
 const bgmBtn = document.getElementById("bgmBtn");
 bgmBtn.addEventListener("click", () => {
   bgmOn = !bgmOn;
-  bgmBtn.textContent = "BGM：" + (bgmOn ? "オン" : "オフ");
+  bgmBtn.textContent = "BGM: " + (bgmOn ? "On" : "Off");
   bgmBtn.setAttribute("aria-pressed", String(bgmOn));
-  if (bgmBus) bgmBus.gain.setTargetAtTime(bgmOn ? 1 : 0, ctx.currentTime, 0.1);
+  if (bgmBus) bgmBus.gain.setTargetAtTime(bgmOn ? BGM_VOLUME : 0, ctx.currentTime, 0.1);
 });
 
 const paletteBtn = document.getElementById("paletteBtn");
 paletteBtn.addEventListener("click", () => {
   paletteName = paletteName === "oil" ? "candy" : "oil";
-  paletteBtn.textContent = "色：" + PALETTES[paletteName].name;
+  paletteBtn.textContent = "Color: " + PALETTES[paletteName].name;
   applyPalette();
 });
 
