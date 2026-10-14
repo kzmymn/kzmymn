@@ -109,6 +109,8 @@
     <div class="controls">
       <button type="button" id="playBtn" disabled>一時停止</button>
       <button type="button" id="shuffleBtn">別のパターン</button>
+      <button type="button" id="soundBtn">音：コトコト</button>
+      <button type="button" id="bgmBtn" aria-pressed="true">BGM：オン</button>
       <button type="button" id="paletteBtn">色：オイル</button>
       <button type="button" id="safeBtn" aria-pressed="false">セーフゾーン表示</button>
     </div>
@@ -192,6 +194,10 @@ function makeScore(seed) {
 let seed = 1;
 let score = makeScore(seed);
 
+/* 音を鳴らす瞬間：映像でキーが底に着く時刻と、上に戻りきる時刻 */
+const BOTTOM_AT = 0.028;
+const TOP_AT = Math.PI / 44;                     // 戻りの揺れが最初にてっぺんを通る時刻（約0.07秒）
+
 /* キーがどれだけ沈んでいるか（0 = 上、1 = 底）を時刻から計算 */
 function depression(key, loopT) {
   let d = 0;
@@ -201,7 +207,7 @@ function depression(key, loopT) {
     if (dt < 0) dt += LOOP;                    // 前の周の打鍵の余韻
     if (dt > e.hold + 0.6) continue;
     let v;
-    if (dt < 0.028) v = Math.pow(dt / 0.028, 1.6) * e.vel;          // 押し込み
+    if (dt < BOTTOM_AT) v = Math.pow(dt / BOTTOM_AT, 1.6) * e.vel;          // 押し込み
     else if (dt < e.hold) v = e.vel;                                 // 底についている
     else {                                                           // バネで戻る（少し跳ねる）
       const u = dt - e.hold;
@@ -215,7 +221,8 @@ function depression(key, loopT) {
 /* ==========================================================
    音（Web Audio）
    ========================================================== */
-let ctx = null, master = null, noiseBuf = null;
+let ctx = null, master = null, noiseBuf = null, keyBus = null, bgmBus = null, bgmDelay = null;
+let bgmOn = true;
 const samples = { press: [], release: [] };
 
 function initAudio() {
@@ -235,6 +242,25 @@ function initAudio() {
   const wet = ctx.createGain(); wet.gain.value = 0.12;
   master.connect(comp); master.connect(verb); verb.connect(wet); wet.connect(comp);
   comp.connect(ctx.destination);
+
+  keyBus = ctx.createGain(); keyBus.connect(master);
+  // BGM：長い響き＋やまびこで、遠くで鳴っているように
+  bgmBus = ctx.createGain(); bgmBus.gain.value = bgmOn ? 1 : 0;
+  const bgmVerb = ctx.createConvolver();
+  const blen = Math.floor(ctx.sampleRate * 2.8);
+  const bir = ctx.createBuffer(2, blen, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) {
+    const ch = bir.getChannelData(c);
+    for (let i = 0; i < blen; i++) ch[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / blen, 2.5);
+  }
+  bgmVerb.buffer = bir;
+  const bgmWet = ctx.createGain(); bgmWet.gain.value = 0.5;
+  bgmDelay = ctx.createDelay(1); bgmDelay.delayTime.value = BEAT * 0.75;
+  const fb = ctx.createGain(); fb.gain.value = 0.35;
+  const dlp = ctx.createBiquadFilter(); dlp.type = "lowpass"; dlp.frequency.value = 2500;
+  bgmDelay.connect(dlp); dlp.connect(fb); fb.connect(bgmDelay);
+  const dOut = ctx.createGain(); dOut.gain.value = 0.4; dlp.connect(dOut); dOut.connect(bgmBus);
+  bgmBus.connect(comp); bgmBus.connect(bgmVerb); bgmVerb.connect(bgmWet); bgmWet.connect(comp);
 
   noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
   const nd = noiseBuf.getChannelData(0);
@@ -261,10 +287,30 @@ function noiseBurst(when, out, { freq, q, gain, decay, type = "bandpass" }) {
   src.start(when, Math.random() * 0.1); src.stop(when + decay + 0.02);
 }
 
+/* 音の種類：ボタンで切り替えて聞き比べる */
+const SOUND_PRESETS = {
+  thock: { name: "コトコト" },   // 低めで丸い。クリーミーな打鍵音
+  click: { name: "カチカチ" },   // 高めで硬い。青軸のようなクリック感
+  pop:   { name: "ポコポコ" },   // 水っぽい。泡がはじけるような音
+};
+let soundName = "thock";
+
+function tone(when, out, { f0, f1, dur, gain, type = "sine", attack = 0.001 }) {
+  const o = ctx.createOscillator(); o.type = type;
+  o.frequency.setValueAtTime(f0, when);
+  o.frequency.exponentialRampToValueAtTime(f1, when + dur * 0.7);
+  const g = ctx.createGain();
+  g.gain.setValueAtTime(0, when);
+  g.gain.linearRampToValueAtTime(gain, when + attack);
+  g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+  o.connect(g); g.connect(out); o.start(when); o.stop(when + dur + 0.02);
+}
+
+/* kind: "down"＝底に当たる音 / "up"＝戻りきった音 */
 function playSound(kind, key, when, vel) {
   const pan = ctx.createStereoPanner(); pan.pan.value = panFor(key);
-  pan.connect(master);
-  const list = samples[kind];
+  pan.connect(keyBus);
+  const list = samples[kind === "down" ? "press" : "release"];
   if (list.length) {                               // 録音素材がある場合
     const src = ctx.createBufferSource();
     src.buffer = list[Math.floor(Math.random() * list.length)];
@@ -273,22 +319,91 @@ function playSound(kind, key, when, vel) {
     src.connect(g); g.connect(pan); src.start(when);
     return;
   }
-  // 合成音：キーごとに少しずつ音の高さを変える（キャップの個体差のイメージ）
-  const tone = 1 + (key - 3.5) * 0.035 + (Math.random() - 0.5) * 0.06;
-  if (kind === "press") {
-    noiseBurst(when, pan, { freq: 3800 * tone, q: 1.4, gain: 0.55 * vel, decay: 0.018 });        // 「カ」
-    noiseBurst(when + 0.002, pan, { freq: 1150 * tone, q: 4, gain: 0.7 * vel, decay: 0.05 });    // 「チ」プラスチックの響き
-    const o = ctx.createOscillator(); o.type = "triangle";                                         // 底に当たる「コト」
-    o.frequency.setValueAtTime(260 * tone, when);
-    o.frequency.exponentialRampToValueAtTime(140 * tone, when + 0.04);
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0, when);
-    g.gain.linearRampToValueAtTime(0.35 * vel, when + 0.002);
-    g.gain.exponentialRampToValueAtTime(0.0001, when + 0.06);
-    o.connect(g); g.connect(pan); o.start(when); o.stop(when + 0.08);
+  // キーごとに少しずつ音の高さを変える（キャップの個体差のイメージ）
+  const k = 1 + (key - 3.5) * 0.03 + (Math.random() - 0.5) * 0.05;
+  const v = vel;
+  if (soundName === "thock") {
+    if (kind === "down") {
+      noiseBurst(when, pan, { freq: 2300 * k, q: 1.2, gain: 0.35 * v, decay: 0.014 });
+      noiseBurst(when + 0.001, pan, { freq: 720 * k, q: 6, gain: 0.8 * v, decay: 0.07 });       // ケースの「コ」
+      tone(when, pan, { f0: 190 * k, f1: 110 * k, dur: 0.09, gain: 0.5 * v, type: "triangle" }); // 底の「ト」
+    } else {
+      noiseBurst(when, pan, { freq: 3200 * k, q: 1.5, gain: 0.16 * v, decay: 0.01 });
+      noiseBurst(when, pan, { freq: 1100 * k, q: 6, gain: 0.3 * v, decay: 0.035 });
+    }
+  } else if (soundName === "click") {
+    if (kind === "down") {
+      noiseBurst(when - 0.012, pan, { freq: 5200 * k, q: 2, gain: 0.5 * v, decay: 0.008 });     // 押し始めの「カ」
+      noiseBurst(when, pan, { freq: 4200 * k, q: 1.6, gain: 0.6 * v, decay: 0.015 });           // 「チッ」
+      noiseBurst(when + 0.001, pan, { freq: 1500 * k, q: 4, gain: 0.45 * v, decay: 0.04 });
+      tone(when, pan, { f0: 4600 * k, f1: 4500 * k, dur: 0.12, gain: 0.025 * v });                // バネの「チーン」
+    } else {
+      noiseBurst(when, pan, { freq: 5600 * k, q: 2, gain: 0.35 * v, decay: 0.009 });
+      noiseBurst(when + 0.001, pan, { freq: 2000 * k, q: 5, gain: 0.25 * v, decay: 0.03 });
+    }
   } else {
-    noiseBurst(when, pan, { freq: 5200 * tone, q: 1.8, gain: 0.22 * vel, decay: 0.012 });        // 戻りの「ッ」
-    noiseBurst(when + 0.001, pan, { freq: 1700 * tone, q: 5, gain: 0.25 * vel, decay: 0.03 });
+    if (kind === "down") {
+      tone(when, pan, { f0: 1100 * k, f1: 380 * k, dur: 0.07, gain: 0.45 * v });                  // 「ポ」
+      noiseBurst(when, pan, { freq: 2600 * k, q: 3, gain: 0.25 * v, decay: 0.012 });
+      tone(when, pan, { f0: 170 * k, f1: 120 * k, dur: 0.06, gain: 0.3 * v, type: "triangle" });
+    } else {
+      tone(when, pan, { f0: 700 * k, f1: 1300 * k, dur: 0.05, gain: 0.2 * v });                   // 戻りの「コ」（上がる音）
+    }
+  }
+}
+
+/* ==========================================================
+   BGM：ドリーミーな小さな曲（96BPM・4小節＝ちょうど10秒）
+   ========================================================== */
+const BEAT = LOOP / 16;                          // 1拍 = 0.625秒
+const midi = n => 440 * Math.pow(2, (n - 69) / 12);
+const CHORDS = [                                  // Fmaj9 → Em7 → Dm9 → Cmaj9
+  [53, 57, 60, 64, 67], [52, 55, 59, 62, 66], [50, 53, 57, 60, 64], [48, 52, 55, 59, 62],
+];
+const ARP = [0, 2, 4, 3, 1, 3, 4, null];         // 8分音符のオルゴール（null は休み）
+const bgmEvents = [];
+CHORDS.forEach((ch, bar) => {
+  const t = bar * 4 * BEAT;
+  bgmEvents.push({ t, type: "pad", notes: ch });
+  bgmEvents.push({ t, type: "bass", note: ch[0] - 12 });
+  ARP.forEach((idx, i) => {
+    if (idx === null || (bar === 3 && i > 5)) return;
+    bgmEvents.push({ t: t + i * BEAT / 2, type: "bell", note: ch[idx] + 12 + (i === 2 ? 12 : 0), pan: i % 2 ? 0.35 : -0.35 });
+  });
+});
+bgmEvents.push({ t: 0, type: "bell", note: 88, pan: 0.5 });   // ループ頭のキラッ
+
+function playBgm(e, when) {
+  if (e.type === "pad") {
+    const f = ctx.createBiquadFilter(); f.type = "lowpass"; f.frequency.value = 900; f.Q.value = 0.5;
+    const g = ctx.createGain();
+    const len = 4 * BEAT;
+    g.gain.setValueAtTime(0, when);
+    g.gain.linearRampToValueAtTime(0.06, when + 0.8);
+    g.gain.setValueAtTime(0.06, when + len - 0.2);
+    g.gain.linearRampToValueAtTime(0, when + len + 1.0);
+    f.connect(g); g.connect(bgmBus);
+    for (const n of e.notes) for (const det of [-7, 7]) {
+      const o = ctx.createOscillator(); o.type = "sawtooth";
+      o.frequency.value = midi(n); o.detune.value = det;
+      o.connect(f); o.start(when); o.stop(when + len + 1.1);
+    }
+  } else if (e.type === "bass") {
+    const o = ctx.createOscillator(); o.frequency.value = midi(e.note);
+    const g = ctx.createGain(); const len = 4 * BEAT;
+    g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(0.12, when + 0.15);
+    g.gain.setValueAtTime(0.12, when + len - 0.3); g.gain.linearRampToValueAtTime(0, when + len + 0.1);
+    o.connect(g); g.connect(bgmBus); o.start(when); o.stop(when + len + 0.15);
+  } else {                                        // オルゴール風のベル
+    const pan = ctx.createStereoPanner(); pan.pan.value = e.pan; pan.connect(bgmBus); pan.connect(bgmDelay);
+    const fq = midi(e.note);
+    for (const [mul, amp, dec] of [[1, 0.09, 1.4], [2, 0.03, 0.6], [4.2, 0.012, 0.25]]) {
+      const o = ctx.createOscillator(); o.frequency.value = fq * mul;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, when); g.gain.linearRampToValueAtTime(amp, when + 0.004);
+      g.gain.exponentialRampToValueAtTime(0.0001, when + dec);
+      o.connect(g); g.connect(pan); o.start(when); o.stop(when + dec + 0.05);
+    }
   }
 }
 
@@ -303,9 +418,13 @@ function scheduler() {
     for (const e of score) {
       const gt = t0 + n * LOOP + e.t;
       if (gt > cursor && gt <= end) {
-        playSound("press", e.key, gt, e.vel);
-        playSound("release", e.key, gt + e.hold, e.vel);
+        playSound("down", e.key, gt + BOTTOM_AT, e.vel);           // キーが底に着いた瞬間
+        playSound("up", e.key, gt + e.hold + TOP_AT, e.vel * 0.9); // バネで上に戻りきった瞬間
       }
+    }
+    for (const e of bgmEvents) {
+      const gt = t0 + n * LOOP + e.t;
+      if (gt > cursor && gt <= end) playBgm(e, gt);
     }
   }
   cursor = end;
@@ -584,7 +703,7 @@ function cord(len) {
 }
 
 const charm = new THREE.Group();                         // 吊り下げの根元（ケースの右手前の角）
-charm.position.set(W / 2 - 0.32, 0.5, D / 2 + 0.06);
+charm.position.set(-(W / 2 - 0.32), 0.5, D / 2 + 0.06);
 charm.scale.setScalar(1.35);
 board.add(charm);
 const ring = new THREE.Mesh(new THREE.TorusGeometry(0.11, 0.025, 10, 32), chrome);
@@ -695,8 +814,8 @@ const STARS = [
   { p: [-1.7, 2.6, -3.0], s: 0.85, ph: 0.0 },
   { p: [1.6, 3.4, -4.2], s: 1.2, ph: 0.3 },
   { p: [-0.2, 4.4, -6.0], s: 0.55, ph: 0.55 },
-  { p: [-2.4, -1.4, 3.0], s: 0.6, ph: 0.8 },
-  { p: [-1.6, 1.6, 4.6], s: 0.8, ph: 0.15 },
+  { p: [-2.6, 4.2, -1.5], s: 0.5, ph: 0.8 },
+  { p: [2.0, -2.6, 2.0], s: 0.55, ph: 0.15 },
 ];
 const stars = STARS.map(d => {
   const m = new THREE.Mesh(starGeo, starMat);
@@ -744,7 +863,7 @@ function update(t) {
   const az = Math.sin(ph) * 0.07, el = 0.68 + Math.sin(ph * 2) * 0.03;
   const dist = 19;
   camera.position.set(Math.sin(az) * Math.cos(el) * dist, Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
-  camera.lookAt(0, -0.9, 0.4);
+  camera.lookAt(0, 0.35, 0.2);
   for (const { m, d } of stars) {
     const a = ph + d.ph * Math.PI * 2;
     m.position.y = d.p[1] + Math.sin(a) * 0.15;
@@ -819,6 +938,20 @@ document.getElementById("shuffleBtn").addEventListener("click", () => {
   score = makeScore(seed);
   document.getElementById("seedLabel").textContent = "#" + String(seed).padStart(4, "0");
   if (ctx && started) startClock();      // 新しいパターンを頭から
+});
+
+const soundBtn = document.getElementById("soundBtn");
+soundBtn.addEventListener("click", () => {
+  const names = Object.keys(SOUND_PRESETS);
+  soundName = names[(names.indexOf(soundName) + 1) % names.length];
+  soundBtn.textContent = "音：" + SOUND_PRESETS[soundName].name;
+});
+const bgmBtn = document.getElementById("bgmBtn");
+bgmBtn.addEventListener("click", () => {
+  bgmOn = !bgmOn;
+  bgmBtn.textContent = "BGM：" + (bgmOn ? "オン" : "オフ");
+  bgmBtn.setAttribute("aria-pressed", String(bgmOn));
+  if (bgmBus) bgmBus.gain.setTargetAtTime(bgmOn ? 1 : 0, ctx.currentTime, 0.1);
 });
 
 const paletteBtn = document.getElementById("paletteBtn");
