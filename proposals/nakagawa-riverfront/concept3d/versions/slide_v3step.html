@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><title>本提案の位置づけとコンセプト</title>
+<link href="../../fonts/fonts.css" rel="stylesheet">
+<style>
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#16181C;--sub:#4A4E55;--mute:#8A8E95;--line:#D3D6DA;--teal:#1E8C8A;--red:#C2403A;--soft:#F2F4F5}
+body{font-family:"Zen Kaku Gothic New",sans-serif;color:var(--ink);font-feature-settings:"palt";-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:297mm;height:210mm;padding:9mm 12mm 7mm;display:flex;flex-direction:column;background:#fff}
+.hd{font-size:7.5pt;font-weight:700;letter-spacing:.22em;border-bottom:.6mm solid var(--ink);padding-bottom:1.8mm;display:flex;justify-content:space-between}
+.head{display:grid;grid-template-columns:1fr 96mm;gap:8mm;margin-top:4.5mm;align-items:end}
+.k{font-size:7pt;letter-spacing:.3em;color:var(--mute)}
+.catch{font-family:"Shippori Mincho",serif;font-weight:800;font-size:24pt;letter-spacing:.05em;line-height:1.3;margin:1mm 0 2mm}
+.lead{font-size:8.4pt;line-height:1.75;color:var(--sub)}
+.lead b{color:var(--ink)}
+.meta{border-left:.3mm solid var(--line);padding-left:5mm;display:grid;gap:1.8mm}
+.lab{font-size:6.4pt;letter-spacing:.2em;color:var(--mute)}
+.theme{font-family:"Shippori Mincho",serif;font-weight:800;font-size:11pt;letter-spacing:.03em}
+.tg{font-size:7.2pt;line-height:1.6;color:var(--sub)}
+.tg b{background:var(--ink);color:#fff;font-size:6.1pt;padding:0 1.1mm;margin-right:1.1mm}
+/* 3-step story */
+.story{display:grid;grid-template-columns:1fr 1.05fr 1.05fr;gap:6mm;margin-top:5mm;flex:1;min-height:0}
+.sc{display:flex;flex-direction:column;min-height:0;border-top:.6mm solid var(--ink);padding-top:2mm}
+.step{font-family:Lato,sans-serif;font-weight:900;font-size:7pt;letter-spacing:.16em;color:var(--teal)}
+.sc h3{font-family:"Shippori Mincho",serif;font-weight:800;font-size:13.5pt;line-height:1.4;letter-spacing:.03em;margin:.8mm 0 2.6mm}
+/* data */
+.stats{display:flex;flex-direction:column;flex:1;min-height:0}
+.stat{display:grid;grid-template-columns:33mm 1fr;gap:3mm;align-items:start;border-top:.25mm solid var(--line);padding:2.6mm 0;flex:1}
+.num{font-family:Lato,sans-serif;font-weight:900;font-size:23pt;line-height:1}
+.num small{font-family:"Zen Kaku Gothic New",sans-serif;font-size:8.5pt;font-weight:700;margin-left:.5mm}
+.num.r{color:var(--red)}
+.sd{font-size:7.3pt;line-height:1.55;color:var(--sub)}
+.sd b{color:var(--ink);display:block;font-size:8pt}
+.concl{margin-top:2mm;background:var(--soft);padding:2.4mm 3.2mm;font-size:8.6pt;font-weight:700;line-height:1.5}
+.concl span{display:block;font-size:7pt;font-weight:400;color:var(--sub);margin-top:.6mm}
+/* potential */
+.pt{display:grid;grid-template-columns:24mm 1fr;gap:3mm;border-top:.25mm solid var(--line);padding:2.2mm 0;align-items:start}
+.pt img{width:24mm;height:17mm;object-fit:cover;display:block}
+.pt .t{font-size:8.3pt;font-weight:700;line-height:1.4}
+.pt .d{font-size:7.1pt;line-height:1.55;color:var(--sub);margin-top:.5mm}
+.pt .d em{font-style:normal;font-family:Lato,"Zen Kaku Gothic New",sans-serif;font-weight:900;color:var(--ink);font-size:8.6pt}
+/* concept */
+.cc{background:var(--ink);color:#fff;border-top-color:var(--ink);padding:2.4mm 4.5mm 3.4mm}
+.cc .step{color:#7FD3C8}
+.eqv{display:grid;gap:1.4mm;margin-top:.5mm}
+.term{border:.3mm solid #4A4F57;padding:1.8mm 3mm}
+.term b{display:block;font-size:9.6pt}
+.term span{font-size:7pt;color:#B9BEC6;line-height:1.5}
+.term .r{font-size:6.4pt;letter-spacing:.14em;color:#7FD3C8;font-weight:700}
+.opv{font-family:Lato,sans-serif;font-weight:300;font-size:15pt;text-align:center;line-height:1;color:#C9CDD3}
+.term.res{background:#fff;color:var(--ink);border-color:#fff}
+.term.res b{font-family:"Shippori Mincho",serif;font-size:13pt}
+.term.res span{color:var(--sub)}
+.term.res .r{color:var(--teal)}
+.out{margin-top:auto;padding-top:2.2mm;border-top:.25mm solid #44484F;display:grid;grid-template-columns:repeat(3,1fr);gap:2mm;text-align:center}
+.out div{font-size:7pt;color:#C9CDD3;line-height:1.4}
+.out b{display:block;color:#fff;font-size:8.6pt}
+/* bottom */
+.keybar{display:grid;grid-template-columns:auto 1fr auto;gap:5mm;align-items:center;margin-top:4mm;border-top:.25mm solid var(--line);padding-top:2.6mm}
+.keybar .l{font-size:7pt;font-weight:700;letter-spacing:.2em;color:var(--mute)}
+.keybar .m{font-size:8.6pt;line-height:1.55}
+.keybar .m b{background:linear-gradient(transparent 62%,#CDEBE6 62%)}
+.keybar .nx{font-size:7.4pt;font-weight:700;border:.3mm solid var(--ink);padding:1.4mm 3mm;white-space:nowrap}
+.vision{display:flex;align-items:baseline;gap:5mm;border-top:.6mm solid var(--ink);padding-top:2.2mm;margin-top:3mm}
+.vision .v{font-family:Lato,sans-serif;font-weight:900;font-size:8.5pt;letter-spacing:.25em}
+.vision .t{font-family:"Shippori Mincho",serif;font-weight:700;font-size:10.4pt;letter-spacing:.04em}
+.src{font-size:5.8pt;color:var(--mute);margin-top:1.4mm;line-height:1.5}
+</style></head><body>
+<section class="page">
+  <div class="hd"><span>1 実施内容｜1-1 本提案の位置づけとコンセプト</span><span>1</span></div>
+
+  <div class="head">
+    <div>
+      <div class="k">CONCEPT</div>
+      <div class="catch">那珂川を、アジアを代表する文化景観に。</div>
+      <p class="lead">人が訪れ続ける場所には、渋谷のスクランブル交差点や道頓堀のように、人の営みと遊び心が積み重なった<b>「文化景観」</b>がある。福岡には人が来ている。足りないのは、<b>夜まで留まり、体験したくなる景観</b>だ。</p>
+    </div>
+    <div class="meta">
+      <div><div class="lab">THEME</div><div class="theme">FUKUOKA ON THE RIVER FESTIVAL</div></div>
+      <div><div class="lab">TARGET</div>
+        <div class="tg"><b>メイン</b>国内外の観光客（アジアからの訪日客・国内旅行者、20〜40代）</div>
+        <div class="tg"><b>サブ</b>都市圏の来街者（天神・中洲で夜を過ごす20〜40代）</div></div>
+    </div>
+  </div>
+
+  <div class="story">
+    <!-- 01 -->
+    <div class="sc">
+      <div class="step">01　現状</div>
+      <h3>人は来ている。<br>でも、留まらない。</h3>
+      <div class="stats"><div class="stat"><div class="num">2,441<small>万人</small></div><div class="sd"><b>福岡市の入込観光客数（2024）</b>2年連続で過去最高。外国人入国者も433万人（2025）で過去最高</div></div>
+      <div class="stat"><div class="num r">75<small>%</small></div><div class="sd"><b>そのうち日帰り客の割合</b>1,840万人が日帰り。宿泊は601万人にとどまる</div></div>
+      <div class="stat"><div class="num r">4.5<small>%</small></div><div class="sd"><b>訪日客の旅行支出に占める娯楽・体験</b>宿泊・買物・飲食が大半。体験にはお金が落ちていない（全国・2025）</div></div></div>
+      <div class="concl">街に留まり、体験する理由が足りない<span>要項の目的「滞在時間の増加と消費拡大」に直結する課題</span></div>
+    </div>
+    <!-- 02 -->
+    <div class="sc">
+      <div class="step">02　可能性</div>
+      <h3>土台も、需要も、<br>すでにある。</h3>
+      <div class="pt"><img src="../../img/concept/il3.jpg" alt=""><div><div class="t">水辺に賑わいを生んだ記憶</div><div class="d">黒田藩の時代、那珂川の水辺には芝居や相撲が呼び込まれ、福岡と博多をつなぐ賑わいが生まれた</div></div></div>
+      <div class="pt"><img src="../../img/concept/il2.jpg" alt=""><div><div class="t">川に開かれたまちへ、整備が完了</div><div class="d">リバーフロントNEXTのもと、清流公園が再整備され、護岸・橋梁のライトアップも完成する</div></div></div>
+      <div class="pt"><img src="../../img/concept/il1.jpg" alt=""><div><div class="t">夜の文化体験には、人が動く</div><div class="d">福岡城跡の夜のアート展示は、会期2か月弱で<em>10万人</em>が来場。海外では湖上ステージが街の象徴に（ブレゲンツ音楽祭：約7,000席、5週間で<em>27万人</em>）</div></div></div>
+      <div class="concl" style="margin-top:auto">那珂川には、夜の舞台になる条件がそろっている<span>歴史・整備・需要の3つを、ひとつの体験につなげる</span></div>
+    </div>
+    <!-- 03 -->
+    <div class="sc cc">
+      <div class="step">03　コンセプト</div>
+      <h3 style="color:#fff">土台に「舞台」を加え、<br>文化景観を育てる。</h3>
+      <div class="eqv">
+        <div class="term"><div class="r">那珂川にすでにある土台</div><b>自然都市景観</b><span>水面、架かる橋、水面に映る街の灯り</span></div>
+        <div class="opv">×</div>
+        <div class="term"><div class="r">本事業が加えるもの</div><b>作り手が集う舞台・文化</b><span>川の上のステージ、音楽、パフォーマンス＝遊び心</span></div>
+        <div class="opv">＝</div>
+        <div class="term res"><div class="r">目指す姿</div><b>文化景観</b><span>人が集い、遊び、撮り、語り継ぐ、福岡を象徴する景色</span></div>
+      </div>
+      <div class="out"><div><b>滞在</b>夜まで留まる</div><div><b>消費</b>体験にお金が落ちる</div><div><b>ブランド</b>面白いことが<br>生まれる川</div></div>
+    </div>
+  </div>
+
+  <div class="keybar">
+    <div class="l">設計の要</div>
+    <div class="m">景観の演出だけでは、まず見てもらえない。人を呼ぶ力だけでは、景観が残らない。<b>川の上の舞台に、人を呼ぶアーティストを迎え、景観と集客を同時に成立させる。</b></div>
+    <div class="nx">次ページ：水上ステージとヘッドライナー →</div>
+  </div>
+
+  <div class="vision">
+    <span class="v">VISION</span>
+    <span class="t">今回のイベントを起点として、川と共に文化が育ち、福岡ならではの景観が生まれ、世界へ波及していくこと</span>
+  </div>
+  <div class="src">出典：入込観光客数・外国人入国者数＝福岡市「福岡市の観光・MICE」2026年版／娯楽等サービス費の構成比＝観光庁「インバウンド消費動向調査」2025年年次報告／福岡城跡の来場者＝チームラボ発表（2018年1月）／ブレゲンツ音楽祭＝同音楽祭の公表値（2018年）</div>
+</section>
+</body></html>
