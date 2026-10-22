@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;background:transparent}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"THREE_PATH"}}</script></head>
+<body>
+<script type="module">
+// Hero visual: a river surface drawn as flowing lines, bridge arcs, and a stage ring floating on the water.
+import * as THREE from 'three';
+const W = 2400, H = 1100;
+const r = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(W, H); r.setClearColor(0xffffff, 0);
+document.body.appendChild(r.domElement);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(32, W / H, 0.1, 400);
+cam.position.set(0, 9, 30); cam.lookAt(0, 0.5, -10);
+const TEAL = new THREE.Color('#1E8C8A'), MINT = new THREE.Color('#5CC7B2'), DEEP = new THREE.Color('#0E4F6B'), AMBER = new THREE.Color('#F0A030');
+// river: many polylines following a curved channel, fading with depth
+const lines = new THREE.Group(); scene.add(lines);
+const N = 46;
+for (let i = 0; i < N; i++) {
+  const u = i / (N - 1);
+  const pts = [], cols = [];
+  for (let k = 0; k <= 220; k++) {
+    const z = 18 - k * 0.45;                       // from near to far
+    const bend = Math.sin(z * 0.07) * 6;           // river meander
+    const x = (u - 0.5) * 22 * (0.55 + 0.45 * (z + 80) / 98) + bend;
+    const y = Math.sin(x * 0.45 + z * 0.35 + u * 3) * 0.28 + Math.sin(z * 0.9 + u * 9) * 0.08;
+    pts.push(x, y, z);
+    const fade = Math.max(0, Math.min(1, (z + 80) / 95));
+    const c = DEEP.clone().lerp(TEAL, u).lerp(MINT, Math.pow(1 - Math.abs(u - .5) * 2, 2) * .6);
+    const a = 0.15 + 0.85 * fade;
+    cols.push(1 - (1 - c.r) * a, 1 - (1 - c.g) * a, 1 - (1 - c.b) * a);   // blend toward white with depth
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  g.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3));
+  lines.add(new THREE.Line(g, new THREE.LineBasicMaterial({ vertexColors: true })));
+}
+// bridge arcs across the river (thin tubes)
+function arc(z, span, h, color, rad) {
+  const bend = Math.sin(z * 0.07) * 6;
+  const curve = new THREE.QuadraticBezierCurve3(new THREE.Vector3(-span / 2 + bend, 0.2, z), new THREE.Vector3(bend, h * 2, z), new THREE.Vector3(span / 2 + bend, 0.2, z));
+  const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 64, rad, 8), new THREE.MeshBasicMaterial({ color }));
+  scene.add(m);
+  // lights on the arc
+  for (let k = 1; k < 12; k++) {
+    const p = curve.getPoint(k / 12);
+    const d = new THREE.Mesh(new THREE.SphereGeometry(rad * 2.4, 12, 8), new THREE.MeshBasicMaterial({ color: AMBER }));
+    d.position.copy(p); scene.add(d);
+  }
+}
+arc(-6, 20, 2.0, DEEP, 0.07); arc(-26, 22, 2.2, TEAL, 0.07); arc(-50, 24, 2.4, MINT, 0.07);
+// stage ring standing on the water + its reflection ellipse
+const ringMat = new THREE.MeshStandardMaterial({ color: '#ffffff', metalness: 0.9, roughness: 0.18 });
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+const l1 = new THREE.PointLight(MINT, 260, 60); l1.position.set(-8, 8, 6); scene.add(l1);
+const l2 = new THREE.PointLight(AMBER, 200, 60); l2.position.set(8, 4, 4); scene.add(l2);
+const l3 = new THREE.PointLight(TEAL, 300, 60); l3.position.set(0, 12, -6); scene.add(l3);
+const zR = 2, bendR = Math.sin(zR * 0.07) * 6;
+const ring = new THREE.Mesh(new THREE.TorusGeometry(3.2, 0.2, 48, 220), ringMat);
+ring.position.set(bendR + 3.5, 3.4, zR); ring.rotation.set(0, -0.5, 0); scene.add(ring);
+const ref = new THREE.Mesh(new THREE.TorusGeometry(3.2, 0.04, 8, 200), new THREE.MeshBasicMaterial({ color: TEAL, transparent: true, opacity: .55 }));
+ref.position.set(bendR + 3.5, 0.15, zR); ref.rotation.set(-Math.PI / 2, 0, 0.5); ref.scale.set(1, .55, 1); scene.add(ref);
+// floating light particles
+const pg = new THREE.BufferGeometry(), pp = [], pc = [];
+for (let i = 0; i < 420; i++) {
+  const z = 14 - Math.random() * 80, bend = Math.sin(z * 0.07) * 6;
+  pp.push((Math.random() - .5) * 18 + bend, Math.random() * 6 + .3, z);
+  const c = [AMBER, MINT, TEAL][i % 3]; pc.push(c.r, c.g, c.b);
+}
+pg.setAttribute('position', new THREE.Float32BufferAttribute(pp, 3)); pg.setAttribute('color', new THREE.Float32BufferAttribute(pc, 3));
+scene.add(new THREE.Points(pg, new THREE.PointsMaterial({ size: .13, vertexColors: true, transparent: true, opacity: .85 })));
+r.render(scene, cam);
+window.done = r.domElement.toDataURL('image/png');
+</script></body></html>
